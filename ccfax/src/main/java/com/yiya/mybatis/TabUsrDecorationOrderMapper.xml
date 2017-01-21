@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabUsrDecorationOrderMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.TabUsrDecorationOrder" >
+	<result column="decoration_order_id" property="decoration_order_id"/>
+	<result column="order_sn" property="order_sn"/>
+	<result column="usrinf_id" property="usrinf_id"/>
+	<result column="decoration_addr_province" property="decoration_addr_province"/>
+	<result column="decoration_addr_city" property="decoration_addr_city"/>
+	<result column="decoration_addr_county" property="decoration_addr_county"/>
+	<result column="decoration_addr_street" property="decoration_addr_street"/>
+	<result column="house_owner" property="house_owner"/>
+	<result column="build_area" property="build_area"/>
+	<result column="house_price" property="house_price"/>
+	<result column="house_buy_type" property="house_buy_type"/>
+	<result column="decoration_contract_price" property="decoration_contract_price"/>
+	<result column="decoration_pay_type" property="decoration_pay_type"/>
+	<result column="decoration_contract_period" property="decoration_contract_period"/>
+</resultMap>
+
+
+	<sql id="Base_Column_List">
+	decoration_order_id,order_sn,usrinf_id,decoration_addr_province,decoration_addr_city,decoration_addr_county,decoration_addr_street,house_owner,build_area,house_price,house_buy_type,decoration_contract_price,decoration_pay_type,decoration_contract_period
+	</sql>
+
+  
+   <!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+	<trim  suffixOverrides="," >
+		<if test="decoration_order_id != null" >
+		    and decoration_order_id =  #{decoration_order_id}
+		</if>
+		<if test="order_sn != null and order_sn != ''" >
+		    and order_sn like CONCAT('%', #{order_sn}, '%')
+		</if>
+		<if test="usrinf_id != null" >
+		    and usrinf_id =  #{usrinf_id}
+		</if>
+		<if test="decoration_addr_province != null and decoration_addr_province != ''" >
+		    and decoration_addr_province like CONCAT('%', #{decoration_addr_province}, '%')
+		</if>
+		<if test="decoration_addr_city != null and decoration_addr_city != ''" >
+		    and decoration_addr_city like CONCAT('%', #{decoration_addr_city}, '%')
+		</if>
+		<if test="decoration_addr_county != null and decoration_addr_county != ''" >
+		    and decoration_addr_county like CONCAT('%', #{decoration_addr_county}, '%')
+		</if>
+		<if test="decoration_addr_street != null and decoration_addr_street != ''" >
+		    and decoration_addr_street like CONCAT('%', #{decoration_addr_street}, '%')
+		</if>
+		<if test="house_owner != null and house_owner != ''" >
+		    and house_owner like CONCAT('%', #{house_owner}, '%')
+		</if>
+		<if test="build_area != null" >
+		    and build_area =  #{build_area}
+		</if>
+		<if test="house_price != null" >
+		    and house_price =  #{house_price}
+		</if>
+		<if test="house_buy_type != null" >
+		    and house_buy_type =  #{house_buy_type}
+		</if>
+		<if test="decoration_contract_price != null" >
+		    and decoration_contract_price =  #{decoration_contract_price}
+		</if>
+		<if test="decoration_pay_type != null" >
+		    and decoration_pay_type =  #{decoration_pay_type}
+		</if>
+		<if test="decoration_contract_period != null" >
+		    and decoration_contract_period =  #{decoration_contract_period}
+		</if>
+		</trim>
+	</sql>
+   
+    <!--查询装修房产订单表 -->
+	<select id="queryByList"  resultMap="BaseResultMap" parameterType="Object">
+		select <include refid="Base_Column_List" /> 
+		 from tab_usr_decoration_order
+		 <include refid="Example_Where_Clause"/>
+	</select>
+	
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from tab_usr_decoration_order 
+		<include refid="Example_Where_Clause"/>
+	</select>
+   
+   
+	  
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object" >
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			 SELECT LAST_INSERT_ID()
+  	   </selectKey>
+	  insert into tab_usr_decoration_order (order_sn,usrinf_id,decoration_addr_province,decoration_addr_city,decoration_addr_county,decoration_addr_street,house_owner,build_area,house_price,house_buy_type,decoration_contract_price,decoration_pay_type,decoration_contract_period)
+	  values(#{order_sn},#{usrinf_id},#{decoration_addr_province},#{decoration_addr_city},#{decoration_addr_county},#{decoration_addr_street},#{house_owner},#{build_area},#{house_price},#{house_buy_type},#{decoration_contract_price},#{decoration_pay_type},#{decoration_contract_period})
+	</insert>
+	
+	 <!-- 根据usrid，修改记录-->  
+	 <update id="update" parameterType="Object" >
+	  update tab_usr_decoration_order set
+	  <trim  suffixOverrides="," >
+		<if test="order_sn != null and order_sn != ''" >
+		     order_sn = #{order_sn},
+		</if>
+		<if test="decoration_addr_province != null and decoration_addr_province != ''" >
+		     decoration_addr_province = #{decoration_addr_province}
+		</if>
+		<if test="decoration_addr_city != null and decoration_addr_city != ''" >
+		     decoration_addr_city = #{decoration_addr_city}
+		</if>
+		
+		<if test="decoration_addr_county != null and decoration_addr_county != ''" >
+		     decoration_addr_county = #{decoration_addr_county}
+		</if>
+		<if test="decoration_addr_street != null and decoration_addr_street != ''" >
+		     decoration_addr_street = #{decoration_addr_street}
+		</if>
+		<if test="house_owner != null and house_owner != ''" >
+		     house_owner = #{house_owner}
+		</if>
+		<if test="build_area != null" >
+		     build_area = #{build_area}
+		</if>
+		<if test="house_price != null" >
+		     house_price = #{house_price}
+		</if>
+		<if test="house_buy_type != null" >
+		     house_buy_type = #{house_buy_type}
+		</if>
+		<if test="decoration_contract_price != null" >
+		     decoration_contract_price = #{decoration_contract_price}
+		</if>
+		<if test="decoration_pay_type != null" >
+		     decoration_pay_type = #{decoration_pay_type}
+		</if>
+		<if test="decoration_contract_period != null" >
+		     decoration_contract_period = #{decoration_contract_period}
+		</if>
+	   </trim> where decoration_order_id=#{decoration_order_id}
+	 </update>
+ 
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="Object">
+		delete from tab_usr_decoration_order where decoration_order_id=#{decoration_order_id}
+	</delete>
+	
+	<select id="queryTabUsrDecorationOrder" resultMap="BaseResultMap" parameterType="Object">
+		select <include refid="Base_Column_List" /> 
+		 from tab_usr_decoration_order
+		 where 1=1
+		<trim  suffixOverrides="," >
+			<if test="order_sn != null and order_sn != ''" >
+			    and order_sn =  #{order_sn}
+			</if>
+			<if test="usrinf_id != null" >
+			    and usrinf_id =  #{usrinf_id}
+			</if>
+		</trim>
+	</select>
+ 
+ 	<select id="queryTabUsrDecorationOrderList" parameterType="Object" resultType="com.yiya.bean.TabUsrDecorationOrder">
+ 		 select <include refid="Base_Column_List" /> 
+		 from tab_usr_decoration_order
+		 where 1=1
+		<trim  suffixOverrides="," >
+			<if test="order_sn != null and order_sn != ''" >
+			    and order_sn =  #{order_sn}
+			</if>
+			<if test="usrinf_id != null" >
+			    and usrinf_id =  #{usrinf_id}
+			</if>
+		</trim>
+ 	</select>
+  	
+</mapper>   

@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabUsrinf2Mapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabUsrinf2" >
+    <id column="usrinf_id" property="usrinf_id" jdbcType="BIGINT" />
+    <result column="usrid" property="usrid" jdbcType="BIGINT" />
+    <result column="usrname" property="usrname" jdbcType="VARCHAR" />
+    <result column="id_card" property="id_card" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="marital" property="marital" jdbcType="TINYINT" />
+    <result column="mobile_phone" property="mobile_phone" jdbcType="VARCHAR" />
+    <result column="diploma" property="diploma" jdbcType="INTEGER" />
+    <result column="register_place" property="register_place" jdbcType="INTEGER" />
+    <result column="local_register_place" property="local_register_place" jdbcType="TINYINT" />
+    <result column="bank_id" property="bank_id" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="INTEGER" />
+    <result column="house_type" property="house_type" jdbcType="TINYINT" />
+    <result column="fixed_assets" property="fixed_assets" jdbcType="TINYINT" />
+    <result column="employment" property="employment" jdbcType="TINYINT" />
+    <result column="com_name" property="com_name" jdbcType="VARCHAR" />
+    <result column="industry" property="industry" jdbcType="INTEGER" />
+    <result column="profession_level" property="profession_level" jdbcType="INTEGER" />
+    <result column="cur_hire_duration" property="cur_hire_duration" jdbcType="INTEGER" />
+    <result column="schooling_system" property="schooling_system" jdbcType="INTEGER" />
+    <result column="graduate_school" property="graduate_school" jdbcType="VARCHAR" />
+    <result column="repaying_source" property="repaying_source" jdbcType="VARCHAR" />
+    <result column="id_card_front_pic" property="id_card_front_pic" jdbcType="VARCHAR" />
+    <result column="id_card_reverse_pic" property="id_card_reverse_pic" jdbcType="VARCHAR" />
+    <result column="with_id_card_pic" property="with_id_card_pic" jdbcType="VARCHAR" />
+    <result column="credit_report_pic" property="credit_report_pic" jdbcType="VARCHAR" />
+    <result column="is_face_id_pass" property="is_face_id_pass" jdbcType="TINYINT" />
+    <result column="applyfo_flag" property="applyfo_flag" jdbcType="TINYINT" />
+    <result column="check_flag" property="check_flag" jdbcType="TINYINT" />
+    <result column="is_loan" property="is_loan" jdbcType="TINYINT" />
+    <result column="second_check_loan_limit" property="second_check_loan_limit" jdbcType="DECIMAL" />
+    <result column="loan_limit" property="loan_limit" jdbcType="DECIMAL" />
+    <result column="loan_used" property="loan_used" jdbcType="DECIMAL" />
+    <result column="is_firstquery" property="is_firstquery" jdbcType="TINYINT" />
+    <result column="applyfor_limit" property="applyfor_limit" jdbcType="DECIMAL" />
+    <result column="applyfor_time" property="applyfor_time" jdbcType="TIMESTAMP" />
+    <result column="freeze_remark" property="freeze_remark" jdbcType="VARCHAR" />
+    <result column="is_activate" property="is_activate" jdbcType="TINYINT" />
+    <result column="limit_validity_time" property="limit_validity_time" jdbcType="TIMESTAMP" />
+    <result column="credit_time" property="credit_time" jdbcType="TIMESTAMP" />
+    <result column="credit_type" property="credit_type" jdbcType="TINYINT" />
+    <result column="first_check_operator" property="first_check_operator" jdbcType="VARCHAR" />
+    <result column="second_check_operator" property="second_check_operator" jdbcType="VARCHAR" />
+    <result column="check_alive_pic" property="check_alive_pic" jdbcType="VARCHAR" />
+    <result column="xiaoshi_check_alive_result" property="xiaoshi_check_alive_result" jdbcType="INTEGER" />
+    <result column="xiaoshi_id_card_check_result" property="xiaoshi_id_card_check_result" jdbcType="VARCHAR" />
+    <result column="xiao_shi_left_times" property="xiao_shi_left_times" jdbcType="INTEGER" />
+    <result column="xiao_shi_invocation_time" property="xiao_shi_invocation_time" jdbcType="TIMESTAMP" />
+    <result column="xiaoshi_id_card_check_msg" property="xiaoshi_id_card_check_msg" jdbcType="VARCHAR" />
+    <result column="xiaoshi_id_card_check_score" property="xiaoshi_id_card_check_score" jdbcType="VARCHAR" />
+    <result column="xiaoshi_id_card_check_guid" property="xiaoshi_id_card_check_guid" jdbcType="VARCHAR" />
+    <result column="is_store" property="is_store" jdbcType="TINYINT" />
+    <result column="borrower_usrname" property="borrower_usrname" jdbcType="VARCHAR" />
+    <result column="borrower_id_card" property="borrower_id_card" jdbcType="VARCHAR" />
+    <result column="borrower_mobile_phone" property="borrower_mobile_phone" jdbcType="VARCHAR" />
+    <result column="mobile_imei" property="mobile_imei" jdbcType="VARCHAR" />
+    <result column="mobile_idfa" property="mobile_idfa" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="head_portrait_pic" property="head_portrait_pic" jdbcType="VARCHAR" />
+    <result column="contract_number" property="contract_number" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+ 
+  
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    usrinf_id, usrid, usrname, id_card, sex, age, marital, mobile_phone, diploma, register_place, 
+    local_register_place, bank_id, income, house_type, fixed_assets, employment, com_name, 
+    industry, profession_level, cur_hire_duration, schooling_system, graduate_school, 
+    repaying_source, id_card_front_pic, id_card_reverse_pic, with_id_card_pic, credit_report_pic, 
+    is_face_id_pass, applyfo_flag, check_flag, is_loan, second_check_loan_limit, loan_limit, 
+    loan_used, is_firstquery, applyfor_limit, applyfor_time, freeze_remark, is_activate, 
+    limit_validity_time, credit_time, credit_type, first_check_operator, second_check_operator, 
+    check_alive_pic, xiaoshi_check_alive_result, xiaoshi_id_card_check_result, xiao_shi_left_times, 
+    xiao_shi_invocation_time, xiaoshi_id_card_check_msg, xiaoshi_id_card_check_score, 
+    xiaoshi_id_card_check_guid,is_store,borrower_usrname,borrower_id_card,borrower_mobile_phone,
+    mobile_imei,mobile_idfa,ip,head_portrait_pic,contract_number
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yiya.bean.TabUsrinf2Example" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_usrinf_2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_usrinf_2
+    where usrinf_id = #{usrinf_id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tab_usrinf_2
+    where usrinf_id = #{usrinf_id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabUsrinf2Example" >
+    delete from tab_usrinf_2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yiya.bean.TabUsrinf2"  keyProperty="usrinf_id" useGeneratedKeys="true"  >
+    insert into tab_usrinf_2 (usrinf_id, usrid, usrname, 
+      id_card, sex, age, 
+      marital, mobile_phone, diploma, 
+      register_place, local_register_place, bank_id, 
+      income, house_type, fixed_assets, 
+      employment, com_name, industry, 
+      profession_level, cur_hire_duration, schooling_system, 
+      graduate_school, repaying_source, id_card_front_pic, 
+      id_card_reverse_pic, with_id_card_pic, 
+      credit_report_pic, is_face_id_pass, applyfo_flag, 
+      check_flag, is_loan, second_check_loan_limit, 
+      loan_limit, loan_used, is_firstquery, 
+      applyfor_limit, applyfor_time, freeze_remark, 
+      is_activate, limit_validity_time, credit_time, 
+      credit_type, first_check_operator, second_check_operator, 
+      check_alive_pic, xiaoshi_check_alive_result, 
+      xiaoshi_id_card_check_result, xiao_shi_left_times, 
+      xiao_shi_invocation_time, xiaoshi_id_card_check_msg, 
+      xiaoshi_id_card_check_score, xiaoshi_id_card_check_guid,is_store,borrower_usrname,borrower_id_card,borrower_mobile_phone,
+      mobile_imei,mobile_idfa,ip,head_portrait_pic,contract_number
+      )
+    values (#{usrinf_id,jdbcType=BIGINT}, #{usrid,jdbcType=BIGINT}, #{usrname,jdbcType=VARCHAR}, 
+      #{id_card,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, 
+      #{marital,jdbcType=TINYINT}, #{mobile_phone,jdbcType=VARCHAR}, #{diploma,jdbcType=INTEGER}, 
+      #{register_place,jdbcType=INTEGER}, #{local_register_place,jdbcType=TINYINT}, #{bank_id,jdbcType=VARCHAR}, 
+      #{income,jdbcType=INTEGER}, #{house_type,jdbcType=TINYINT}, #{fixed_assets,jdbcType=TINYINT}, 
+      #{employment,jdbcType=TINYINT}, #{com_name,jdbcType=VARCHAR}, #{industry,jdbcType=INTEGER}, 
+      #{profession_level,jdbcType=INTEGER}, #{cur_hire_duration,jdbcType=INTEGER}, #{schooling_system,jdbcType=INTEGER}, 
+      #{graduate_school,jdbcType=VARCHAR}, #{repaying_source,jdbcType=VARCHAR}, #{id_card_front_pic,jdbcType=VARCHAR}, 
+      #{id_card_reverse_pic,jdbcType=VARCHAR}, #{with_id_card_pic,jdbcType=VARCHAR}, 
+      #{credit_report_pic,jdbcType=VARCHAR}, #{is_face_id_pass,jdbcType=TINYINT}, #{applyfo_flag,jdbcType=TINYINT}, 
+      #{check_flag,jdbcType=TINYINT}, #{is_loan,jdbcType=TINYINT}, #{second_check_loan_limit,jdbcType=DECIMAL}, 
+      #{loan_limit,jdbcType=DECIMAL}, #{loan_used,jdbcType=DECIMAL}, #{is_firstquery,jdbcType=TINYINT}, 
+      #{applyfor_limit,jdbcType=DECIMAL}, now(), #{freeze_remark,jdbcType=VARCHAR}, 
+      #{is_activate,jdbcType=TINYINT}, #{limit_validity_time,jdbcType=TIMESTAMP}, #{credit_time,jdbcType=TIMESTAMP}, 
+      #{credit_type,jdbcType=TINYINT}, #{first_check_operator,jdbcType=VARCHAR}, #{second_check_operator,jdbcType=VARCHAR}, 
+      #{check_alive_pic,jdbcType=VARCHAR}, #{xiaoshi_check_alive_result,jdbcType=INTEGER}, 
+      #{xiaoshi_id_card_check_result,jdbcType=VARCHAR}, #{xiao_shi_left_times,jdbcType=INTEGER}, 
+      #{xiao_shi_invocation_time,jdbcType=TIMESTAMP}, #{xiaoshi_id_card_check_msg,jdbcType=VARCHAR}, 
+      #{xiaoshi_id_card_check_score,jdbcType=VARCHAR}, #{xiaoshi_id_card_check_guid,jdbcType=VARCHAR},
+      #{is_store,jdbcType=TINYINT},#{borrower_usrname,jdbcType=VARCHAR},
+      #{borrower_id_card,jdbcType=VARCHAR},#{borrower_mobile_phone,jdbcType=VARCHAR},#{mobile_imei,jdbcType=VARCHAR},
+      #{mobile_idfa,jdbcType=VARCHAR},#{ip,jdbcType=VARCHAR},#{head_portrait_pic,jdbcType=VARCHAR},#{contract_number,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabUsrinf2" >
+    insert into tab_usrinf_2
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usrinf_id != null" >
+        usrinf_id,
+      </if>
+      <if test="usrid != null" >
+        usrid,
+      </if>
+      <if test="usrname != null" >
+        usrname,
+      </if>
+      <if test="id_card != null" >
+        id_card,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="marital != null" >
+        marital,
+      </if>
+      <if test="mobile_phone != null" >
+        mobile_phone,
+      </if>
+      <if test="diploma != null" >
+        diploma,
+      </if>
+      <if test="register_place != null" >
+        register_place,
+      </if>
+      <if test="local_register_place != null" >
+        local_register_place,
+      </if>
+      <if test="bank_id != null" >
+        bank_id,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="house_type != null" >
+        house_type,
+      </if>
+      <if test="fixed_assets != null" >
+        fixed_assets,
+      </if>
+      <if test="employment != null" >
+        employment,
+      </if>
+      <if test="com_name != null" >
+        com_name,
+      </if>
+      <if test="industry != null" >
+        industry,
+      </if>
+      <if test="profession_level != null" >
+        profession_level,
+      </if>
+      <if test="cur_hire_duration != null" >
+        cur_hire_duration,
+      </if>
+      <if test="schooling_system != null" >
+        schooling_system,
+      </if>
+      <if test="graduate_school != null" >
+        graduate_school,
+      </if>
+      <if test="repaying_source != null" >
+        repaying_source,
+      </if>
+      <if test="id_card_front_pic != null" >
+        id_card_front_pic,
+      </if>
+      <if test="id_card_reverse_pic != null" >
+        id_card_reverse_pic,
+      </if>
+      <if test="with_id_card_pic != null" >
+        with_id_card_pic,
+      </if>
+      <if test="credit_report_pic != null" >
+        credit_report_pic,
+      </if>
+      <if test="is_face_id_pass != null" >
+        is_face_id_pass,
+      </if>
+      <if test="applyfo_flag != null" >
+        applyfo_flag,
+      </if>
+      <if test="check_flag != null" >
+        check_flag,
+      </if>
+      <if test="is_loan != null" >
+        is_loan,
+      </if>
+      <if test="second_check_loan_limit != null" >
+        second_check_loan_limit,
+      </if>
+      <if test="loan_limit != null" >
+        loan_limit,
+      </if>
+      <if test="loan_used != null" >
+        loan_used,
+      </if>
+      <if test="is_firstquery != null" >
+        is_firstquery,
+      </if>
+      <if test="applyfor_limit != null" >
+        applyfor_limit,
+      </if>
+      <if test="applyfor_time != null" >
+        applyfor_time,
+      </if>
+      <if test="freeze_remark != null" >
+        freeze_remark,
+      </if>
+      <if test="is_activate != null" >
+        is_activate,
+      </if>
+      <if test="limit_validity_time != null" >
+        limit_validity_time,
+      </if>
+      <if test="credit_time != null" >
+        credit_time,
+      </if>
+      <if test="credit_type != null" >
+        credit_type,
+      </if>
+      <if test="first_check_operator != null" >
+        first_check_operator,
+      </if>
+      <if test="second_check_operator != null" >
+        second_check_operator,
+      </if>
+      <if test="check_alive_pic != null" >
+        check_alive_pic,
+      </if>
+      <if test="xiaoshi_check_alive_result != null" >
+        xiaoshi_check_alive_result,
+      </if>
+      <if test="xiaoshi_id_card_check_result != null" >
+        xiaoshi_id_card_check_result,
+      </if>
+      <if test="xiao_shi_left_times != null" >
+        xiao_shi_left_times,
+      </if>
+      <if test="xiao_shi_invocation_time != null" >
+        xiao_shi_invocation_time,
+      </if>
+      <if test="xiaoshi_id_card_check_msg != null" >
+        xiaoshi_id_card_check_msg,
+      </if>
+      <if test="xiaoshi_id_card_check_score != null" >
+        xiaoshi_id_card_check_score,
+      </if>
+      <if test="xiaoshi_id_card_check_guid != null" >
+        xiaoshi_id_card_check_guid,
+      </if>
+        <if test="borrower_usrname != null" >
+        borrower_usrname,
+      </if>
+       <if test="borrower_id_card != null" >
+        borrower_id_card,
+      </if>
+       <if test="borrower_mobile_phone != null" >
+        borrower_mobile_phone,
+      </if>
+       <if test="mobile_imei != null" >
+        mobile_imei,
+      </if>
+       <if test="mobile_idfa != null" >
+        mobile_idfa,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="head_portrait_pic != null" >
+        head_portrait_pic,
+      </if>
+      <if test="contract_number != null" >
+        contract_number
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usrinf_id != null" >
+        #{usrinf_id,jdbcType=BIGINT},
+      </if>
+      <if test="usrid != null" >
+        #{usrid,jdbcType=BIGINT},
+      </if>
+      <if test="usrname != null" >
+        #{usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card != null" >
+        #{id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marital != null" >
+        #{marital,jdbcType=TINYINT},
+      </if>
+      <if test="mobile_phone != null" >
+        #{mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="diploma != null" >
+        #{diploma,jdbcType=INTEGER},
+      </if>
+      <if test="register_place != null" >
+        #{register_place,jdbcType=INTEGER},
+      </if>
+      <if test="local_register_place != null" >
+        #{local_register_place,jdbcType=TINYINT},
+      </if>
+      <if test="bank_id != null" >
+        #{bank_id,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=INTEGER},
+      </if>
+      <if test="house_type != null" >
+        #{house_type,jdbcType=TINYINT},
+      </if>
+      <if test="fixed_assets != null" >
+        #{fixed_assets,jdbcType=TINYINT},
+      </if>
+      <if test="employment != null" >
+        #{employment,jdbcType=TINYINT},
+      </if>
+      <if test="com_name != null" >
+        #{com_name,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null" >
+        #{industry,jdbcType=INTEGER},
+      </if>
+      <if test="profession_level != null" >
+        #{profession_level,jdbcType=INTEGER},
+      </if>
+      <if test="cur_hire_duration != null" >
+        #{cur_hire_duration,jdbcType=INTEGER},
+      </if>
+      <if test="schooling_system != null" >
+        #{schooling_system,jdbcType=INTEGER},
+      </if>
+      <if test="graduate_school != null" >
+        #{graduate_school,jdbcType=VARCHAR},
+      </if>
+      <if test="repaying_source != null" >
+        #{repaying_source,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card_front_pic != null" >
+        #{id_card_front_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card_reverse_pic != null" >
+        #{id_card_reverse_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="with_id_card_pic != null" >
+        #{with_id_card_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="credit_report_pic != null" >
+        #{credit_report_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="is_face_id_pass != null" >
+        #{is_face_id_pass,jdbcType=TINYINT},
+      </if>
+      <if test="applyfo_flag != null" >
+        #{applyfo_flag,jdbcType=TINYINT},
+      </if>
+      <if test="check_flag != null" >
+        #{check_flag,jdbcType=TINYINT},
+      </if>
+      <if test="is_loan != null" >
+        #{is_loan,jdbcType=TINYINT},
+      </if>
+      <if test="second_check_loan_limit != null" >
+        #{second_check_loan_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="loan_limit != null" >
+        #{loan_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="loan_used != null" >
+        #{loan_used,jdbcType=DECIMAL},
+      </if>
+      <if test="is_firstquery != null" >
+        #{is_firstquery,jdbcType=TINYINT},
+      </if>
+      <if test="applyfor_limit != null" >
+        #{applyfor_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="applyfor_time != null" >
+        #{applyfor_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freeze_remark != null" >
+        #{freeze_remark,jdbcType=VARCHAR},
+      </if>
+      <if test="is_activate != null" >
+        #{is_activate,jdbcType=TINYINT},
+      </if>
+      <if test="limit_validity_time != null" >
+        #{limit_validity_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="credit_time != null" >
+        #{credit_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="credit_type != null" >
+        #{credit_type,jdbcType=TINYINT},
+      </if>
+      <if test="first_check_operator != null" >
+        #{first_check_operator,jdbcType=VARCHAR},
+      </if>
+      <if test="second_check_operator != null" >
+        #{second_check_operator,jdbcType=VARCHAR},
+      </if>
+      <if test="check_alive_pic != null" >
+        #{check_alive_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="xiaoshi_check_alive_result != null" >
+        #{xiaoshi_check_alive_result,jdbcType=INTEGER},
+      </if>
+      <if test="xiaoshi_id_card_check_result != null" >
+        #{xiaoshi_id_card_check_result,jdbcType=VARCHAR},
+      </if>
+      <if test="xiao_shi_left_times != null" >
+        #{xiao_shi_left_times,jdbcType=INTEGER},
+      </if>
+      <if test="xiao_shi_invocation_time != null" >
+        #{xiao_shi_invocation_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xiaoshi_id_card_check_msg != null" >
+        #{xiaoshi_id_card_check_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="xiaoshi_id_card_check_score != null" >
+        #{xiaoshi_id_card_check_score,jdbcType=VARCHAR},
+      </if>
+      <if test="xiaoshi_id_card_check_guid != null" >
+        #{xiaoshi_id_card_check_guid,jdbcType=VARCHAR},
+      </if>
+       <if test="is_store != null" >
+        #{is_store,jdbcType=TINYINT},
+      </if>
+       <if test="borrower_usrname != null" >
+        #{borrower_usrname,jdbcType=VARCHAR},
+      </if>
+       <if test="borrower_id_card != null" >
+        #{borrower_id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_mobile_phone != null" >
+        #{borrower_mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_imei != null" >
+        #{mobile_imei,jdbcType=VARCHAR},
+      </if>
+       <if test="mobile_idfa != null" >
+        #{mobile_idfa,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="head_portrait_pic != null" >
+        #{head_portrait_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="contract_number != null" >
+        #{contract_number,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabUsrinf2Example" resultType="java.lang.Integer" >
+    select count(*) from tab_usrinf_2
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_usrinf_2
+    <set >
+      <if test="record.usrinf_id != null" >
+        usrinf_id = #{record.usrinf_id,jdbcType=BIGINT},
+      </if>
+      <if test="record.usrid != null" >
+        usrid = #{record.usrid,jdbcType=BIGINT},
+      </if>
+      <if test="record.usrname != null" >
+        usrname = #{record.usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id_card != null" >
+        id_card = #{record.id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=TINYINT},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.marital != null" >
+        marital = #{record.marital,jdbcType=TINYINT},
+      </if>
+      <if test="record.mobile_phone != null" >
+        mobile_phone = #{record.mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diploma != null" >
+        diploma = #{record.diploma,jdbcType=INTEGER},
+      </if>
+      <if test="record.register_place != null" >
+        register_place = #{record.register_place,jdbcType=INTEGER},
+      </if>
+      <if test="record.local_register_place != null" >
+        local_register_place = #{record.local_register_place,jdbcType=TINYINT},
+      </if>
+      <if test="record.bank_id != null" >
+        bank_id = #{record.bank_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.income != null" >
+        income = #{record.income,jdbcType=INTEGER},
+      </if>
+      <if test="record.house_type != null" >
+        house_type = #{record.house_type,jdbcType=TINYINT},
+      </if>
+      <if test="record.fixed_assets != null" >
+        fixed_assets = #{record.fixed_assets,jdbcType=TINYINT},
+      </if>
+      <if test="record.employment != null" >
+        employment = #{record.employment,jdbcType=TINYINT},
+      </if>
+      <if test="record.com_name != null" >
+        com_name = #{record.com_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industry != null" >
+        industry = #{record.industry,jdbcType=INTEGER},
+      </if>
+      <if test="record.profession_level != null" >
+        profession_level = #{record.profession_level,jdbcType=INTEGER},
+      </if>
+      <if test="record.cur_hire_duration != null" >
+        cur_hire_duration = #{record.cur_hire_duration,jdbcType=INTEGER},
+      </if>
+      <if test="record.schooling_system != null" >
+        schooling_system = #{record.schooling_system,jdbcType=INTEGER},
+      </if>
+      <if test="record.graduate_school != null" >
+        graduate_school = #{record.graduate_school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaying_source != null" >
+        repaying_source = #{record.repaying_source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id_card_front_pic != null" >
+        id_card_front_pic = #{record.id_card_front_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id_card_reverse_pic != null" >
+        id_card_reverse_pic = #{record.id_card_reverse_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.with_id_card_pic != null" >
+        with_id_card_pic = #{record.with_id_card_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credit_report_pic != null" >
+        credit_report_pic = #{record.credit_report_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is_face_id_pass != null" >
+        is_face_id_pass = #{record.is_face_id_pass,jdbcType=TINYINT},
+      </if>
+      <if test="record.applyfo_flag != null" >
+        applyfo_flag = #{record.applyfo_flag,jdbcType=TINYINT},
+      </if>
+      <if test="record.check_flag != null" >
+        check_flag = #{record.check_flag,jdbcType=TINYINT},
+      </if>
+      <if test="record.is_loan != null" >
+        is_loan = #{record.is_loan,jdbcType=TINYINT},
+      </if>
+      <if test="record.second_check_loan_limit != null" >
+        second_check_loan_limit = #{record.second_check_loan_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loan_limit != null" >
+        loan_limit = #{record.loan_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loan_used != null" >
+        loan_used = #{record.loan_used,jdbcType=DECIMAL},
+      </if>
+      <if test="record.is_firstquery != null" >
+        is_firstquery = #{record.is_firstquery,jdbcType=TINYINT},
+      </if>
+      <if test="record.applyfor_limit != null" >
+        applyfor_limit = #{record.applyfor_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.applyfor_time != null" >
+        applyfor_time = #{record.applyfor_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.freeze_remark != null" >
+        freeze_remark = #{record.freeze_remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is_activate != null" >
+        is_activate = #{record.is_activate,jdbcType=TINYINT},
+      </if>
+      <if test="record.limit_validity_time != null" >
+        limit_validity_time = #{record.limit_validity_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.credit_time != null" >
+        credit_time = #{record.credit_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.credit_type != null" >
+        credit_type = #{record.credit_type,jdbcType=TINYINT},
+      </if>
+      <if test="record.first_check_operator != null" >
+        first_check_operator = #{record.first_check_operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.second_check_operator != null" >
+        second_check_operator = #{record.second_check_operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.check_alive_pic != null" >
+        check_alive_pic = #{record.check_alive_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xiaoshi_check_alive_result != null" >
+        xiaoshi_check_alive_result = #{record.xiaoshi_check_alive_result,jdbcType=INTEGER},
+      </if>
+      <if test="record.xiaoshi_id_card_check_result != null" >
+        xiaoshi_id_card_check_result = #{record.xiaoshi_id_card_check_result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xiao_shi_left_times != null" >
+        xiao_shi_left_times = #{record.xiao_shi_left_times,jdbcType=INTEGER},
+      </if>
+      <if test="record.xiao_shi_invocation_time != null" >
+        xiao_shi_invocation_time = #{record.xiao_shi_invocation_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.xiaoshi_id_card_check_msg != null" >
+        xiaoshi_id_card_check_msg = #{record.xiaoshi_id_card_check_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xiaoshi_id_card_check_score != null" >
+        xiaoshi_id_card_check_score = #{record.xiaoshi_id_card_check_score,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xiaoshi_id_card_check_guid != null" >
+        xiaoshi_id_card_check_guid = #{record.xiaoshi_id_card_check_guid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is_store != null" >
+        is_store = #{record.is_store,jdbcType=TINYINT},
+      </if>
+      <if test="record.borrower_usrname != null" >
+        borrower_usrname = #{record.borrower_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrower_id_card != null" >
+        borrower_id_card = #{record.borrower_id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrower_mobile_phone != null" >
+        borrower_mobile_phone = #{record.borrower_mobile_phone,jdbcType=VARCHAR},
+      </if>
+       <if test="record.mobile_imei != null" >
+        mobile_imei = #{record.mobile_imei,jdbcType=VARCHAR},
+      </if>
+       <if test="record.mobile_idfa != null" >
+        mobile_idfa = #{record.mobile_idfa,jdbcType=VARCHAR},
+      </if>
+       <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.head_portrait_pic != null" >
+        head_portrait_pic = #{record.head_portrait_pic,jdbcType=VARCHAR},
+      </if>
+       <if test="record.contract_number != null" >
+        contract_number = #{record.contract_number,jdbcType=VARCHAR}
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_usrinf_2
+    set usrinf_id = #{record.usrinf_id,jdbcType=BIGINT},
+      usrid = #{record.usrid,jdbcType=BIGINT},
+      usrname = #{record.usrname,jdbcType=VARCHAR},
+      id_card = #{record.id_card,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=TINYINT},
+      age = #{record.age,jdbcType=INTEGER},
+      marital = #{record.marital,jdbcType=TINYINT},
+      mobile_phone = #{record.mobile_phone,jdbcType=VARCHAR},
+      diploma = #{record.diploma,jdbcType=INTEGER},
+      register_place = #{record.register_place,jdbcType=INTEGER},
+      local_register_place = #{record.local_register_place,jdbcType=TINYINT},
+      bank_id = #{record.bank_id,jdbcType=VARCHAR},
+      income = #{record.income,jdbcType=INTEGER},
+      house_type = #{record.house_type,jdbcType=TINYINT},
+      fixed_assets = #{record.fixed_assets,jdbcType=TINYINT},
+      employment = #{record.employment,jdbcType=TINYINT},
+      com_name = #{record.com_name,jdbcType=VARCHAR},
+      industry = #{record.industry,jdbcType=INTEGER},
+      profession_level = #{record.profession_level,jdbcType=INTEGER},
+      cur_hire_duration = #{record.cur_hire_duration,jdbcType=INTEGER},
+      schooling_system = #{record.schooling_system,jdbcType=INTEGER},
+      graduate_school = #{record.graduate_school,jdbcType=VARCHAR},
+      repaying_source = #{record.repaying_source,jdbcType=VARCHAR},
+      id_card_front_pic = #{record.id_card_front_pic,jdbcType=VARCHAR},
+      id_card_reverse_pic = #{record.id_card_reverse_pic,jdbcType=VARCHAR},
+      with_id_card_pic = #{record.with_id_card_pic,jdbcType=VARCHAR},
+      credit_report_pic = #{record.credit_report_pic,jdbcType=VARCHAR},
+      is_face_id_pass = #{record.is_face_id_pass,jdbcType=TINYINT},
+      applyfo_flag = #{record.applyfo_flag,jdbcType=TINYINT},
+      check_flag = #{record.check_flag,jdbcType=TINYINT},
+      is_loan = #{record.is_loan,jdbcType=TINYINT},
+      second_check_loan_limit = #{record.second_check_loan_limit,jdbcType=DECIMAL},
+      loan_limit = #{record.loan_limit,jdbcType=DECIMAL},
+      loan_used = #{record.loan_used,jdbcType=DECIMAL},
+      is_firstquery = #{record.is_firstquery,jdbcType=TINYINT},
+      applyfor_limit = #{record.applyfor_limit,jdbcType=DECIMAL},
+      applyfor_time = #{record.applyfor_time,jdbcType=TIMESTAMP},
+      freeze_remark = #{record.freeze_remark,jdbcType=VARCHAR},
+      is_activate = #{record.is_activate,jdbcType=TINYINT},
+      limit_validity_time = #{record.limit_validity_time,jdbcType=TIMESTAMP},
+      credit_time = #{record.credit_time,jdbcType=TIMESTAMP},
+      credit_type = #{record.credit_type,jdbcType=TINYINT},
+      first_check_operator = #{record.first_check_operator,jdbcType=VARCHAR},
+      second_check_operator = #{record.second_check_operator,jdbcType=VARCHAR},
+      check_alive_pic = #{record.check_alive_pic,jdbcType=VARCHAR},
+      xiaoshi_check_alive_result = #{record.xiaoshi_check_alive_result,jdbcType=INTEGER},
+      xiaoshi_id_card_check_result = #{record.xiaoshi_id_card_check_result,jdbcType=VARCHAR},
+      xiao_shi_left_times = #{record.xiao_shi_left_times,jdbcType=INTEGER},
+      xiao_shi_invocation_time = #{record.xiao_shi_invocation_time,jdbcType=TIMESTAMP},
+      xiaoshi_id_card_check_msg = #{record.xiaoshi_id_card_check_msg,jdbcType=VARCHAR},
+      xiaoshi_id_card_check_score = #{record.xiaoshi_id_card_check_score,jdbcType=VARCHAR},
+      xiaoshi_id_card_check_guid = #{record.xiaoshi_id_card_check_guid,jdbcType=VARCHAR},
+      is_store = #{record.is_store,jdbcType=TINYINT},
+      borrower_usrname = #{record.borrower_usrname,jdbcType=VARCHAR},
+      borrower_id_card = #{record.borrower_id_card,jdbcType=VARCHAR},
+      borrower_mobile_phone = #{record.borrower_mobile_phone,jdbcType=VARCHAR},
+      mobile_imei = #{record.mobile_imei,jdbcType=VARCHAR},
+      mobile_idfa = #{record.mobile_idfa,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      head_portrait_pic = #{record.head_portrait_pic,jdbcType=VARCHAR},
+      contract_number = #{record.contract_number,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabUsrinf2" >
+    update tab_usrinf_2
+    <set >
+      <if test="usrid != null" >
+        usrid = #{usrid,jdbcType=BIGINT},
+      </if>
+      <if test="usrname != null" >
+        usrname = #{usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card != null" >
+        id_card = #{id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marital != null" >
+        marital = #{marital,jdbcType=TINYINT},
+      </if>
+      <if test="mobile_phone != null" >
+        mobile_phone = #{mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="diploma != null" >
+        diploma = #{diploma,jdbcType=INTEGER},
+      </if>
+      <if test="register_place != null" >
+        register_place = #{register_place,jdbcType=INTEGER},
+      </if>
+      <if test="local_register_place != null" >
+        local_register_place = #{local_register_place,jdbcType=TINYINT},
+      </if>
+      <if test="bank_id != null" >
+        bank_id = #{bank_id,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=INTEGER},
+      </if>
+      <if test="house_type != null" >
+        house_type = #{house_type,jdbcType=TINYINT},
+      </if>
+      <if test="fixed_assets != null" >
+        fixed_assets = #{fixed_assets,jdbcType=TINYINT},
+      </if>
+      <if test="employment != null" >
+        employment = #{employment,jdbcType=TINYINT},
+      </if>
+      <if test="com_name != null" >
+        com_name = #{com_name,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null" >
+        industry = #{industry,jdbcType=INTEGER},
+      </if>
+      <if test="profession_level != null" >
+        profession_level = #{profession_level,jdbcType=INTEGER},
+      </if>
+      <if test="cur_hire_duration != null" >
+        cur_hire_duration = #{cur_hire_duration,jdbcType=INTEGER},
+      </if>
+      <if test="schooling_system != null" >
+        schooling_system = #{schooling_system,jdbcType=INTEGER},
+      </if>
+      <if test="graduate_school != null" >
+        graduate_school = #{graduate_school,jdbcType=VARCHAR},
+      </if>
+      <if test="repaying_source != null" >
+        repaying_source = #{repaying_source,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card_front_pic != null" >
+        id_card_front_pic = #{id_card_front_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card_reverse_pic != null" >
+        id_card_reverse_pic = #{id_card_reverse_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="with_id_card_pic != null" >
+        with_id_card_pic = #{with_id_card_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="credit_report_pic != null" >
+        credit_report_pic = #{credit_report_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="is_face_id_pass != null" >
+        is_face_id_pass = #{is_face_id_pass,jdbcType=TINYINT},
+      </if>
+      <if test="applyfo_flag != null" >
+        applyfo_flag = #{applyfo_flag,jdbcType=TINYINT},
+      </if>
+      <if test="check_flag != null" >
+        check_flag = #{check_flag,jdbcType=TINYINT},
+      </if>
+      <if test="is_loan != null" >
+        is_loan = #{is_loan,jdbcType=TINYINT},
+      </if>
+      <if test="second_check_loan_limit != null" >
+        second_check_loan_limit = #{second_check_loan_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="loan_limit != null" >
+        loan_limit = #{loan_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="loan_used != null" >
+        loan_used = #{loan_used,jdbcType=DECIMAL},
+      </if>
+      <if test="is_firstquery != null" >
+        is_firstquery = #{is_firstquery,jdbcType=TINYINT},
+      </if>
+      <if test="applyfor_limit != null" >
+        applyfor_limit = #{applyfor_limit,jdbcType=DECIMAL},
+      </if>
+      <if test="applyfor_time != null" >
+        applyfor_time = #{applyfor_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freeze_remark != null" >
+        freeze_remark = #{freeze_remark,jdbcType=VARCHAR},
+      </if>
+      <if test="is_activate != null" >
+        is_activate = #{is_activate,jdbcType=TINYINT},
+      </if>
+      <if test="limit_validity_time != null" >
+        limit_validity_time = #{limit_validity_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="credit_time != null" >
+        credit_time = #{credit_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="credit_type != null" >
+        credit_type = #{credit_type,jdbcType=TINYINT},
+      </if>
+      <if test="first_check_operator != null" >
+        first_check_operator = #{first_check_operator,jdbcType=VARCHAR},
+      </if>
+      <if test="second_check_operator != null" >
+        second_check_operator = #{second_check_operator,jdbcType=VARCHAR},
+      </if>
+      <if test="check_alive_pic != null" >
+        check_alive_pic = #{check_alive_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="xiaoshi_check_alive_result != null" >
+        xiaoshi_check_alive_result = #{xiaoshi_check_alive_result,jdbcType=INTEGER},
+      </if>
+      <if test="xiaoshi_id_card_check_result != null" >
+        xiaoshi_id_card_check_result = #{xiaoshi_id_card_check_result,jdbcType=VARCHAR},
+      </if>
+      <if test="xiao_shi_left_times != null" >
+        xiao_shi_left_times = #{xiao_shi_left_times,jdbcType=INTEGER},
+      </if>
+      <if test="xiao_shi_invocation_time != null" >
+        xiao_shi_invocation_time = #{xiao_shi_invocation_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xiaoshi_id_card_check_msg != null" >
+        xiaoshi_id_card_check_msg = #{xiaoshi_id_card_check_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="xiaoshi_id_card_check_score != null" >
+        xiaoshi_id_card_check_score = #{xiaoshi_id_card_check_score,jdbcType=VARCHAR},
+      </if>
+      <if test="xiaoshi_id_card_check_guid != null" >
+        xiaoshi_id_card_check_guid = #{xiaoshi_id_card_check_guid,jdbcType=VARCHAR},
+      </if>
+      <if test="is_store != null" >
+        is_store = #{is_store,jdbcType=TINYINT},
+      </if>
+      <if test="borrower_usrname != null" >
+        borrower_usrname = #{borrower_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_id_card != null" >
+        borrower_id_card = #{borrower_id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_mobile_phone != null" >
+        borrower_mobile_phone = #{borrower_mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_imei != null" >
+        mobile_imei = #{mobile_imei,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_idfa != null" >
+        mobile_idfa = #{mobile_idfa,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="head_portrait_pic != null" >
+        head_portrait_pic = #{head_portrait_pic,jdbcType=VARCHAR},
+      </if>
+      <if test="contract_number != null" >
+        contract_number = #{contract_number,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where usrinf_id = #{usrinf_id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabUsrinf2" >
+    update tab_usrinf_2
+    set usrid = #{usrid,jdbcType=BIGINT},
+      usrname = #{usrname,jdbcType=VARCHAR},
+      id_card = #{id_card,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      age = #{age,jdbcType=INTEGER},
+      marital = #{marital,jdbcType=TINYINT},
+      mobile_phone = #{mobile_phone,jdbcType=VARCHAR},
+      diploma = #{diploma,jdbcType=INTEGER},
+      register_place = #{register_place,jdbcType=INTEGER},
+      local_register_place = #{local_register_place,jdbcType=TINYINT},
+      bank_id = #{bank_id,jdbcType=VARCHAR},
+      income = #{income,jdbcType=INTEGER},
+      house_type = #{house_type,jdbcType=TINYINT},
+      fixed_assets = #{fixed_assets,jdbcType=TINYINT},
+      employment = #{employment,jdbcType=TINYINT},
+      com_name = #{com_name,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=INTEGER},
+      profession_level = #{profession_level,jdbcType=INTEGER},
+      cur_hire_duration = #{cur_hire_duration,jdbcType=INTEGER},
+      schooling_system = #{schooling_system,jdbcType=INTEGER},
+      graduate_school = #{graduate_school,jdbcType=VARCHAR},
+      repaying_source = #{repaying_source,jdbcType=VARCHAR},
+      id_card_front_pic = #{id_card_front_pic,jdbcType=VARCHAR},
+      id_card_reverse_pic = #{id_card_reverse_pic,jdbcType=VARCHAR},
+      with_id_card_pic = #{with_id_card_pic,jdbcType=VARCHAR},
+      credit_report_pic = #{credit_report_pic,jdbcType=VARCHAR},
+      is_face_id_pass = #{is_face_id_pass,jdbcType=TINYINT},
+      applyfo_flag = #{applyfo_flag,jdbcType=TINYINT},
+      check_flag = #{check_flag,jdbcType=TINYINT},
+      is_loan = #{is_loan,jdbcType=TINYINT},
+      second_check_loan_limit = #{second_check_loan_limit,jdbcType=DECIMAL},
+      loan_limit = #{loan_limit,jdbcType=DECIMAL},
+      loan_used = #{loan_used,jdbcType=DECIMAL},
+      is_firstquery = #{is_firstquery,jdbcType=TINYINT},
+      applyfor_limit = #{applyfor_limit,jdbcType=DECIMAL},
+      applyfor_time = #{applyfor_time,jdbcType=TIMESTAMP},
+      freeze_remark = #{freeze_remark,jdbcType=VARCHAR},
+      is_activate = #{is_activate,jdbcType=TINYINT},
+      limit_validity_time = #{limit_validity_time,jdbcType=TIMESTAMP},
+      credit_time = #{credit_time,jdbcType=TIMESTAMP},
+      credit_type = #{credit_type,jdbcType=TINYINT},
+      first_check_operator = #{first_check_operator,jdbcType=VARCHAR},
+      second_check_operator = #{second_check_operator,jdbcType=VARCHAR},
+      check_alive_pic = #{check_alive_pic,jdbcType=VARCHAR},
+      xiaoshi_check_alive_result = #{xiaoshi_check_alive_result,jdbcType=INTEGER},
+      xiaoshi_id_card_check_result = #{xiaoshi_id_card_check_result,jdbcType=VARCHAR},
+      xiao_shi_left_times = #{xiao_shi_left_times,jdbcType=INTEGER},
+      xiao_shi_invocation_time = #{xiao_shi_invocation_time,jdbcType=TIMESTAMP},
+      xiaoshi_id_card_check_msg = #{xiaoshi_id_card_check_msg,jdbcType=VARCHAR},
+      xiaoshi_id_card_check_score = #{xiaoshi_id_card_check_score,jdbcType=VARCHAR},
+      xiaoshi_id_card_check_guid = #{xiaoshi_id_card_check_guid,jdbcType=VARCHAR},
+      is_store = #{is_store,jdbcType=TINYINT},
+      borrower_usrname = #{borrower_usrname,jdbcType=VARCHAR},
+      borrower_id_card = #{borrower_id_card,jdbcType=VARCHAR},
+      borrower_mobile_phone = #{borrower_mobile_phone,jdbcType=VARCHAR},
+      mobile_imei = #{mobile_imei,jdbcType=VARCHAR},
+      mobile_idfa = #{mobile_idfa,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      head_portrait_pic = #{head_portrait_pic,jdbcType=VARCHAR},
+      contract_number = #{contract_number,jdbcType=VARCHAR}
+    where usrinf_id = #{usrinf_id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <!--按条件分页查询-->
+  <select id="queryByList" parameterType="Object" resultType="com.yiya.model.TabUsrinf2Model">
+          select  <include refid="Base_Column_List" />  
+		      from tab_usrinf_2 
+		  <where>
+		    <if test="usrinf_id != null" >
+		         usrinf_id =  #{usrinf_id}
+			</if>
+			<if test="usrid != null" >
+			    and usrid =  #{usrid}
+			</if>
+			<if test="is_store != null" >
+			    and is_store =  #{is_store}
+			</if>
+			<if test="is_activate != null" >
+			    and is_activate = #{is_activate}
+			</if>
+			<if test="usrname != null and usrname != ''" >
+			    and usrname like CONCAT('%', #{usrname}, '%')
+			</if>
+			<if test="id_card != null and id_card != ''" >
+			    and id_card like CONCAT('%', #{id_card}, '%')
+			</if>
+			<if test="mobile_phone != null and mobile_phone != ''" >
+			    and mobile_phone like CONCAT('%', #{mobile_phone}, '%')
+			</if>
+			<if test="check_flag != null and check_flag != ''" >
+		       and check_flag =  #{check_flag}
+	     	</if>
+		    <if test="applyfor_time_start != null and applyfor_time_start != ''" >
+	  	      and applyfor_time &gt;= #{applyfor_time_start}
+            </if>
+			<if test="applyfor_time_end != null and applyfor_time_end != ''" >
+			    and applyfor_time &lt;= #{applyfor_time_end}
+			</if>
+			<if test="if_filter_check_flag_initial != false" >
+			    and check_flag != 0
+			</if>
+		    </where>
+		    order by applyfor_time desc
+		    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+		     ${pager.orderCondition}
+		    </if>
+		    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+		       ${pager.mysqlQueryCondition}
+		    </if>
+		
+  </select>
+  
+  <!-- 列表总数-->
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="com.yiya.model.TabUsrinf2Model">
+		select count(1) from tab_usrinf_2
+		 <where>
+		    <if test="usrinf_id != null" >
+		         usrinf_id =  #{usrinf_id}
+			</if>
+			<if test="usrid != null" >
+			    and usrid =  #{usrid}
+			</if>
+			<if test="is_store != null" >
+			    and is_store =  #{is_store}
+			</if>
+			<if test="is_activate != null" >
+			    and is_activate = #{is_activate}
+			</if>
+			<if test="usrname != null and usrname != ''" >
+			    and usrname like CONCAT('%', #{usrname}, '%')
+			</if>
+			<if test="id_card != null and id_card != ''" >
+			    and id_card like CONCAT('%', #{id_card}, '%')
+			</if>
+			<if test="mobile_phone != null and mobile_phone != ''" >
+			    and mobile_phone like CONCAT('%', #{mobile_phone}, '%')
+			</if>
+			<if test="check_flag != null" >
+		       and check_flag =  #{check_flag}
+	     	</if>
+		    <if test="applyfor_time_start != null" >
+	  	      and applyfor_time &gt;= #{applyfor_time_start}
+            </if>
+			<if test="applyfor_time_end != null" >
+			    and applyfor_time &lt;= #{applyfor_time_end}
+			</if>
+			<if test="if_filter_check_flag_initial != false" >
+			    and check_flag != 0
+			</if>
+		    </where>
+	</select>
+	
+	
+	<!--关联订单表查询数据-->
+	<select id="selectUserWithOrderTable" parameterType="Object" resultType="com.yiya.model.TabUsrinf2Model">
+	    
+	    SELECT
+	       a.*,
+	       b.order_sn,
+	       b.store_charge_rate,
+	       b.order_money
+	    FROM
+	       tab_usrinf_2 a
+	    JOIN
+	       tab_usr_order b
+	    ON
+	       a.borrower_id_card = b.borrower_id_card
+	    <where>
+		  <if test="usrid != null and usrid != ''" >
+		         a.usrid =  #{usrid}
+			</if>
+			<if test="borrower_usrname != null and borrower_usrname != '' " >
+		         a.borrower_usrname =  #{borrower_usrname}
+			</if>
+			<if test="borrower_mobile_phone != null and borrower_mobile_phone != '' " >
+			    and a.borrower_mobile_phone =  #{borrower_mobile_phone}
+			</if>
+			<if test="order_sn != null and order_sn != '' " >
+			    and b.order_sn =  #{order_sn}
+			</if>
+			<if test="is_store != null and is_store != '' " >
+			    and a.is_store =  #{is_store}
+			</if>
+			<if test="store_uid != null and store_uid != ''" >
+			    and b.store_uid =  #{store_uid}
+			</if>
+			<if test="store_name != null and store_name != ''" >
+			    and b.store_name =  #{store_name}
+			</if>
+			<if test="store_contract != null and store_contract!= ''" >
+			    and b.store_contract =  #{store_contract}
+			</if>
+			<if test="store_tel != null and store_tel != ''" >
+			    and b.store_tel =  #{store_tel}
+			</if>
+			<if test="start_time != null" >
+			    and UNIX_TIMESTAMP(b.create_time) >= #{start_time}
+			</if>
+			<if test="end_time != null" >
+			    and #{end_time} > UNIX_TIMESTAMP(b.create_time)
+			</if>
+		</where>
+		 order by a.usrid asc
+		    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+		     ${pager.orderCondition}
+		    </if>
+		    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+		       ${pager.mysqlQueryCondition}
+		    </if>
+	</select>
+	
+	
+	<!--关联订单表查询数据 总数-->
+	<select id="selectUserWithOrderTableCount" resultType="java.lang.Integer"  parameterType="com.yiya.model.TabUsrinf2Model">
+	    
+	    SELECT
+           count(*)            
+	    FROM
+	       tab_usrinf_2 a
+	    JOIN
+	       tab_usr_order b
+	    ON
+	       a.borrower_id_card = b.borrower_id_card
+	    <where>
+		     <if test="usrid != null and usrid != ''" >
+		         a.usrid =  #{usrid}
+			</if>
+			<if test="borrower_usrname != null and borrower_usrname != '' " >
+		         a.borrower_usrname =  #{borrower_usrname}
+			</if>
+			<if test="borrower_mobile_phone != null and borrower_mobile_phone != '' " >
+			    and a.borrower_mobile_phone =  #{borrower_mobile_phone}
+			</if>
+			<if test="order_sn != null and order_sn != '' " >
+			    and b.order_sn =  #{order_sn}
+			</if>
+			<if test="is_store != null and is_store != '' " >
+			    and a.is_store =  #{is_store}
+			</if>
+			<if test="store_uid != null and store_uid != ''" >
+			    and b.store_uid =  #{store_uid}
+			</if>
+			<if test="store_name != null and store_name != ''" >
+			    and b.store_name =  #{store_name}
+			</if>
+			<if test="store_contract != null and store_contract!= ''" >
+			    and b.store_contract =  #{store_contract}
+			</if>
+			<if test="store_tel != null and store_tel != ''" >
+			    and b.store_tel =  #{store_tel}
+			</if>
+			<if test="start_time != null" >
+			    and UNIX_TIMESTAMP(b.create_time) >= #{start_time}
+			</if>
+			<if test="end_time != null" >
+			    and #{end_time} > UNIX_TIMESTAMP(b.create_time)
+			</if>
+		</where>
+	</select>
+ 
+</mapper>

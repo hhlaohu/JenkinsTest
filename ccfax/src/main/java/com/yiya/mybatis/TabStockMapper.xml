@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabStockMapper">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.yiya.bean.TabStock">
+		<result column="tab_stock_id" property="tab_stock_id" />
+		<result column="stock_id" property="stock_id" />
+		<result column="customer_id" property="customer_id" />
+		<result column="area_name" property="area_name" />
+		<result column="space_name" property="space_name" />
+		<result column="good_name" property="good_name" />
+		<result column="good_place" property="good_place" />
+		<result column="market_prices" property="market_prices" />
+		<result column="pledge_multiplier" property="pledge_multiplier" />
+		<result column="good_level" property="good_level" />
+		<result column="good_size" property="good_size" />
+		<result column="good_volume" property="good_volume" />
+		<result column="good_weight" property="good_weight" />
+		<result column="lump_sum" property="lump_sum" />
+		<result column="market_total_price" property="market_total_price" />
+		<result column="check_time" property="check_time" />
+		<result column="good_name_comment" property="good_name_comment" />
+		<result column="good_place_comment" property="good_place_comment" />
+		<result column="good_level_comment" property="good_level_comment" />
+		<result column="good_size_comment" property="good_size_comment" />
+		<result column="put_success_time" property="put_success_time" />
+		<result column="bar_code" property="bar_code" />
+		<result column="business_pag_no" property="business_pag_no" />
+	</resultMap>
+
+
+
+
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object">
+
+		insert into
+		tab_stock(stock_id,customer_id,area_name,space_name,good_name,good_place,good_level,good_size,good_volume,good_weight,lump_sum,market_total_price,check_time,put_success_time,good_number,lock_status,bar_code,business_pag_no)
+		values(#{stock_id},#{customer_id},#{area_name},#{space_name},#{good_name},#{good_place},#{good_level},#{good_size},#{good_volume},#{good_weight},
+		#{lump_sum},#{market_total_price},#{check_time},#{put_success_time},#{good_number},#{lock_status},#{bar_code},#{business_pag_no})
+	</insert>
+
+	<!--批量插入 -->
+	<insert id="addInBatch" parameterType="java.util.List">
+		INSERT INTO
+		tab_stock(stock_id,customer_id,area_name,space_name,good_name,good_place,good_level,good_size,good_volume,good_weight,lump_sum,market_total_price,check_time,put_success_time,good_number,lock_status,bar_code,business_pag_no)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.stock_id},#{item.customer_id},#{item.area_name},#{item.space_name},#{item.good_name},
+			#{item.good_place},#{item.good_level},#{item.good_size},#{item.good_volume},#{item.good_weight},
+			#{item.lump_sum},#{item.market_total_price},#{item.check_time},#{item.put_success_time},#{item.good_number},#{item.lock_status},#{item.bar_code},#{item.business_pag_no})
+		</foreach>
+
+	</insert>
+
+	<!-- 根据id，修改记录 -->
+	<update id="update" parameterType="java.util.List">
+		update tab_stock set
+		<trim suffixOverrides=",">
+			<if test="area_name != null  and area_name != '' ">
+				area_name=#{area_name},
+			</if>
+			<if test="space_name != null  and space_name != '' ">
+				space_name=#{space_name},
+			</if>
+			<if test="good_name != null  and good_name != '' ">
+				good_name=#{good_name},
+			</if>
+			<if test="good_place != null  and good_place != '' ">
+				good_place=#{good_place},
+			</if>
+			<if test="good_level != null  and good_level != '' ">
+				good_level=#{good_level},
+			</if>
+			<if test="good_size != null  and good_size != '' ">
+				good_size=#{good_size},
+			</if>
+			<if test="good_type != null  and good_type != '' ">
+				good_type=#{good_type},
+			</if>
+			<if test="good_volume != null  and good_volume != '' ">
+				good_volume=#{good_volume},
+			</if>
+			<if test="good_weight != null  and good_weight != '' ">
+				good_weight=#{good_weight},
+			</if>
+			<if test="lump_sum != null  and lump_sum != '' ">
+				lump_sum=#{lump_sum},
+			</if>
+			<if test="market_total_price != null  and market_total_price != '' ">
+				market_total_price=#{market_total_price},
+			</if>
+			<if test="check_time != null  and check_time != '' ">
+				check_time=#{check_time},
+			</if>
+			<if test="put_success_time != null  and put_success_time != '' ">
+				put_success_time=#{put_success_time},
+			</if>
+			<if test="good_number != null  and good_number != '' ">
+				good_number=#{good_number},
+			</if>
+			<if test="bar_code != null  and bar_code != '' ">
+				bar_code=#{bar_code},
+			</if>
+			<if test="business_pag_no != null  and business_pag_no != '' ">
+				business_pag_no=#{business_pag_no},
+			</if>
+			lock_status=#{lock_status}
+			
+		</trim>
+		where
+		customer_id=#{customer_id} and stock_id=#{stock_id}
+	</update>
+
+	<!-- 批量修改 -->
+	<update id="updateInBatch" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update tab_stock
+			<set>
+				<trim suffixOverrides=",">
+					<if test="item.area_name != null  and item.area_name != '' ">
+						area_name=#{item.area_name},
+					</if>
+					<if test="item.space_name != null  and item.space_name != '' ">
+						space_name=#{item.space_name},
+					</if>
+					<if test="item.good_name != null  and item.good_name != '' ">
+						good_name=#{item.good_name},
+					</if>
+					<if test="item.good_place != null  and item.good_place != '' ">
+						good_place=#{item.good_place},
+					</if>
+					<if test="item.good_level != null  and item.good_level != '' ">
+						good_level=#{item.good_level},
+					</if>
+					<if test="item.good_size != null  and item.good_size != '' ">
+						good_size=#{item.good_size},
+					</if>
+					<if test="item.good_type != null  and item.good_type != '' ">
+						good_type=#{item.good_type},
+					</if>
+					<if test="item.good_volume != null  and item.good_volume != '' ">
+						good_volume=#{item.good_volume},
+					</if>
+					<if test="item.good_weight != null  and item.good_weight != '' ">
+						good_weight=#{item.good_weight},
+					</if>
+					<if test="item.lump_sum != null  and item.lump_sum != '' ">
+						lump_sum=#{item.lump_sum},
+					</if>
+					<if
+						test="item.market_total_price != null  and item.market_total_price != '' ">
+						market_total_price=#{item.market_total_price},
+					</if>
+					<if test="item.check_time != null  and item.check_time != '' ">
+						check_time=#{item.check_time},
+					</if>
+					<if test="item.put_success_time != null  and item.put_success_time != '' ">
+						put_success_time=#{item.put_success_time},
+					</if>
+					<if test="item.good_number != null  and item.good_number != '' ">
+						good_number=#{item.good_number},
+					</if>
+					<if test="item.bar_code != null  and item.bar_code != '' ">
+						bar_code=#{item.bar_code},
+					</if>
+					<if test="item.business_pag_no != null  and item.business_pag_no != '' ">
+						business_pag_no=#{item.business_pag_no},
+					</if>
+					lock_status=#{item.lock_status}
+				</trim>
+			</set>
+			<where>
+				stock_id=#{item.stock_id}
+			</where>
+		</foreach>
+
+	</update>
+
+
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="Object">
+		delete from tab_stock where
+		stock_id=#{stock_id}
+
+	</delete>
+
+	<!-- 删除记录 -->
+	<delete id="deleteStock" parameterType="Object">
+		delete from tab_stock
+		where stock_id=#{stock_id}
+
+	</delete>
+
+
+	<!-- 批量删除 -->
+	<delete id="deleteInBatch" parameterType="java.util.List">
+		DELETE FROM
+		tab_stock
+		WHERE
+		stock_id
+		IN
+		<foreach collection="list" item="item" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 根据id查询 系统用户 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+		select *
+		from tab_stock where stock_id=#{stock_id}
+	</select>
+
+	<!-- 系统用户 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="Object">
+		SELECT count(*) FROM (
+		SELECT
+		a.*,
+		pg.market_prices,
+		pg.pledge_multiplier,
+		config.spec_name as good_size_comment_spec_name
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		INNER JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN ( IF(
+		a.good_name_comment='',a.good_name,a.good_name_comment ),
+		2468 )
+		AND
+		pg.pz_good_level IN ( IF(
+		a.good_level_comment='0',a.good_level,a.good_level_comment ) ,
+		2468)
+		AND pg.pz_good_place IN ( IF( a.good_place_comment='',a.good_place,
+		a.good_place_comment ) ,
+		2468)
+		AND
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(a.good_size_comment is null,
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		),
+		pg.pz_good_size=a.good_size_comment
+		)
+		)
+
+		LEFT JOIN
+		spec_config config
+		ON
+		a.good_size_comment = config.spec_id
+
+		WHERE
+		customer_id=#{customer_id}
+		and lock_status=0 and good_number > 0
+
+		UNION
+
+		SELECT
+		a.*,
+		pg.market_prices,
+		pg.pledge_multiplier,
+		config.spec_name
+		as good_size_comment_spec_name
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		LEFT JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN (a.good_name,
+		2468)
+		AND pg.pz_good_level IN
+		(a.good_level,
+		2468)
+		AND pg.pz_good_place IN (a.good_place,
+		2468)
+		AND
+
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name =
+		a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		)
+		)
+
+		LEFT JOIN
+		spec_config config
+		ON
+		pg.pz_good_size = config.spec_id
+		WHERE
+		customer_id=#{customer_id}
+		AND stock_id NOT IN
+		(
+		SELECT
+		stock_id
+		FROM
+		tab_stock_comment)
+		)
+		AS customer
+		WHERE 1=1 and lock_status=0 and good_number > 0
+		<if test="good_name != null and good_name != ''">
+			and good_name like CONCAT('%', #{good_name}, '%')
+		</if>
+		<if test="good_place != null and good_place != ''">
+			and good_place like CONCAT('%', #{good_place}, '%')
+		</if>
+		<if test="good_level != null">
+			and good_level = #{good_level}
+		</if>
+		<if test="good_size != null and good_size != ''">
+			and good_size like CONCAT('%', #{good_size}, '%')
+		</if>
+		<if test="start_put_time != null and start_put_time != ''">
+			and put_success_time &gt;= #{start_put_time}
+		</if>
+		<if test="end_put_time != null and end_put_time != ''">
+			and put_success_time &lt;= #{end_put_time}
+		</if>
+		
+	</select>
+
+	<!-- 系统仓库商品列表 -->
+	<select id="queryByList" resultType="com.yiya.bean.TabStock"
+		parameterType="Object">
+
+		SELECT * FROM (
+
+		SELECT
+		a.*,
+		pg.market_prices,
+		pg.pledge_multiplier,
+		config.spec_name as good_size_comment_spec_name
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		INNER
+		JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN (
+		IF( a.good_name_comment='',a.good_name,a.good_name_comment ),
+		2468 )
+		AND pg.pz_good_level IN ( IF(
+		a.good_level_comment='0',a.good_level,a.good_level_comment ) ,
+		2468)
+		AND pg.pz_good_place IN ( IF( a.good_place_comment='',a.good_place,
+		a.good_place_comment ) ,
+		2468)
+		AND
+
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(a.good_size_comment is null,
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		),
+		pg.pz_good_size=a.good_size_comment
+		)
+		)
+
+		LEFT JOIN
+		spec_config config
+		ON
+		a.good_size_comment = config.spec_id
+
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		<if test="good_name != null and good_name != ''">
+			and good_name like CONCAT('%', #{good_name}, '%')
+		</if>
+		<if test="good_place != null and good_place != ''">
+			and good_place like CONCAT('%', #{good_place}, '%')
+		</if>
+		<if test="good_level != null">
+			and good_level = #{good_level}
+		</if>
+		<if test="good_size != null and good_size != ''">
+			and good_size like CONCAT('%', #{good_size}, '%')
+		</if>
+		<if test="start_put_time != null and start_put_time != '' ">
+			and put_success_time &gt;= #{start_put_time}
+		</if>
+		<if test="end_put_time != null and end_put_time != '' ">
+			and put_success_time &lt;= #{end_put_time}
+		</if>
+
+		UNION
+
+		SELECT
+		a.*,
+		pg.market_prices,
+		pg.pledge_multiplier,
+		config.spec_name
+		as good_size_comment_spec_name
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		LEFT JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN (a.good_name,
+		2468)
+		AND pg.pz_good_level IN
+		(a.good_level,
+		2468)
+		AND pg.pz_good_place IN (a.good_place,
+		2468)
+		AND
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name =
+		a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		)
+		)
+
+		LEFT JOIN
+		spec_config config
+		ON
+		pg.pz_good_size = config.spec_id
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		AND stock_id NOT IN
+		(
+		SELECT
+		stock_id
+		FROM
+		tab_stock_comment)
+		<if test="good_name != null and good_name != ''">
+			and good_name like CONCAT('%', #{good_name}, '%')
+		</if>
+		<if test="good_place != null and good_place != ''">
+			and good_place like CONCAT('%', #{good_place}, '%')
+		</if>
+		<if test="good_level != null">
+			and good_level = #{good_level}
+		</if>
+		<if test="good_size != null and good_size != ''">
+			and good_size like CONCAT('%', #{good_size}, '%')
+		</if>
+		<if test="start_put_time != null and start_put_time != ''">
+			and put_success_time &gt;= #{start_put_time}
+		</if>
+		<if test="end_put_time != null and end_put_time != '' ">
+			and put_success_time &lt;= #{end_put_time}
+		</if>
+
+
+		) as stock
+
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+
+
+
+
+	</select>
+
+	<!-- 查询全部，没有分页 -->
+
+	<select id="queryAllByList" resultMap="BaseResultMap"
+		parameterType="Object">
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		INNER JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN ( IF(
+		a.good_name_comment='',a.good_name,a.good_name_comment ),
+		2468 )
+		AND
+		pg.pz_good_level IN ( IF(
+		a.good_level_comment='0',a.good_level,a.good_level_comment ) ,
+		2468)
+		AND pg.pz_good_place IN ( IF( a.good_place_comment='',a.good_place,
+		a.good_place_comment ) ,
+		2468)
+		AND
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(a.good_size_comment is null,
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		),
+		pg.pz_good_size=a.good_size_comment
+		)
+		)
+		WHERE 
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		<if test="good_name != null and good_name != ''">
+			and good_name like CONCAT('%', #{good_name}, '%')
+		</if>
+		<if test="good_place != null and good_place != ''">
+			and good_place like CONCAT('%', #{good_place}, '%')
+		</if>
+		<if test="good_level != null">
+			and good_level = #{good_level}
+		</if>
+		<if test="good_size != null and good_size != ''">
+			and good_size like CONCAT('%', #{good_size}, '%')
+		</if>
+		<if test="start_put_time != null and start_put_time != ''">
+			and put_success_time &gt;= #{start_put_time}
+		</if>
+		<if test="end_put_time != null and end_put_time != '' ">
+			and put_success_time &lt;= #{end_put_time}
+		</if>
+
+		UNION
+
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		LEFT JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name = a.good_name
+		AND pg.pz_good_level IN (a.good_level,
+		2468)
+		AND pg.pz_good_place IN (a.good_place,
+		2468)
+		AND
+		(
+		pg.pz_good_size =
+		0
+		OR
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		(
+		pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		)
+		)
+
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		AND stock_id NOT IN
+		(
+		SELECT
+		stock_id
+		FROM
+		tab_stock_comment)
+		<if test="good_name != null and good_name != ''">
+			and good_name like CONCAT('%', #{good_name}, '%')
+		</if>
+		<if test="good_place != null and good_place != ''">
+			and good_place like CONCAT('%', #{good_place}, '%')
+		</if>
+		<if test="good_level != null">
+			and good_level = #{good_level}
+		</if>
+		<if test="good_size != null and good_size != ''">
+			and good_size like CONCAT('%', #{good_size}, '%')
+		</if>
+		<if test="start_put_time != null and start_put_time != ''">
+			and put_success_time &gt;= #{start_put_time}
+		</if>
+		<if test="end_put_time != null and end_put_time != '' ">
+			and put_success_time &lt;= #{end_put_time}
+		</if>
+
+	</select>
+
+
+
+
+
+	<!-- 查询仓号用户具体库存列表 -->
+	<select id="queryStockDetailList" resultMap="BaseResultMap"
+		parameterType="Object">
+
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		INNER JOIN
+		tab_stock_comment
+		tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good
+		left join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as
+		pg
+		ON
+		pg.pz_good_name IN ( IF(
+		a.good_name_comment='',a.good_name,a.good_name_comment ),
+		2468 )
+		AND
+		pg.pz_good_level IN ( IF(
+		a.good_level_comment='0',a.good_level,a.good_level_comment )
+		,
+		2468)
+		AND
+		pg.pz_good_place IN ( IF( a.good_place_comment='',a.good_place,
+		a.good_place_comment )
+		,
+		2468)
+		AND
+
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(a.good_size_comment is null,
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		),
+		pg.pz_good_size=a.good_size_comment
+		)
+		)
+
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		UNION
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		LEFT JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN (a.good_name)
+		AND pg.pz_good_level IN (a.good_level,
+		2468)
+		AND pg.pz_good_place IN (a.good_place,
+		2468)
+		AND
+
+		(
+		pg.pz_good_size =
+		0
+		OR
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		(
+		pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		)
+		)
+
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		AND stock_id NOT IN
+		(
+		SELECT
+		stock_id
+		FROM
+		tab_stock_comment) )AS b
+		WHERE
+		area_name=#{area_name}
+		AND
+		space_name=#{space_name}
+
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+	</select>
+
+	<!-- 查询仓号用户具体库存 列表总数 -->
+	<select id="queryStockDetailCount" resultType="java.lang.Integer"
+		parameterType="Object">
+		SELECT
+		COUNT(1)
+		FROM
+		(
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		INNER JOIN
+		tab_stock_comment
+		tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good
+		left join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as
+		pg
+		ON
+		pg.pz_good_name IN ( IF(
+		a.good_name_comment='',a.good_name,a.good_name_comment ),
+		2468 )
+		AND
+		pg.pz_good_level IN ( IF(
+		a.good_level_comment='0',a.good_level,a.good_level_comment )
+		,
+		2468)
+		AND
+		pg.pz_good_place IN ( IF( a.good_place_comment='',a.good_place,
+		a.good_place_comment )
+		,
+		2468)
+		AND
+
+		(
+		pg.pz_good_size = 0
+		OR
+		IF(a.good_size_comment is null,
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		( pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		),
+		pg.pz_good_size=a.good_size_comment
+		)
+		)
+
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		UNION
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		tsk.*,
+		tsc.good_name_comment,
+		tsc.good_level_comment,
+		tsc.good_place_comment,
+		tsc.good_size_comment,
+		tsc.good_volume_comment
+		FROM
+		tab_stock tsk
+		LEFT JOIN
+		tab_stock_comment tsc
+		ON
+		tsk.stock_id=tsc.stock_id ) AS a
+		LEFT JOIN
+		(select * from pz_good left
+		join spec_config on
+		pz_good.pz_good_size=spec_config.spec_id) as pg
+		ON
+		pg.pz_good_name IN (a.good_name)
+		AND pg.pz_good_level IN (a.good_level,
+		2468)
+		AND pg.pz_good_place IN (a.good_place,
+		2468)
+		AND
+
+		(
+		pg.pz_good_size =
+		0
+		OR
+		IF(
+		locate('*',a.good_size)=0,
+		pg.spec_name = a.good_size,
+		(
+		pg.value_begin <![CDATA[<= ]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		AND
+		pg.value_end <![CDATA[>]]>
+		substring(a.good_size, 1, locate('*',a.good_size)-1)
+		)
+		)
+		)
+
+
+		WHERE
+		customer_id=#{customer_id} and lock_status=0 and good_number > 0
+		AND stock_id NOT IN
+		(
+		SELECT
+		stock_id
+		FROM
+		tab_stock_comment))AS b
+		WHERE
+		area_name=#{area_name}
+		AND
+		space_name=#{space_name}
+
+	</select>
+
+
+	<!--查询包含于id集合的记录 -->
+	<select id="queryStockByBatchId" parameterType="list"
+		resultType="com.yiya.model.StockAndCommentBlendModel">
+		SELECT
+		*
+		FROM
+		tab_stock a
+		LEFT JOIN
+		tab_stock_comment b
+		ON
+		a.stock_id =
+		b.stock_id
+		<where>
+			a.stock_id
+			IN
+			<foreach collection="list" index="index" item="stockId" open="("
+				separator="," close=")">
+				#{stockId}
+			</foreach>
+		</where>
+
+	</select>
+
+	<!--查询全部tab_stock全表数据 -->
+	<select id="queryAllTabStock" resultType="com.yiya.bean.TabStock">
+		SELECT
+		*
+		FROM
+		tab_stock
+	</select>
+
+
+
+
+</mapper>   

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabUsrComplementPicMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.TabUsrComplementPic" >
+	<result column="id" property="id"/>
+	<result column="usrinf_id" property="usrinf_id"/>
+	<result column="com_pic_desc" property="com_pic_desc"/>
+	<result column="com_pic_addr" property="com_pic_addr"/>
+	<result column="pic_type" property="pic_type"/>
+	<result column="sequence" property="sequence"/>
+</resultMap>
+
+
+	<sql id="Base_Column_List">
+	id,usrinf_id,com_pic_desc,com_pic_addr,pic_type,sequence
+	</sql>
+
+  
+   <!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+	<trim  suffixOverrides="," >
+		<if test="id != null" >
+		    and id =  #{id}
+		</if>
+		<if test="usrinf_id != null" >
+		    and usrinf_id =  #{usrinf_id}
+		</if>
+		<if test="com_pic_desc != null and com_pic_desc != ''" >
+		    and com_pic_desc like CONCAT('%', #{com_pic_desc}, '%')
+		</if>
+		<if test="com_pic_addr != null and com_pic_addr != ''" >
+		    and com_pic_addr like CONCAT('%', #{com_pic_addr}, '%')
+		</if>
+		<if test="pic_type != null" >
+		    and pic_type =  #{pic_type}
+		</if>
+		</trim>
+	</sql>
+   
+      <!-- 查询补充资料资料信息 -->
+	<select id="queryByList"  resultMap="BaseResultMap" parameterType="Object">
+		select <include refid="Base_Column_List" /> 
+		 from tab_usr_complement_pic
+		 <include refid="Example_Where_Clause"/>
+		 ORDER BY IF(ISNULL(sequence),1,0),sequence
+	</select>
+	
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from tab_usr_complement_pic 
+		<include refid="Example_Where_Clause"/>
+	</select>
+	  
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object" >
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			 SELECT LAST_INSERT_ID()
+  	   </selectKey>
+	  insert into tab_usr_complement_pic (usrinf_id,com_pic_desc,com_pic_addr,pic_type,sequence)
+	  values(#{usrinf_id},#{com_pic_desc},#{com_pic_addr},#{pic_type},#{sequence})
+	</insert>
+	
+	 <!-- 根据usrid，修改记录-->  
+	 <update id="update" parameterType="Object" >
+	  update tab_usr_complement_pic set
+	  <trim  suffixOverrides="," >
+		<if test="com_pic_desc != null and com_pic_desc != ''" >
+		     com_pic_desc = #{com_pic_desc},
+		</if>
+		<if test="com_pic_addr != null and com_pic_addr != ''" >
+		     com_pic_addr = #{com_pic_addr}
+		</if>
+		<if test="sequence != null" >
+		     sequence = #{sequence}
+		</if>
+	   </trim> where usrinf_id=#{usrinf_id}
+	 </update>
+ 
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from tab_usr_complement_pic where usrinf_id=#{usrinf_id}
+
+</delete>
+ 
+
+
+
+  	
+</mapper>   

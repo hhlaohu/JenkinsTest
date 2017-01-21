@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabUsrOrderPicMapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabUsrOrderPic" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="usr_order_id" property="usr_order_id" jdbcType="BIGINT" />
+    <result column="pic_desc" property="pic_desc" jdbcType="VARCHAR" />
+    <result column="pic_addr" property="pic_addr" jdbcType="VARCHAR" />
+    <result column="order_sn" property="order_sn" jdbcType="VARCHAR" />
+    <result column="is_code" property="is_code" jdbcType="TINYINT" />
+    <result column="sequence" property="sequence" jdbcType="TINYINT" />
+    <result column="pic_type" property="pic_type" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, usr_order_id, pic_desc, pic_addr, order_sn, is_code, sequence, pic_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yiya.bean.TabUsrOrderPicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_usr_order_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_usr_order_pic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tab_usr_order_pic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabUsrOrderPicExample" >
+    delete from tab_usr_order_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <!--is_code值默认为零-->
+  <insert id="insert" parameterType="com.yiya.bean.TabUsrOrderPic" >
+    insert into tab_usr_order_pic (id, usr_order_id, pic_desc, 
+      pic_addr, order_sn, is_code, 
+      sequence, pic_type)
+    values (#{id,jdbcType=BIGINT}, #{usr_order_id,jdbcType=BIGINT}, #{pic_desc,jdbcType=VARCHAR}, 
+      #{pic_addr,jdbcType=VARCHAR}, #{order_sn,jdbcType=VARCHAR}, 0, 
+      #{sequence,jdbcType=TINYINT}, #{pic_type,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabUsrOrderPic" >
+    insert into tab_usr_order_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usr_order_id != null" >
+        usr_order_id,
+      </if>
+      <if test="pic_desc != null" >
+        pic_desc,
+      </if>
+      <if test="pic_addr != null" >
+        pic_addr,
+      </if>
+      <if test="order_sn != null" >
+        order_sn,
+      </if>
+      <if test="is_code != null" >
+        is_code,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="pic_type != null" >
+        pic_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="usr_order_id != null" >
+        #{usr_order_id,jdbcType=BIGINT},
+      </if>
+      <if test="pic_desc != null" >
+        #{pic_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="pic_addr != null" >
+        #{pic_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="order_sn != null" >
+        #{order_sn,jdbcType=VARCHAR},
+      </if>
+      <if test="is_code != null" >
+        #{is_code,jdbcType=TINYINT},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=TINYINT},
+      </if>
+      <if test="pic_type != null" >
+        #{pic_type,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabUsrOrderPicExample" resultType="java.lang.Integer" >
+    select count(*) from tab_usr_order_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_usr_order_pic
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.usr_order_id != null" >
+        usr_order_id = #{record.usr_order_id,jdbcType=BIGINT},
+      </if>
+      <if test="record.pic_desc != null" >
+        pic_desc = #{record.pic_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic_addr != null" >
+        pic_addr = #{record.pic_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.order_sn != null" >
+        order_sn = #{record.order_sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is_code != null" >
+        is_code = #{record.is_code,jdbcType=TINYINT},
+      </if>
+      <if test="record.sequence != null" >
+        sequence = #{record.sequence,jdbcType=TINYINT},
+      </if>
+      <if test="record.pic_type != null" >
+        pic_type = #{record.pic_type,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_usr_order_pic
+    set id = #{record.id,jdbcType=BIGINT},
+      usr_order_id = #{record.usr_order_id,jdbcType=BIGINT},
+      pic_desc = #{record.pic_desc,jdbcType=VARCHAR},
+      pic_addr = #{record.pic_addr,jdbcType=VARCHAR},
+      order_sn = #{record.order_sn,jdbcType=VARCHAR},
+      is_code = #{record.is_code,jdbcType=TINYINT},
+      sequence = #{record.sequence,jdbcType=TINYINT},
+      pic_type = #{record.pic_type,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabUsrOrderPic" >
+    update tab_usr_order_pic
+    <set >
+      <if test="usr_order_id != null" >
+        usr_order_id = #{usr_order_id,jdbcType=BIGINT},
+      </if>
+      <if test="pic_desc != null" >
+        pic_desc = #{pic_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="pic_addr != null" >
+        pic_addr = #{pic_addr,jdbcType=VARCHAR},
+      </if>
+      <if test="order_sn != null" >
+        order_sn = #{order_sn,jdbcType=VARCHAR},
+      </if>
+      <if test="is_code != null" >
+        is_code = #{is_code,jdbcType=TINYINT},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=TINYINT},
+      </if>
+      <if test="pic_type != null" >
+        pic_type = #{pic_type,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabUsrOrderPic" >
+    update tab_usr_order_pic
+    set usr_order_id = #{usr_order_id,jdbcType=BIGINT},
+      pic_desc = #{pic_desc,jdbcType=VARCHAR},
+      pic_addr = #{pic_addr,jdbcType=VARCHAR},
+      order_sn = #{order_sn,jdbcType=VARCHAR},
+      is_code = #{is_code,jdbcType=TINYINT},
+      sequence = #{sequence,jdbcType=TINYINT},
+      pic_type = #{pic_type,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

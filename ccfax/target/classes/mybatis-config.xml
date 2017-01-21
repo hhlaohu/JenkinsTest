@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+	</settings>
+
+
+	<typeAliases>
+
+	</typeAliases>
+
+	<mappers>
+
+		<mapper resource="com/yiya/mybatis/SysMenuMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/SysUserMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/SysRoleMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/SysRoleRelMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/SysMenuBtnMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/PzGoodMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/AlertDailyMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/AlertConfigMapper.xml" />
+
+
+		<mapper resource="com/yiya/mybatis/TabCustomerMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/DbjeMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/OperatorDailyMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabStockMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/CustomerNoteMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabStockCommentMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/AllocationGoodsMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabUsrinfMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabBondsmaninfMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabUsrOtherPicMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabCheckLogMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabApplyLogMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabUsrComplementPicMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabChangeLogMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/SpecConfigMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabUsrDecorationContractPicMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabUsrPremisePermitPicMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/TabUsrDecorationOrderMapper.xml" />
+
+		<mapper resource="com/yiya/mybatis/XiaoShiConfigMapper.xml" />
+		
+        <mapper resource="com/yiya/mybatis/ScoringConfigMapper.xml" />
+        
+		<mapper resource="com/yiya/mybatis/DataManagerMapper.xml" />
+		
+        <mapper resource="com/yiya/mybatis/ScoringGatherFieldMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/GatherTypeMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/GatherValueMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/ScoringGatherFieldMapMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/ScoreMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabUsrinf2Mapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabAreaBeanMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabUsrOrderMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabUsrOrderPicMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabBorrowSerialCodeMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabScoringReportMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabBlacklistReportListMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabAntiFraudReportListMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabScoringReportListMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabAffiliateRuleMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabAffiliateRuleReportListMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/TabOrderBondsmaninfMapper.xml" />
+        
+        <mapper resource="com/yiya/mybatis/OrderMapper.xml" />
+        
+	</mappers>
+
+
+
+
+
+
+</configuration>

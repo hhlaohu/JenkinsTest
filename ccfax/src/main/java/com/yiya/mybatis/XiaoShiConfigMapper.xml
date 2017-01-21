@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.XiaoShiConfigMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.XiaoShiConfig" >
+	<result column="id" property="id"/>
+	<result column="product_type" property="product_type"/>
+	<result column="product_desc" property="product_desc"/>
+	<result column="config_status" property="config_status"/>
+	<result column="score_standard" property="score_standard"/>
+</resultMap>
+       
+       
+<sql id="Base_Column_List" >
+	id,product_type,product_desc,config_status,score_standard
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="product_type != null" >
+	    and product_type =#{product_type}
+	</if>
+</trim>
+</sql>
+
+
+<!-- 根据条件查询 -->
+<select id="queryByCondition" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from xiao_shi_config 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+
+<update id="update" parameterType="Object">
+   UPDATE 
+      xiao_shi_config 
+   SET
+      config_status = #{config_status},
+      score_standard = #{score_standard}
+   WHERE
+      product_type=#{product_type} 
+</update>
+
+</mapper>   

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabBondsmaninfMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.TabBondsmaninf" >
+	<result column="id" property="id"/>
+	<result column="usrinf_id" property="usrinf_id"/>
+	<result column="rel_usrname" property="rel_usrname"/>
+	<result column="relation" property="relation"/>
+	<result column="rel_mobile_phone" property="rel_mobile_phone"/>
+</resultMap>
+
+
+	<sql id="Base_Column_List">
+	id,usrinf_id,rel_usrname,relation,rel_mobile_phone
+	</sql>
+
+  
+   <!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+	<trim  suffixOverrides="," >
+		<if test="id != null" >
+		    and id =  #{id}
+		</if>
+		<if test="usrinf_id != null" >
+		    and usrinf_id =  #{usrinf_id}
+		</if>
+		<if test="rel_usrname != null and rel_usrname != ''" >
+		    and rel_usrname like CONCAT('%', #{rel_usrname}, '%')
+		</if>
+		<if test="relation != null and relation != ''" >
+		    and relation like CONCAT('%', #{relation}, '%')
+		</if>
+		<if test="rel_mobile_phone != null and rel_mobile_phone != ''" >
+		    and rel_mobile_phone like CONCAT('%', #{rel_mobile_phone}, '%')
+		</if>
+		</trim>
+	</sql>
+   
+   
+	  
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object" >
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			 SELECT LAST_INSERT_ID()
+  	   </selectKey>
+	  insert into tab_bondsmaninf (usrinf_id,rel_usrname,relation,rel_mobile_phone)
+	  values(#{usrinf_id},#{rel_usrname},#{relation},#{rel_mobile_phone})
+	</insert>
+	
+	 <!-- 根据usrid，修改记录-->  
+	 <update id="update" parameterType="Object" >
+	  update tab_bondsmaninf set
+	  <trim  suffixOverrides="," >
+		<if test="rel_usrname != null and rel_usrname != ''" >
+		     rel_usrname = #{rel_usrname},
+		</if>
+		<if test="relation != null and relation != ''" >
+		     relation = #{relation},
+		</if>
+		<if test="rel_mobile_phone != null and rel_mobile_phone != ''" >
+		     rel_mobile_phone = #{rel_mobile_phone}
+		</if>
+	   </trim> where id=#{id}
+	 </update>
+ 
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from tab_bondsmaninf where usrinf_id=#{usrinf_id}
+
+</delete>
+ 
+<!-- 查询担保人基本信息 -->
+<select id="queryByList"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from tab_bondsmaninf
+	 <include refid="Example_Where_Clause"/>
+</select>
+
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from tab_bondsmaninf 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+  	
+</mapper>   

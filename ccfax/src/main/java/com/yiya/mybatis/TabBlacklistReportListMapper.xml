@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabBlacklistReportListMapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabBlacklistReportList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="report_id" property="report_id" jdbcType="INTEGER" />
+    <result column="blacklist_type" property="blacklist_type" jdbcType="VARCHAR" />
+    <result column="blacklist_value" property="blacklist_value" jdbcType="VARCHAR" />
+    <result column="is_hit" property="is_hit" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, report_id, blacklist_type, blacklist_value, is_hit
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yiya.bean.TabBlacklistReportListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_blacklist_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_blacklist_report_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tab_blacklist_report_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabBlacklistReportListExample" >
+    delete from tab_blacklist_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yiya.bean.TabBlacklistReportList" >
+    insert into tab_blacklist_report_list (id, report_id, blacklist_type, 
+      blacklist_value, is_hit)
+    values (#{id,jdbcType=INTEGER}, #{report_id,jdbcType=INTEGER}, #{blacklist_type,jdbcType=VARCHAR}, 
+      #{blacklist_value,jdbcType=VARCHAR}, #{is_hit,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabBlacklistReportList" >
+    insert into tab_blacklist_report_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="report_id != null" >
+        report_id,
+      </if>
+      <if test="blacklist_type != null" >
+        blacklist_type,
+      </if>
+      <if test="blacklist_value != null" >
+        blacklist_value,
+      </if>
+      <if test="is_hit != null" >
+        is_hit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="report_id != null" >
+        #{report_id,jdbcType=INTEGER},
+      </if>
+      <if test="blacklist_type != null" >
+        #{blacklist_type,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklist_value != null" >
+        #{blacklist_value,jdbcType=VARCHAR},
+      </if>
+      <if test="is_hit != null" >
+        #{is_hit,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabBlacklistReportListExample" resultType="java.lang.Integer" >
+    select count(*) from tab_blacklist_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_blacklist_report_list
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.report_id != null" >
+        report_id = #{record.report_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.blacklist_type != null" >
+        blacklist_type = #{record.blacklist_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blacklist_value != null" >
+        blacklist_value = #{record.blacklist_value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is_hit != null" >
+        is_hit = #{record.is_hit,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_blacklist_report_list
+    set id = #{record.id,jdbcType=INTEGER},
+      report_id = #{record.report_id,jdbcType=INTEGER},
+      blacklist_type = #{record.blacklist_type,jdbcType=VARCHAR},
+      blacklist_value = #{record.blacklist_value,jdbcType=VARCHAR},
+      is_hit = #{record.is_hit,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabBlacklistReportList" >
+    update tab_blacklist_report_list
+    <set >
+      <if test="report_id != null" >
+        report_id = #{report_id,jdbcType=INTEGER},
+      </if>
+      <if test="blacklist_type != null" >
+        blacklist_type = #{blacklist_type,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklist_value != null" >
+        blacklist_value = #{blacklist_value,jdbcType=VARCHAR},
+      </if>
+      <if test="is_hit != null" >
+        is_hit = #{is_hit,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabBlacklistReportList" >
+    update tab_blacklist_report_list
+    set report_id = #{report_id,jdbcType=INTEGER},
+      blacklist_type = #{blacklist_type,jdbcType=VARCHAR},
+      blacklist_value = #{blacklist_value,jdbcType=VARCHAR},
+      is_hit = #{is_hit,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

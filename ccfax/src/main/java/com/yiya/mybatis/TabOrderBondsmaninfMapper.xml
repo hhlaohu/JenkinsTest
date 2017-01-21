@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabOrderBondsmaninfMapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabOrderBondsmaninf" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="usr_order_id" property="usr_order_id" jdbcType="BIGINT" />
+    <result column="rel_usrname" property="rel_usrname" jdbcType="VARCHAR" />
+    <result column="relation" property="relation" jdbcType="INTEGER" />
+    <result column="rel_mobile_phone" property="rel_mobile_phone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, usr_order_id, rel_usrname, relation, rel_mobile_phone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yiya.bean.TabOrderBondsmaninfExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_order_bondsmaninf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_order_bondsmaninf
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tab_order_bondsmaninf
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabOrderBondsmaninfExample" >
+    delete from tab_order_bondsmaninf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yiya.bean.TabOrderBondsmaninf" >
+    insert into tab_order_bondsmaninf (id, usr_order_id, rel_usrname, 
+      relation, rel_mobile_phone)
+    values (#{id,jdbcType=BIGINT}, #{usr_order_id,jdbcType=BIGINT}, #{rel_usrname,jdbcType=VARCHAR}, 
+      #{relation,jdbcType=INTEGER}, #{rel_mobile_phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabOrderBondsmaninf" >
+    insert into tab_order_bondsmaninf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usr_order_id != null" >
+        usr_order_id,
+      </if>
+      <if test="rel_usrname != null" >
+        rel_usrname,
+      </if>
+      <if test="relation != null" >
+        relation,
+      </if>
+      <if test="rel_mobile_phone != null" >
+        rel_mobile_phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="usr_order_id != null" >
+        #{usr_order_id,jdbcType=BIGINT},
+      </if>
+      <if test="rel_usrname != null" >
+        #{rel_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="rel_mobile_phone != null" >
+        #{rel_mobile_phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabOrderBondsmaninfExample" resultType="java.lang.Integer" >
+    select count(*) from tab_order_bondsmaninf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_order_bondsmaninf
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.usr_order_id != null" >
+        usr_order_id = #{record.usr_order_id,jdbcType=BIGINT},
+      </if>
+      <if test="record.rel_usrname != null" >
+        rel_usrname = #{record.rel_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relation != null" >
+        relation = #{record.relation,jdbcType=INTEGER},
+      </if>
+      <if test="record.rel_mobile_phone != null" >
+        rel_mobile_phone = #{record.rel_mobile_phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_order_bondsmaninf
+    set id = #{record.id,jdbcType=BIGINT},
+      usr_order_id = #{record.usr_order_id,jdbcType=BIGINT},
+      rel_usrname = #{record.rel_usrname,jdbcType=VARCHAR},
+      relation = #{record.relation,jdbcType=INTEGER},
+      rel_mobile_phone = #{record.rel_mobile_phone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabOrderBondsmaninf" >
+    update tab_order_bondsmaninf
+    <set >
+      <if test="usr_order_id != null" >
+        usr_order_id = #{usr_order_id,jdbcType=BIGINT},
+      </if>
+      <if test="rel_usrname != null" >
+        rel_usrname = #{rel_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        relation = #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="rel_mobile_phone != null" >
+        rel_mobile_phone = #{rel_mobile_phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabOrderBondsmaninf" >
+    update tab_order_bondsmaninf
+    set usr_order_id = #{usr_order_id,jdbcType=BIGINT},
+      rel_usrname = #{rel_usrname,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=INTEGER},
+      rel_mobile_phone = #{rel_mobile_phone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

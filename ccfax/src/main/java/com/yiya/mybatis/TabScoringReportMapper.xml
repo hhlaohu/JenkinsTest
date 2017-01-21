@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabScoringReportMapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabScoringReport" >
+    <id column="report_id" property="report_id" jdbcType="INTEGER" />
+    <result column="usrid" property="usrid" jdbcType="INTEGER" />
+    <result column="sum_score" property="sum_score" jdbcType="DECIMAL" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="add_usr_id" property="add_usr_id" jdbcType="INTEGER" />
+    <result column="scoring_quota" property="scoring_quota" jdbcType="DECIMAL" />
+    <result column="borrower_usrname" property="borrower_usrname" jdbcType="VARCHAR" />
+    <result column="borrower_id_card" property="borrower_id_card" jdbcType="VARCHAR" />
+    <result column="borrower_mobile_phone" property="borrower_mobile_phone" jdbcType="VARCHAR" />
+    <result column="mobile_imei" property="mobile_imei" jdbcType="VARCHAR" />
+    <result column="mobile_idfa" property="mobile_idfa" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="marital" property="marital" jdbcType="VARCHAR" />
+    <result column="mobile_phone" property="mobile_phone" jdbcType="VARCHAR" />
+    <result column="diploma" property="diploma" jdbcType="VARCHAR" />
+    <result column="register_place" property="register_place" jdbcType="VARCHAR" />
+    <result column="local_register_place" property="local_register_place" jdbcType="VARCHAR" />
+    <result column="bank_id" property="bank_id" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="VARCHAR" />
+    <result column="house_type" property="house_type" jdbcType="VARCHAR" />
+    <result column="fixed_assets" property="fixed_assets" jdbcType="VARCHAR" />
+    <result column="employment" property="employment" jdbcType="VARCHAR" />
+    <result column="com_name" property="com_name" jdbcType="VARCHAR" />
+    <result column="industry" property="industry" jdbcType="VARCHAR" />
+    <result column="profession_level" property="profession_level" jdbcType="VARCHAR" />
+    <result column="cur_hire_duration" property="cur_hire_duration" jdbcType="VARCHAR" />
+    <result column="schooling_system" property="schooling_system" jdbcType="VARCHAR" />
+    <result column="graduate_school" property="graduate_school" jdbcType="VARCHAR" />
+    <result column="repaying_source" property="repaying_source" jdbcType="VARCHAR" />
+    <result column="refund_verdict" property="refund_verdict" jdbcType="VARCHAR" />
+    <result column="umpire" property="umpire" jdbcType="VARCHAR" />
+    <result column="first_trial_verdict" property="first_trial_verdict" jdbcType="VARCHAR" />
+    <result column="first_person" property="first_person" jdbcType="VARCHAR" />
+    <result column="recheck_verdict" property="recheck_verdict" jdbcType="VARCHAR" />
+    <result column="recheck_person" property="recheck_person" jdbcType="VARCHAR" />
+    <result column="last_trial_verdict" property="last_trial_verdict" jdbcType="VARCHAR" />
+    <result column="last_person" property="last_person" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    report_id, usrid, sum_score, create_time, add_usr_id, scoring_quota, borrower_usrname, 
+    borrower_id_card, borrower_mobile_phone, mobile_imei, mobile_idfa, ip, sex, age, 
+    marital, mobile_phone, diploma, register_place, local_register_place, bank_id, income, 
+    house_type, fixed_assets, employment, com_name, industry, profession_level, cur_hire_duration, 
+    schooling_system, graduate_school, repaying_source, refund_verdict, umpire, first_trial_verdict, 
+    first_person, recheck_verdict, recheck_person, last_trial_verdict, last_person
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yiya.bean.TabScoringReportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_scoring_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="start !=0 or limit!=0">  
+      limit #{start},#{limit}  
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_scoring_report
+    where report_id = #{report_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tab_scoring_report
+    where report_id = #{report_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabScoringReportExample" >
+    delete from tab_scoring_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yiya.bean.TabScoringReport" >
+    insert into tab_scoring_report (report_id, usrid, sum_score, 
+      create_time, add_usr_id, scoring_quota, 
+      borrower_usrname, borrower_id_card, borrower_mobile_phone, 
+      mobile_imei, mobile_idfa, ip, 
+      sex, age, marital, 
+      mobile_phone, diploma, register_place, 
+      local_register_place, bank_id, income, 
+      house_type, fixed_assets, employment, 
+      com_name, industry, profession_level, 
+      cur_hire_duration, schooling_system, graduate_school, 
+      repaying_source, refund_verdict, umpire, 
+      first_trial_verdict, first_person, recheck_verdict, 
+      recheck_person, last_trial_verdict, last_person
+      )
+    values (#{report_id,jdbcType=INTEGER}, #{usrid,jdbcType=INTEGER}, #{sum_score,jdbcType=DECIMAL}, 
+      #{create_time,jdbcType=TIMESTAMP}, #{add_usr_id,jdbcType=INTEGER}, #{scoring_quota,jdbcType=DECIMAL}, 
+      #{borrower_usrname,jdbcType=VARCHAR}, #{borrower_id_card,jdbcType=VARCHAR}, #{borrower_mobile_phone,jdbcType=VARCHAR}, 
+      #{mobile_imei,jdbcType=VARCHAR}, #{mobile_idfa,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{marital,jdbcType=VARCHAR}, 
+      #{mobile_phone,jdbcType=VARCHAR}, #{diploma,jdbcType=VARCHAR}, #{register_place,jdbcType=VARCHAR}, 
+      #{local_register_place,jdbcType=VARCHAR}, #{bank_id,jdbcType=VARCHAR}, #{income,jdbcType=VARCHAR}, 
+      #{house_type,jdbcType=VARCHAR}, #{fixed_assets,jdbcType=VARCHAR}, #{employment,jdbcType=VARCHAR}, 
+      #{com_name,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{profession_level,jdbcType=VARCHAR}, 
+      #{cur_hire_duration,jdbcType=VARCHAR}, #{schooling_system,jdbcType=VARCHAR}, #{graduate_school,jdbcType=VARCHAR}, 
+      #{repaying_source,jdbcType=VARCHAR}, #{refund_verdict,jdbcType=VARCHAR}, #{umpire,jdbcType=VARCHAR}, 
+      #{first_trial_verdict,jdbcType=VARCHAR}, #{first_person,jdbcType=VARCHAR}, #{recheck_verdict,jdbcType=VARCHAR}, 
+      #{recheck_person,jdbcType=VARCHAR}, #{last_trial_verdict,jdbcType=VARCHAR}, #{last_person,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabScoringReport" >
+    insert into tab_scoring_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="report_id != null" >
+        report_id,
+      </if>
+      <if test="usrid != null" >
+        usrid,
+      </if>
+      <if test="sum_score != null" >
+        sum_score,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="add_usr_id != null" >
+        add_usr_id,
+      </if>
+      <if test="scoring_quota != null" >
+        scoring_quota,
+      </if>
+      <if test="borrower_usrname != null" >
+        borrower_usrname,
+      </if>
+      <if test="borrower_id_card != null" >
+        borrower_id_card,
+      </if>
+      <if test="borrower_mobile_phone != null" >
+        borrower_mobile_phone,
+      </if>
+      <if test="mobile_imei != null" >
+        mobile_imei,
+      </if>
+      <if test="mobile_idfa != null" >
+        mobile_idfa,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="marital != null" >
+        marital,
+      </if>
+      <if test="mobile_phone != null" >
+        mobile_phone,
+      </if>
+      <if test="diploma != null" >
+        diploma,
+      </if>
+      <if test="register_place != null" >
+        register_place,
+      </if>
+      <if test="local_register_place != null" >
+        local_register_place,
+      </if>
+      <if test="bank_id != null" >
+        bank_id,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="house_type != null" >
+        house_type,
+      </if>
+      <if test="fixed_assets != null" >
+        fixed_assets,
+      </if>
+      <if test="employment != null" >
+        employment,
+      </if>
+      <if test="com_name != null" >
+        com_name,
+      </if>
+      <if test="industry != null" >
+        industry,
+      </if>
+      <if test="profession_level != null" >
+        profession_level,
+      </if>
+      <if test="cur_hire_duration != null" >
+        cur_hire_duration,
+      </if>
+      <if test="schooling_system != null" >
+        schooling_system,
+      </if>
+      <if test="graduate_school != null" >
+        graduate_school,
+      </if>
+      <if test="repaying_source != null" >
+        repaying_source,
+      </if>
+      <if test="refund_verdict != null" >
+        refund_verdict,
+      </if>
+      <if test="umpire != null" >
+        umpire,
+      </if>
+      <if test="first_trial_verdict != null" >
+        first_trial_verdict,
+      </if>
+      <if test="first_person != null" >
+        first_person,
+      </if>
+      <if test="recheck_verdict != null" >
+        recheck_verdict,
+      </if>
+      <if test="recheck_person != null" >
+        recheck_person,
+      </if>
+      <if test="last_trial_verdict != null" >
+        last_trial_verdict,
+      </if>
+      <if test="last_person != null" >
+        last_person,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="report_id != null" >
+        #{report_id,jdbcType=INTEGER},
+      </if>
+      <if test="usrid != null" >
+        #{usrid,jdbcType=INTEGER},
+      </if>
+      <if test="sum_score != null" >
+        #{sum_score,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="add_usr_id != null" >
+        #{add_usr_id,jdbcType=INTEGER},
+      </if>
+      <if test="scoring_quota != null" >
+        #{scoring_quota,jdbcType=DECIMAL},
+      </if>
+      <if test="borrower_usrname != null" >
+        #{borrower_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_id_card != null" >
+        #{borrower_id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_mobile_phone != null" >
+        #{borrower_mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_imei != null" >
+        #{mobile_imei,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_idfa != null" >
+        #{mobile_idfa,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marital != null" >
+        #{marital,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_phone != null" >
+        #{mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="diploma != null" >
+        #{diploma,jdbcType=VARCHAR},
+      </if>
+      <if test="register_place != null" >
+        #{register_place,jdbcType=VARCHAR},
+      </if>
+      <if test="local_register_place != null" >
+        #{local_register_place,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_id != null" >
+        #{bank_id,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=VARCHAR},
+      </if>
+      <if test="house_type != null" >
+        #{house_type,jdbcType=VARCHAR},
+      </if>
+      <if test="fixed_assets != null" >
+        #{fixed_assets,jdbcType=VARCHAR},
+      </if>
+      <if test="employment != null" >
+        #{employment,jdbcType=VARCHAR},
+      </if>
+      <if test="com_name != null" >
+        #{com_name,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null" >
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="profession_level != null" >
+        #{profession_level,jdbcType=VARCHAR},
+      </if>
+      <if test="cur_hire_duration != null" >
+        #{cur_hire_duration,jdbcType=VARCHAR},
+      </if>
+      <if test="schooling_system != null" >
+        #{schooling_system,jdbcType=VARCHAR},
+      </if>
+      <if test="graduate_school != null" >
+        #{graduate_school,jdbcType=VARCHAR},
+      </if>
+      <if test="repaying_source != null" >
+        #{repaying_source,jdbcType=VARCHAR},
+      </if>
+      <if test="refund_verdict != null" >
+        #{refund_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="umpire != null" >
+        #{umpire,jdbcType=VARCHAR},
+      </if>
+      <if test="first_trial_verdict != null" >
+        #{first_trial_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="first_person != null" >
+        #{first_person,jdbcType=VARCHAR},
+      </if>
+      <if test="recheck_verdict != null" >
+        #{recheck_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="recheck_person != null" >
+        #{recheck_person,jdbcType=VARCHAR},
+      </if>
+      <if test="last_trial_verdict != null" >
+        #{last_trial_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="last_person != null" >
+        #{last_person,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabScoringReportExample" resultType="java.lang.Integer" >
+    select count(*) from tab_scoring_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_scoring_report
+    <set >
+      <if test="record.report_id != null" >
+        report_id = #{record.report_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.usrid != null" >
+        usrid = #{record.usrid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sum_score != null" >
+        sum_score = #{record.sum_score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.create_time != null" >
+        create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.add_usr_id != null" >
+        add_usr_id = #{record.add_usr_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoring_quota != null" >
+        scoring_quota = #{record.scoring_quota,jdbcType=DECIMAL},
+      </if>
+      <if test="record.borrower_usrname != null" >
+        borrower_usrname = #{record.borrower_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrower_id_card != null" >
+        borrower_id_card = #{record.borrower_id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrower_mobile_phone != null" >
+        borrower_mobile_phone = #{record.borrower_mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile_imei != null" >
+        mobile_imei = #{record.mobile_imei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile_idfa != null" >
+        mobile_idfa = #{record.mobile_idfa,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.marital != null" >
+        marital = #{record.marital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile_phone != null" >
+        mobile_phone = #{record.mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diploma != null" >
+        diploma = #{record.diploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.register_place != null" >
+        register_place = #{record.register_place,jdbcType=VARCHAR},
+      </if>
+      <if test="record.local_register_place != null" >
+        local_register_place = #{record.local_register_place,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bank_id != null" >
+        bank_id = #{record.bank_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.income != null" >
+        income = #{record.income,jdbcType=VARCHAR},
+      </if>
+      <if test="record.house_type != null" >
+        house_type = #{record.house_type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixed_assets != null" >
+        fixed_assets = #{record.fixed_assets,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employment != null" >
+        employment = #{record.employment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.com_name != null" >
+        com_name = #{record.com_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industry != null" >
+        industry = #{record.industry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profession_level != null" >
+        profession_level = #{record.profession_level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cur_hire_duration != null" >
+        cur_hire_duration = #{record.cur_hire_duration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schooling_system != null" >
+        schooling_system = #{record.schooling_system,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduate_school != null" >
+        graduate_school = #{record.graduate_school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaying_source != null" >
+        repaying_source = #{record.repaying_source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refund_verdict != null" >
+        refund_verdict = #{record.refund_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.umpire != null" >
+        umpire = #{record.umpire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.first_trial_verdict != null" >
+        first_trial_verdict = #{record.first_trial_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.first_person != null" >
+        first_person = #{record.first_person,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recheck_verdict != null" >
+        recheck_verdict = #{record.recheck_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recheck_person != null" >
+        recheck_person = #{record.recheck_person,jdbcType=VARCHAR},
+      </if>
+      <if test="record.last_trial_verdict != null" >
+        last_trial_verdict = #{record.last_trial_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.last_person != null" >
+        last_person = #{record.last_person,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_scoring_report
+    set report_id = #{record.report_id,jdbcType=INTEGER},
+      usrid = #{record.usrid,jdbcType=INTEGER},
+      sum_score = #{record.sum_score,jdbcType=DECIMAL},
+      create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      add_usr_id = #{record.add_usr_id,jdbcType=INTEGER},
+      scoring_quota = #{record.scoring_quota,jdbcType=DECIMAL},
+      borrower_usrname = #{record.borrower_usrname,jdbcType=VARCHAR},
+      borrower_id_card = #{record.borrower_id_card,jdbcType=VARCHAR},
+      borrower_mobile_phone = #{record.borrower_mobile_phone,jdbcType=VARCHAR},
+      mobile_imei = #{record.mobile_imei,jdbcType=VARCHAR},
+      mobile_idfa = #{record.mobile_idfa,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      marital = #{record.marital,jdbcType=VARCHAR},
+      mobile_phone = #{record.mobile_phone,jdbcType=VARCHAR},
+      diploma = #{record.diploma,jdbcType=VARCHAR},
+      register_place = #{record.register_place,jdbcType=VARCHAR},
+      local_register_place = #{record.local_register_place,jdbcType=VARCHAR},
+      bank_id = #{record.bank_id,jdbcType=VARCHAR},
+      income = #{record.income,jdbcType=VARCHAR},
+      house_type = #{record.house_type,jdbcType=VARCHAR},
+      fixed_assets = #{record.fixed_assets,jdbcType=VARCHAR},
+      employment = #{record.employment,jdbcType=VARCHAR},
+      com_name = #{record.com_name,jdbcType=VARCHAR},
+      industry = #{record.industry,jdbcType=VARCHAR},
+      profession_level = #{record.profession_level,jdbcType=VARCHAR},
+      cur_hire_duration = #{record.cur_hire_duration,jdbcType=VARCHAR},
+      schooling_system = #{record.schooling_system,jdbcType=VARCHAR},
+      graduate_school = #{record.graduate_school,jdbcType=VARCHAR},
+      repaying_source = #{record.repaying_source,jdbcType=VARCHAR},
+      refund_verdict = #{record.refund_verdict,jdbcType=VARCHAR},
+      umpire = #{record.umpire,jdbcType=VARCHAR},
+      first_trial_verdict = #{record.first_trial_verdict,jdbcType=VARCHAR},
+      first_person = #{record.first_person,jdbcType=VARCHAR},
+      recheck_verdict = #{record.recheck_verdict,jdbcType=VARCHAR},
+      recheck_person = #{record.recheck_person,jdbcType=VARCHAR},
+      last_trial_verdict = #{record.last_trial_verdict,jdbcType=VARCHAR},
+      last_person = #{record.last_person,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabScoringReport" >
+    update tab_scoring_report
+    <set >
+      <if test="usrid != null" >
+        usrid = #{usrid,jdbcType=INTEGER},
+      </if>
+      <if test="sum_score != null" >
+        sum_score = #{sum_score,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="add_usr_id != null" >
+        add_usr_id = #{add_usr_id,jdbcType=INTEGER},
+      </if>
+      <if test="scoring_quota != null" >
+        scoring_quota = #{scoring_quota,jdbcType=DECIMAL},
+      </if>
+      <if test="borrower_usrname != null" >
+        borrower_usrname = #{borrower_usrname,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_id_card != null" >
+        borrower_id_card = #{borrower_id_card,jdbcType=VARCHAR},
+      </if>
+      <if test="borrower_mobile_phone != null" >
+        borrower_mobile_phone = #{borrower_mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_imei != null" >
+        mobile_imei = #{mobile_imei,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_idfa != null" >
+        mobile_idfa = #{mobile_idfa,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marital != null" >
+        marital = #{marital,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_phone != null" >
+        mobile_phone = #{mobile_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="diploma != null" >
+        diploma = #{diploma,jdbcType=VARCHAR},
+      </if>
+      <if test="register_place != null" >
+        register_place = #{register_place,jdbcType=VARCHAR},
+      </if>
+      <if test="local_register_place != null" >
+        local_register_place = #{local_register_place,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_id != null" >
+        bank_id = #{bank_id,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=VARCHAR},
+      </if>
+      <if test="house_type != null" >
+        house_type = #{house_type,jdbcType=VARCHAR},
+      </if>
+      <if test="fixed_assets != null" >
+        fixed_assets = #{fixed_assets,jdbcType=VARCHAR},
+      </if>
+      <if test="employment != null" >
+        employment = #{employment,jdbcType=VARCHAR},
+      </if>
+      <if test="com_name != null" >
+        com_name = #{com_name,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null" >
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="profession_level != null" >
+        profession_level = #{profession_level,jdbcType=VARCHAR},
+      </if>
+      <if test="cur_hire_duration != null" >
+        cur_hire_duration = #{cur_hire_duration,jdbcType=VARCHAR},
+      </if>
+      <if test="schooling_system != null" >
+        schooling_system = #{schooling_system,jdbcType=VARCHAR},
+      </if>
+      <if test="graduate_school != null" >
+        graduate_school = #{graduate_school,jdbcType=VARCHAR},
+      </if>
+      <if test="repaying_source != null" >
+        repaying_source = #{repaying_source,jdbcType=VARCHAR},
+      </if>
+      <if test="refund_verdict != null" >
+        refund_verdict = #{refund_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="umpire != null" >
+        umpire = #{umpire,jdbcType=VARCHAR},
+      </if>
+      <if test="first_trial_verdict != null" >
+        first_trial_verdict = #{first_trial_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="first_person != null" >
+        first_person = #{first_person,jdbcType=VARCHAR},
+      </if>
+      <if test="recheck_verdict != null" >
+        recheck_verdict = #{recheck_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="recheck_person != null" >
+        recheck_person = #{recheck_person,jdbcType=VARCHAR},
+      </if>
+      <if test="last_trial_verdict != null" >
+        last_trial_verdict = #{last_trial_verdict,jdbcType=VARCHAR},
+      </if>
+      <if test="last_person != null" >
+        last_person = #{last_person,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where report_id = #{report_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabScoringReport" >
+    update tab_scoring_report
+    set usrid = #{usrid,jdbcType=INTEGER},
+      sum_score = #{sum_score,jdbcType=DECIMAL},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      add_usr_id = #{add_usr_id,jdbcType=INTEGER},
+      scoring_quota = #{scoring_quota,jdbcType=DECIMAL},
+      borrower_usrname = #{borrower_usrname,jdbcType=VARCHAR},
+      borrower_id_card = #{borrower_id_card,jdbcType=VARCHAR},
+      borrower_mobile_phone = #{borrower_mobile_phone,jdbcType=VARCHAR},
+      mobile_imei = #{mobile_imei,jdbcType=VARCHAR},
+      mobile_idfa = #{mobile_idfa,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      marital = #{marital,jdbcType=VARCHAR},
+      mobile_phone = #{mobile_phone,jdbcType=VARCHAR},
+      diploma = #{diploma,jdbcType=VARCHAR},
+      register_place = #{register_place,jdbcType=VARCHAR},
+      local_register_place = #{local_register_place,jdbcType=VARCHAR},
+      bank_id = #{bank_id,jdbcType=VARCHAR},
+      income = #{income,jdbcType=VARCHAR},
+      house_type = #{house_type,jdbcType=VARCHAR},
+      fixed_assets = #{fixed_assets,jdbcType=VARCHAR},
+      employment = #{employment,jdbcType=VARCHAR},
+      com_name = #{com_name,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      profession_level = #{profession_level,jdbcType=VARCHAR},
+      cur_hire_duration = #{cur_hire_duration,jdbcType=VARCHAR},
+      schooling_system = #{schooling_system,jdbcType=VARCHAR},
+      graduate_school = #{graduate_school,jdbcType=VARCHAR},
+      repaying_source = #{repaying_source,jdbcType=VARCHAR},
+      refund_verdict = #{refund_verdict,jdbcType=VARCHAR},
+      umpire = #{umpire,jdbcType=VARCHAR},
+      first_trial_verdict = #{first_trial_verdict,jdbcType=VARCHAR},
+      first_person = #{first_person,jdbcType=VARCHAR},
+      recheck_verdict = #{recheck_verdict,jdbcType=VARCHAR},
+      recheck_person = #{recheck_person,jdbcType=VARCHAR},
+      last_trial_verdict = #{last_trial_verdict,jdbcType=VARCHAR},
+      last_person = #{last_person,jdbcType=VARCHAR}
+    where report_id = #{report_id,jdbcType=INTEGER}
+  </update>
+</mapper>

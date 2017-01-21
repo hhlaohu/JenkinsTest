@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.SpecConfigMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.SpecConfig" >
+	<result column="spec_id" property="spec_id"/>
+	<result column="spec_name" property="spec_name"/>
+	<result column="spec_type" property="spec_type"/>
+	<result column="value_begin" property="value_begin"/>
+	<result column="value_end" property="value_end"/>
+</resultMap>
+
+
+	<sql id="Base_Column_List">
+	spec_id,spec_name,spec_type,value_begin,value_end
+	</sql>
+
+  
+   <!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+	<trim  suffixOverrides="," >
+		<if test="spec_id != null" >
+		    and spec_id =  #{spec_id}
+		</if>
+		<if test="spec_name != null and spec_name != ''">
+				and spec_name like CONCAT('%', #{spec_name}, '%')
+		</if>
+		<if test="spec_type != null" >
+		    and spec_type =  #{spec_type}
+		</if>
+			<if test="value_begin != null" >
+		    and value_begin =  #{value_begin}
+		</if>
+		<if test="value_end != null" >
+		    and value_end =  #{value_end}
+		</if>
+		</trim>
+	</sql>
+   
+   <!--规格管理信息 -->
+	<select id="queryByList"  resultMap="BaseResultMap" parameterType="Object">
+		select <include refid="Base_Column_List" /> 
+		 from spec_config
+		 <include refid="Example_Where_Clause"/>
+		 order by spec_id desc
+		 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+	      ${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	       ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from spec_config 
+		<include refid="Example_Where_Clause"/>
+	</select>
+	   
+   
+	  
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object" >
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="spec_id">
+			 SELECT LAST_INSERT_ID()
+  	   </selectKey>
+	  insert into spec_config (spec_name,spec_type,value_begin,value_end)
+	  values(#{spec_name},#{spec_type},#{value_begin},#{value_end})
+	</insert>
+	
+	 <!-- 根据usrid，修改记录-->  
+	 <update id="update" parameterType="Object" >
+	  update spec_config set
+	  <trim  suffixOverrides="," >
+		<if test="spec_name != null and spec_name != ''" >
+		     spec_name = #{spec_name},
+		</if>
+		<if test="spec_type != null">
+		     spec_type = #{spec_type},
+		</if>
+		<if test="value_begin != null">
+		     value_begin = #{value_begin},
+		</if>
+		<if test="value_end != null">
+		     value_end = #{value_end}
+		</if>
+	   </trim> where spec_id=#{spec_id}
+	 </update>
+ 
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="Object">
+		delete from spec_config where spec_id=#{spec_id}
+	</delete>
+ 
+	<!-- 规格名称列表 -->
+	<select id="querySpecConfigList" resultType="com.yiya.bean.SpecConfig">
+	 select sc.* from spec_config as sc order by sc.spec_id desc
+	</select>
+	
+	<!-- 规格互斥查询 -->
+	<select id="querySpecConfigReject" resultType="com.yiya.bean.SpecConfig" parameterType="Object">
+		select sc.* from spec_config as sc where sc.spec_id=#{spec_id} and sc.spec_type=1
+	</select>
+	  	
+	<select id="querySpecConfig" parameterType="Object" resultType="com.yiya.bean.SpecConfig">
+		select  <include refid="Base_Column_List" />  from 
+		spec_config  <include refid="Example_Where_Clause"/>
+	</select>
+</mapper>   

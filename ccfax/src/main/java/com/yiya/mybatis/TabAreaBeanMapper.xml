@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabAreaBeanMapper">
+
+	<!-- 根据条件查询 -->
+	<select id="queryByCondition" resultType="com.yiya.bean.TabAreaBean"
+		parameterType="Object">
+		select
+           *
+		from tab_area
+		<where>
+		   <if test="area_deep != null">
+			   area_deep = #{area_deep}
+			</if>
+			 <if test="area_id != null">
+			  and area_id = #{area_id}
+			</if>
+			 <if test="area_parent_id != null">
+			  and area_parent_id = #{area_parent_id}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+
+		
+</mapper>   

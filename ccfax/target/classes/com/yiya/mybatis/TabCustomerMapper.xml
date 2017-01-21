@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabCustomerMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.TabCustomer" >
+	<result column="tab_id" property="tab_id"/>
+	<result column="customer_id" property="customer_id"/>
+	<result column="customer_name" property="customer_name"/>
+	<result column="customer_type" property="customer_type"/>
+	<result column="address" property="address"/>
+	<result column="telephone" property="telephone"/>
+	<result column="credit_limit" property="credit_limit"/>
+	<result column="borrow_balance" property="borrow_balance"/>
+	<result column="guarant_balance" property="guarant_balance"/>
+	<result column="rc_guarant_balance" property="rc_guarant_balance"/>
+	<result column="lock_line" property="lock_line"/>
+	<result column="temporary_lock_line" property="temporary_lock_line"/>
+	<result column="start_time" property="start_time"/>
+	<result column="end_time" property="end_time"/>
+	<result column="stock_value" property="stock_value"/>
+	<result column="break_Stock_value" property="break_Stock_value"/>
+	<result column="comment_contente" property="comment_contente"/>
+	<result column="comment_person" property="comment_person"/>
+</resultMap>
+
+
+<!-- Result Map-->
+<resultMap id="errordaily" type="com.yiya.bean.ErrorDaily" >
+	<result column="error_id" property="error_id"/>
+	<result column="error_customer_name" property="error_customer_name"/>
+	<result column="error_telephone" property="error_telephone"/>
+	<result column="error_content" property="error_content"/>
+	<result column="error_status" property="error_status"/>
+	<result column="error_deal_with" property="error_deal_with"/>
+</resultMap>
+       
+<!-- sys_user table all fields -->
+<sql id="Base_Column_List" >
+	 tab_id,customer_id,customer_name,customer_type,address,telephone,credit_limit,borrow_balance,guarant_balance,rc_guarant_balance,lock_line,temporary_lock_line,end_time,stock_value,break_Stock_value,comment_contente,comment_person,start_time
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="customer_id != null">
+	  and	tf.customer_id=#{customer_id}
+	</if>
+	<if test="customer_type != null ">
+		and	tf.customer_type=#{customer_type}
+	</if>
+	<if test="address != null  and address != '' ">
+		and	tf.address=#{address}
+	</if>	
+	<if test="telephone != null  and telephone != '' ">
+		and	tf.telephone=#{telephone}
+	</if>
+	<if test="credit_limit != null  and credit_limit != '' ">
+		and	tf.credit_limit=#{credit_limit}
+	</if>
+	<if test="borrow_balance != null  and borrow_balance != '' ">
+		and	tf.borrow_balance=#{borrow_balance}
+	</if>
+	<if test="guarant_balance != null  and guarant_balance != '' ">
+		and	tf.guarant_balance=#{guarant_balance}
+	</if>
+	<if test="rc_guarant_balance != null  and rc_guarant_balance != '' ">
+		and	tf.rc_guarant_balance=#{rc_guarant_balance}
+	</if>
+	<if test="lock_line != null  and lock_line != '' ">
+		and	tf.lock_line=#{lock_line}
+	</if>
+	<if test="temporary_lock_line != null  and temporary_lock_line != '' ">
+		and	tf.temporary_lock_line=#{temporary_lock_line}
+	</if>
+	<if test="start_time != null  and start_time != '' ">
+		and	tf.start_time=#{start_time}
+	</if>
+	<if test="end_time != null  and end_time != '' ">
+		and	tf.end_time=#{end_time}
+	</if>
+	<if test="stock_value != null  and stock_value != '' ">
+		and	tf.stock_value=#{stock_value}
+	</if>
+	<if test="break_Stock_value != null  and break_Stock_value != '' ">
+		and	tf.break_Stock_value=#{break_Stock_value}
+	</if>
+	<if test="comment_contente != null  and comment_contente != '' ">
+		and	tf.comment_contente=#{comment_contente}
+	</if>
+	<if test="comment_person != null  and comment_person != '' ">
+		and	tf.comment_person=#{comment_person}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  
+  insert into tab_customerinfo(customer_id,customer_name,customer_type,address,telephone,credit_limit,borrow_balance,guarant_balance,rc_guarant_balance,lock_line,temporary_lock_line,start_time,end_time,stock_value,break_Stock_value,comment_contente,comment_person)
+  values(#{customer_id},#{customer_name},#{customer_type},#{address},#{telephone},#{credit_limit},#{borrow_balance},#{guarant_balance},#{rc_guarant_balance},#{lock_line},#{temporary_lock_line},#{start_time},#{end_time},#{stock_value},#{break_Stock_value},#{comment_contente},#{comment_person})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update tab_customerinfo set
+  <trim  suffixOverrides="," >
+  <if test="customer_name != null  and customer_name != '' ">
+		customer_name=#{customer_name},
+	</if>
+	<if test="customer_type != null">
+		customer_type=#{customer_type},
+	</if>
+	<if test="address != null  and address != '' ">
+		address=#{address},
+	</if>	
+	<if test="telephone != null  and telephone != '' ">
+		telephone=#{telephone},
+	</if>
+	<if test="credit_limit != null  and credit_limit != '' ">
+		credit_limit=#{credit_limit},
+	</if>
+	<if test="borrow_balance != null  and borrow_balance != '' ">
+		borrow_balance=#{borrow_balance},
+	</if>
+	<if test="guarant_balance != null  and guarant_balance != '' ">
+		guarant_balance=#{guarant_balance},
+	</if>
+	<if test="rc_guarant_balance != null  and rc_guarant_balance != '' ">
+		rc_guarant_balance=#{rc_guarant_balance},
+	</if>
+	<if test="lock_line != null  and lock_line != '' ">
+		lock_line=#{lock_line},
+	</if>
+	<if test="temporary_lock_line != null  and temporary_lock_line != '' ">
+		temporary_lock_line=#{temporary_lock_line},
+	</if>
+	<if test="start_time != null  and start_time != '' ">
+		start_time=#{start_time},
+	</if>
+	<if test="end_time != null  and end_time != '' ">
+		end_time=#{end_time},
+	</if>
+	<if test="stock_value != null  and stock_value != '' ">
+		stock_value=#{stock_value},
+	</if>
+	<if test="break_Stock_value != null  and break_Stock_value != '' ">
+		break_Stock_value=#{break_Stock_value},
+	</if>
+	<if test="comment_contente != null  and comment_contente != '' ">
+		comment_contente=#{comment_contente},
+	</if>
+	<if test="comment_person != null  and comment_person != '' ">
+		comment_person=#{comment_person},
+	</if>
+	<if test="comment_person != null  and comment_person != '' ">
+		comment_person=#{comment_person},
+	</if>
+
+   </trim> where customer_id=#{customer_id}
+ </update>
+ 
+
+<!-- 根据id，修改记录-->  
+ <update id="updateborrow" parameterType="Object" >
+  update tab_customerinfo set
+  	borrow_balance=#{borrow_balance}
+  where customer_id=#{customer_id}
+ </update>
+<!-- 根据id，修改记录-->  
+ <update id="updatelockline" parameterType="Object" >
+  update tab_customerinfo set
+
+
+<trim  suffixOverrides="," >
+	<if test="credit_limit != null  and credit_limit != '' ">
+		credit_limit=#{credit_limit},
+	</if>
+	<if test="borrow_balance != null  and borrow_balance != '' ">
+		borrow_balance=#{borrow_balance},
+	</if>
+
+	
+		temporary_lock_line=#{temporary_lock_line},
+
+
+			<if test="start_time != null  and start_time != '' ">
+		start_time=#{start_time},
+	</if>
+	<if test="end_time != null  and end_time != '' ">
+		end_time=#{end_time},
+	</if>
+	
+
+  </trim>
+ where customer_id=#{customer_id}
+ </update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from tab_customerinfo where customer_id = #{customer_id}
+</delete>
+ 
+<!-- 根据id查询 系统用户 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List"/>
+	 from tab_customerinfo where customer_id = #{customer_id}
+</select>
+
+<!-- 系统用户 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	SELECT count(1)
+	FROM tab_customerinfo tf
+
+	LEFT JOIN
+	(SELECT SUM(db_money) AS rc_guarant_balance,bdbr_id FROM db_money GROUP BY
+	bdbr_id)a ON tf.customer_id=a.bdbr_id LEFT JOIN
+
+	(SELECT SUM(db_money) AS guarant_balance,dbr_id FROM db_money GROUP BY
+	dbr_id)b ON tf.customer_id=b.dbr_id
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询系统用户列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	SELECT
+	tf.tab_id,tf.customer_id,tf.customer_name,tf.customer_type,tf.borrow_balance,
+	tf.address,tf.telephone,tf.credit_limit,tf.lock_line,tf.temporary_lock_line,tf.start_time,tf.end_time,b.guarant_balance,
+	a.rc_guarant_balance
+	FROM tab_customerinfo tf
+	LEFT JOIN
+	(SELECT SUM(db_money) AS rc_guarant_balance,bdbr_id FROM db_money GROUP BY
+	bdbr_id)a ON tf.customer_id=a.bdbr_id LEFT JOIN
+	(SELECT SUM(db_money) AS guarant_balance,dbr_id FROM db_money GROUP BY
+	dbr_id)b ON tf.customer_id=b.dbr_id 
+	<include refid="Example_Where_Clause"/>
+	order by tf.customer_id desc
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+  	
+  	
+  	<!-- 查询系统用户列表 -->
+<select id="queryBycustomerid" resultMap="BaseResultMap"  parameterType="Object">
+	SELECT
+	tf.tab_id,tf.customer_id,tf.customer_name,tf.customer_type,tf.borrow_balance,
+	tf.address,tf.telephone,tf.credit_limit,tf.lock_line,tf.temporary_lock_line,tf.start_time,tf.end_time,b.guarant_balance,
+	a.rc_guarant_balance
+	FROM tab_customerinfo tf
+	LEFT JOIN
+	(SELECT SUM(db_money) AS rc_guarant_balance,bdbr_id FROM db_money GROUP BY
+	bdbr_id)a ON tf.customer_id=a.bdbr_id LEFT JOIN
+	(SELECT SUM(db_money) AS guarant_balance,dbr_id FROM db_money GROUP BY
+	dbr_id)b ON tf.customer_id=b.dbr_id
+	<if test="customer_id != null  and customer_id != '' ">
+			where customer_id=#{customer_id}
+	</if>
+
+</select>
+  	
+  	<!-- 系统用户 列表总数-->
+<select id="queryErrorDailyCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from error_daily 
+	
+</select>
+  	
+<!-- 查询系统用户列表 -->
+<select id="queryErrorDaily" resultMap="errordaily"  parameterType="Object">
+	select error_id,error_customer_name,error_telephone,error_content,error_status,error_deal_with 
+	 from error_daily
+	order by error_id desc
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+
+
+	  	<!-- 查询系统用户所以列表不分页 -->
+<select id="queryAllList" resultMap="BaseResultMap"  parameterType="Object">
+	SELECT
+	tf.tab_id,tf.customer_id,tf.customer_name,tf.customer_type,tf.borrow_balance,
+	tf.address,tf.telephone,tf.credit_limit,tf.lock_line,tf.temporary_lock_line,tf.start_time,tf.end_time,b.guarant_balance,
+	a.rc_guarant_balance
+	FROM tab_customerinfo tf
+	LEFT JOIN
+	(SELECT SUM(db_money) AS rc_guarant_balance,bdbr_id FROM db_money GROUP BY
+	bdbr_id)a ON tf.customer_id=a.bdbr_id LEFT JOIN
+	(SELECT SUM(db_money) AS guarant_balance,dbr_id FROM db_money GROUP BY
+	dbr_id)b ON tf.customer_id=b.dbr_id
+	
+
+</select>
+
+
+<!-- 根据id，修改记录-->  
+ <update id="errorStatusUp" parameterType="Object" >
+  update error_daily set error_status=1
+  where error_id=#{error_id}
+
+ </update>
+ 
+ 
+ <!-- 插入记录 -->
+<insert id="adderrordaily" parameterType="Object" >
+
+  insert into error_daily(error_customer_name,error_telephone,error_content,error_status,error_deal_with)
+  values(#{error_customer_name},#{error_telephone},#{error_content},#{error_status},#{error_deal_with})
+</insert>
+
+ <!--批量插入记录 -->
+<insert id="batchInsertErrorDaily">
+  INSERT INTO
+    error_daily
+    (
+       error_customer_name,
+       error_telephone,
+       error_content,
+       error_status,
+       error_deal_with
+      )
+  VALUES
+     <foreach collection="list" item="item" index="index" separator="," >  
+        (#{item.error_customer_name},#{item.error_telephone},#{item.error_content},#{item.error_status},#{item.error_deal_with})  
+    </foreach>  
+
+</insert>
+
+<!-- 删除错误记录 -->
+<delete id="deleteerror" parameterType="Object">
+	delete from error_daily where error_id = #{error_id}
+</delete>
+
+<!-- 批量更新 -->
+<update id="batchUpdateTabCustomer"  parameterType="java.util.List">
+	 
+      <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+	     UPDATE
+	       tab_customerinfo 
+	     SET
+		  <trim  suffixOverrides="," >
+			<if test="item.credit_limit != null">
+				credit_limit=#{item.credit_limit},
+			</if>
+			<if test="item.borrow_balance != null ">
+				borrow_balance=#{item.borrow_balance}
+			</if>
+           </trim>	 
+          <where>
+            <if test="item.customer_id != null" >
+                 customer_id=#{item.customer_id}
+            </if>
+		    <if test="item.telephone != null and item.telephone != ''" >
+		       and telephone=#{item.telephone}
+		    </if>
+          </where> 
+	 </foreach>
+		 
+</update>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>   

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.PzGoodMapper">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.yiya.bean.PzGood">
+		<result column="pz_id" property="pz_id" />
+		<result column="pz_good_name" property="pz_good_name" />
+		<result column="pz_good_place" property="pz_good_place" />
+		<result column="pz_good_level" property="pz_good_level" />
+		<result column="pz_good_size" property="pz_good_size" />
+		<result column="market_prices" property="market_prices" />
+		<result column="unit" property="unit" />
+		<result column="pledge_multiplier" property="pledge_multiplier" />
+	</resultMap>
+	
+	<resultMap type="com.yiya.model.PzGoodAndSpecConfigModel" id="pzGoodAndSpecConfigModel"/>
+
+	<!-- sys_user table all fields -->
+	<sql id="Base_Column_List">
+		pz_id,pz_good_name,pz_good_place,pz_good_level,pz_good_size,market_prices,unit,pledge_multiplier
+	</sql>
+	
+	<sql id="SELECT_SQL_1">
+        a.pz_id,a.pz_good_name,a.pz_good_place,a.pz_good_level,a.pz_good_size,a.market_prices,a.unit,a.pledge_multiplier,
+        b.spec_id,b.spec_name,b.spec_type,b.value_begin,b.value_end
+	</sql>
+    
+
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="pz_id != null">
+				and pz_id = #{pz_id}
+			</if>
+			<if test="pz_good_name != null and pz_good_name != ''">
+				and pz_good_name like CONCAT('%', #{pz_good_name}, '%')
+			</if>
+			<if test="pz_good_place != null and pz_good_place != ''">
+				and pz_good_place like CONCAT('%', #{pz_good_place}, '%')
+			</if>
+			<if test="pz_good_level != null">
+				and pz_good_level = #{pz_good_level}
+			</if>
+			<if test="market_prices != null">
+				and market_prices = #{market_prices}
+			</if>
+			<if test="unit != null and unit != ''">
+				and unit like CONCAT('%', #{unit}, '%')
+			</if>
+			<if test="pledge_multiplier != null">
+				and pledge_multiplier = #{pledge_multiplier}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 配置管理列表总数 -->
+	<select id="queryCountbyAll" resultType="java.lang.Integer"
+		parameterType="hashmap">
+		select count(1) from pz_good
+		<include refid="Example_Where_Clause" />
+	</select>
+
+
+	<sql id="limitSql">
+		LIMIT #{startRow},#{rows}
+	</sql>
+
+   <!-- 查询列表 -->
+	<select id="queryByAll" resultMap="BaseResultMap" parameterType="Object">
+		select * from (select
+		<include refid="Base_Column_List" />
+		from pz_good ORDER BY pz_id DESC) as a order by pz_good_name
+		desc,pz_good_level asc,pz_good_size desc
+		<include refid="limitSql" />
+	</select>
+	
+    <!-- 联表查询pz_good、spec_config-->
+	<select id="queryAllJoinSpecConfig" resultMap="pzGoodAndSpecConfigModel" parameterType="Object">
+		SELECT
+		  <include refid="SELECT_SQL_1"/>
+		FROM
+		  pz_good a
+		LEFT JOIN
+		  spec_config b
+		ON
+		  a.pz_good_size = b.spec_id
+		  <include refid="Example_Where_Clause" />
+		ORDER BY 
+		  a.pz_good_name desc,
+		  a.pz_good_level desc
+		  <include refid="limitSql"/>
+	</select>
+
+
+
+	<!-- 根据id查询 配置管理信息 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from pz_good where pz_id = #{id}
+	</select>
+
+
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object">
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		pz_good(pz_id,pz_good_name,pz_good_place,pz_good_level,pz_good_size,market_prices,unit,pledge_multiplier)
+		values(#{pz_id},#{pz_good_name},#{pz_good_place},#{pz_good_level},#{pz_good_size},#{market_prices},#{unit},#{pledge_multiplier}
+		)
+	</insert>
+
+
+	<!-- 添加配置管理信息 -->
+	<insert id="addPzGood" parameterType="map"
+		>
+		insert into
+		pz_good(pz_good_name,pz_good_place,pz_good_level,pz_good_size,market_prices,unit,pledge_multiplier)
+		values(#{pz_good_name},#{pz_good_place},#{pz_good_level},#{pz_good_size},#{market_prices},#{unit},#{pledge_multiplier}
+		)
+	</insert>
+
+
+	<!-- 根据id，修改记录 -->
+	<update id="modifyPzGood" parameterType="com.yiya.bean.PzGood">
+		update pz_good set
+		pz_good_name=#{pz_good_name},pz_good_place=#{pz_good_place},pz_good_level=#{pz_good_level},pz_good_size=#{pz_good_size},market_prices=#{market_prices},unit=#{unit},pledge_multiplier=#{pledge_multiplier}
+		where pz_id=#{pz_id}
+	</update>
+
+	<!-- 按货物名称查询条目数 -->
+	<select id="queryPzGoodNameCount" resultType="java.lang.Integer"
+		parameterType="com.yiya.model.PzGoodModel">
+		select count(1)
+		from pz_good
+		<include refid="Example_Where_Clause" />
+	</select>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="Object">
+		delete from pz_good where pz_id = #{pz_id}
+	</delete>
+
+	<!-- 查询货物名称List -->
+	<select id="listAll" resultType="com.yiya.bean.PzGood">
+		select DISTINCT(pg.pz_good_name) from pz_good as pg ORDER BY pg.pz_id DESC
+	</select>
+
+	<insert id="insertBatchPzGood" parameterType="com.yiya.bean.PzGood">
+		insert into
+		pz_good(pz_id,pz_good_name,pz_good_place,pz_good_level,pz_good_size,market_prices,unit,pledge_multiplier)
+		values(#{pz_id},#{pz_good_name},#{pz_good_place},#{pz_good_level},#{pz_good_size},#{market_prices},#{unit},#{pledge_multiplier}
+		)
+	</insert>
+
+
+	<!-- 按货物名称查询列表 -->
+	<select id="queryByone" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from pz_good
+		where pz_good_name=#{pz_good_name} and
+		pz_good_place=#{pz_good_place} and
+		pz_good_size=#{pz_good_size} and
+		pz_good_level=#{pz_good_level}
+		LIMIT 0,1
+	</select>
+
+
+	<!-- 查询货物产地List -->
+	<select id="queryPlace" resultType="com.yiya.bean.PzGood">
+		select DISTINCT(pz_good_place) as pz_good_place from pz_good where
+		pz_good.pz_good_place!=2468
+	</select>
+
+	<!-- 查询货物规格 -->
+	<select id="queryLevel" resultType="com.yiya.bean.PzGood">
+		select DISTINCT(pz_good_size) as pz_good_size from pz_good where
+		pz_good.pz_good_size!=0
+	</select>
+
+
+	
+	
+	
+	<!-- 根据条件匹配pz_good -->
+	<select id="matchGoodWithCondition" parameterType="map" resultType="com.yiya.bean.PzGood">
+	  SELECT
+	    a.pz_id,
+	    a.pz_good_name,
+	    a.pz_good_place,
+	    a.pz_good_level,
+	    a.pz_good_size,
+	    a.market_prices,
+	    a.unit,
+	    a.pledge_multiplier
+		FROM
+		    pz_good a
+		LEFT JOIN
+		    spec_config b
+		ON
+		    a.pz_good_size = b.spec_id
+		WHERE
+		 a.pz_good_name = #{pz_good_name}
+		AND 
+		 a.pz_good_place IN (#{pz_good_place},2468)
+		AND
+		 a.pz_good_level IN (#{pz_good_level},2468)
+		AND
+		(
+		    a.pz_good_size = 0
+		    OR 
+		    b.spec_type = #{spec_type}
+		  )
+		AND
+		   (
+		        a.pz_good_size = 0
+		    OR  (  <!-- B类才有区间比较 -->
+		            b.value_begin <![CDATA[<= ]]> #{pz_good_size}
+		        AND b.value_end <![CDATA[>]]> #{pz_good_size} )
+		    OR b.spec_name = #{spec_name} 
+		   )
+		 
+       	
+	</select>
+
+	<!-- 新增配置管理SQL判断Start -->
+	<select id="queryByName" resultMap="BaseResultMap"	parameterType="Object">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM pz_good WHERE pz_good_name = #{pz_good_name}
+		<if test="pz_good_place != null and pz_good_place != ''">
+			AND pz_good_place =2468
+		</if>
+		<if test="pz_good_size != null">
+			AND pz_good_size =0
+		</if>
+		<if test="pz_good_level != null">
+			AND pz_good_level =2468
+		</if>
+		<if test="pz_id != null">
+			AND pz_id !=#{pz_id}
+		</if>
+		LIMIT 0,1
+	</select>
+	
+	<select id="queryLevelIn" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+		AND pg.pz_good_place = #{pz_good_place}
+		AND pg.pz_good_level = 2468
+		<if test="pz_id != null">
+			AND pg.pz_id != #{pz_id}
+		</if>
+		LIMIT 0,1
+	</select>
+	
+	<select id="querySizeIn" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+		AND pg.pz_good_place = #{pz_good_place}
+		AND pg.pz_good_level = #{pz_good_level}
+		AND pg.pz_good_size = 0
+		<if test="pz_id != null">
+			AND pg.pz_id != #{pz_id}
+		</if>
+		LIMIT 0,1
+	</select>
+	
+	<select id="queryAllByName" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+		<if test="pz_good_place != null and pz_good_place != ''">
+			AND pg.pz_good_place =#{pz_good_place}
+		</if>
+		<if test="pz_good_size != null">
+			AND pg.pz_good_size =#{pz_good_size}
+		</if>
+		<if test="pz_good_level != null">
+			AND pg.pz_good_level =#{pz_good_level}
+		</if>
+		<if test="pz_id != null">
+			AND pg.pz_id = #{pz_id}
+		</if>
+	</select>
+	
+	<select id="queryAllByName2" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+		<if test="pz_good_place != null and pz_good_place != ''">
+			AND pg.pz_good_place =#{pz_good_place}
+		</if>
+		<if test="pz_good_size != null">
+			AND pg.pz_good_size =#{pz_good_size}
+		</if>
+		<if test="pz_good_level != null">
+			AND pg.pz_good_level =#{pz_good_level}
+		</if>
+		<if test="pz_id != null">
+			AND pg.pz_id != #{pz_id}
+		</if>
+	</select>
+	
+	<select id="queryPlaceIsAll" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+		AND pg.pz_good_place !=2468
+		<if test="pz_id != null">
+			AND pg.pz_id != #{pz_id}
+		</if>
+		LIMIT 0,1
+	</select>
+
+	<select id="queryLevelIsAll" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+    	AND pg.pz_good_place =#{pz_good_place}
+		AND pg.pz_good_level !=2468
+		<if test="pz_id != null">
+			AND pg.pz_id != #{pz_id}
+		</if>
+		LIMIT 0,1
+	</select>
+	
+	<select id="querySizeIsAll" resultMap="BaseResultMap" parameterType="Object">
+		SELECT pg.*
+		FROM pz_good AS pg 
+		WHERE 
+		pg.pz_good_name = #{pz_good_name}
+     	AND pg.pz_good_place =#{pz_good_place}
+        AND pg.pz_good_Level =#{pz_good_level}
+		AND pg.pz_good_size !=0
+		<if test="pz_id != null">
+			AND pz_id != #{pz_id}
+		</if>
+		LIMIT 0,1
+	</select>
+	
+	<select id="queryPzGoodSizeReject" resultType="com.yiya.model.PzGoodAndSpecConfigModel" parameterType="Object">
+		SELECT pg.*,sc.*
+		FROM pz_good AS pg
+		LEFT JOIN spec_config AS sc ON pg.pz_good_size=sc.spec_id
+		WHERE
+		pg.pz_good_name = #{pz_good_name}
+		AND pg.pz_good_place = #{pz_good_place}
+        AND pg.pz_good_level = #{pz_good_level}
+		AND sc.spec_type=1
+		<if test="pz_id != null">
+			AND pz_id != #{pz_id}
+		</if>
+	</select>
+	<!-- 新增配置管理SQL判断End -->
+	
+</mapper>   

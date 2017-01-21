@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.GatherValueMapper">
+
+    <sql id="Base_Column_List">
+		id,usrid,gather_type_id,gather_field_id,gather_field_value,add_time,gather_parent_id
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="gather_type_id != null">
+				and gather_type_id = #{gather_type_id}
+			</if>
+			<if test="gather_field_id != null">
+				and gather_field_id = #{gather_field_id}
+			</if>
+			<if test="usrid != null and usrid != ''">
+				and usrid = #{usrid}
+			</if>
+			<if test="gather_parent_id != null">
+				and gather_parent_id = #{gather_parent_id}
+			</if>
+		</trim>
+	</sql>
+
+	 <!-- 插入记录 -->
+	<insert id="add" parameterType="com.yiya.bean.GatherValue" >
+	  INSERT INTO 
+	  gather_value
+	  (usrid,gather_type_id,gather_field_id,gather_field_value,gather_parent_id,add_time)
+	  VALUES
+	  (
+	  #{usrid},
+	  #{gather_type_id},
+	  #{gather_field_id},
+	  #{gather_field_value},
+	  #{gather_parent_id},
+	  #{add_time})
+	</insert>
+	
+	<!--批量插入记录 -->
+	<insert id="batchInsert">
+	  INSERT INTO
+	    gather_value
+	    (
+	       usrid,
+	       gather_type_id,
+	       gather_field_id,
+	       gather_field_value,
+	       gather_parent_id,
+	       add_time
+	      )
+	  VALUES
+	     <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.usrid},#{item.gather_type_id},#{item.gather_field_id},#{item.gather_field_value},#{item.gather_parent_id},#{item.add_time})  
+	    </foreach>  
+	
+	</insert>
+	
+		<!--删除记录  -->
+	<delete id="delete" parameterType="Object">
+	    delete from gather_value where id = #{id}
+    </delete>
+    
+     <!--根据usrid以及typeId删除-->
+	<delete id="deleteByusrIdAndTypeId" parameterType="Object">
+	    delete from gather_value where usrid = #{usrid} and gather_type_id = #{gather_type_id}
+    </delete>
+	
+	<!-- 根据条件查询 -->
+	<select id="queryByCondition" resultType="com.yiya.bean.GatherValue"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from gather_value
+		<include refid="Example_Where_Clause" />
+	</select>
+	
+	
+	<!-- 联表scoring_gather_field查询 -->
+	<select id="queryGatherValueJoinGatherField" resultType="map"
+		parameterType="Object">
+		SELECT
+		   a.gather_field_id,
+		   a.gather_field_value,
+		   a.id as gather_value_id,
+		   a.gather_parent_id,
+		   a.usrid,
+		   b.field_name
+		FROM
+		   gather_value a
+		JOIN
+		   scoring_gather_field b
+		ON 
+		   a.gather_field_id = b.gather_field_id
+ 		<where>
+            <trim suffixOverrides=",">
+               <if test="field_name != null">
+				 b.field_name = #{field_name}
+			   </if>
+			   <if test="usrid != null">
+				 and a.usrid = #{usrid}
+			   </if>
+			   <if test="gather_type_id != null">
+				and  a.gather_type_id = #{gather_type_id}
+			   </if>
+            </trim>		
+		</where>
+	</select>
+	
+<!-- 批量更新 -->
+	<update id="batchUpdateGatherValue"  parameterType="java.util.List">
+		 
+	      <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+		     UPDATE
+		       gather_value 
+		     SET
+			  <trim  suffixOverrides="," >
+				<if test="item.gather_parent_id != null">
+					gather_parent_id=#{item.gather_parent_id}
+				</if>
+	           </trim>	 
+	          <where>
+	            <if test="item.id != null" >
+	                 id=#{item.id}
+	            </if>
+	          </where> 
+		 </foreach>
+			 
+	</update>
+		
+</mapper>   

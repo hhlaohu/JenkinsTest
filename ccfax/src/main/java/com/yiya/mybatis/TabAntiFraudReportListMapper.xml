@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabAntiFraudReportListMapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabAntiFraudReportList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="report_id" property="report_id" jdbcType="INTEGER" />
+    <result column="anti_fraud_rule_id" property="anti_fraud_rule_id" jdbcType="INTEGER" />
+    <result column="anti_fraud_rule_code" property="anti_fraud_rule_code" jdbcType="VARCHAR" />
+    <result column="anti_fraud_rule_name" property="anti_fraud_rule_name" jdbcType="VARCHAR" />
+    <result column="anti_fraud_rule_desc" property="anti_fraud_rule_desc" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="gather_field_value" property="gather_field_value" jdbcType="VARCHAR" />
+    <result column="scoring_field_id" property="scoring_field_id" jdbcType="INTEGER" />
+    <result column="scoring_field_name" property="scoring_field_name" jdbcType="VARCHAR" />
+    <result column="scoring_field_name_ch" property="scoring_field_name_ch" jdbcType="VARCHAR" />
+    <result column="scoring_field_desc" property="scoring_field_desc" jdbcType="VARCHAR" />
+    <result column="is_hit" property="is_hit" jdbcType="TINYINT" />
+    <result column="gather_type_name" property="gather_type_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yiya.bean.TabAntiFraudReportList" extends="BaseResultMap" >
+    <result column="gather_field_remark" property="gather_field_remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, report_id, anti_fraud_rule_id, anti_fraud_rule_code, anti_fraud_rule_name, anti_fraud_rule_desc, 
+    create_time, gather_field_value, scoring_field_id, scoring_field_name, scoring_field_name_ch, 
+    scoring_field_desc, is_hit, gather_type_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    gather_field_remark
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.yiya.bean.TabAntiFraudReportListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tab_anti_fraud_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yiya.bean.TabAntiFraudReportListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_anti_fraud_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="start !=0 or limit!=0">  
+      limit #{start},#{limit}  
+     </if> 
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tab_anti_fraud_report_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tab_anti_fraud_report_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabAntiFraudReportListExample" >
+    delete from tab_anti_fraud_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yiya.bean.TabAntiFraudReportList" >
+    insert into tab_anti_fraud_report_list (id, report_id, anti_fraud_rule_id, 
+      anti_fraud_rule_code, anti_fraud_rule_name, 
+      anti_fraud_rule_desc, create_time, gather_field_value, 
+      scoring_field_id, scoring_field_name, scoring_field_name_ch, 
+      scoring_field_desc, is_hit, gather_type_name, 
+      gather_field_remark)
+    values (#{id,jdbcType=INTEGER}, #{report_id,jdbcType=INTEGER}, #{anti_fraud_rule_id,jdbcType=INTEGER}, 
+      #{anti_fraud_rule_code,jdbcType=VARCHAR}, #{anti_fraud_rule_name,jdbcType=VARCHAR}, 
+      #{anti_fraud_rule_desc,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{gather_field_value,jdbcType=VARCHAR}, 
+      #{scoring_field_id,jdbcType=INTEGER}, #{scoring_field_name,jdbcType=VARCHAR}, #{scoring_field_name_ch,jdbcType=VARCHAR}, 
+      #{scoring_field_desc,jdbcType=VARCHAR}, #{is_hit,jdbcType=TINYINT}, #{gather_type_name,jdbcType=VARCHAR}, 
+      #{gather_field_remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabAntiFraudReportList" >
+    insert into tab_anti_fraud_report_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="report_id != null" >
+        report_id,
+      </if>
+      <if test="anti_fraud_rule_id != null" >
+        anti_fraud_rule_id,
+      </if>
+      <if test="anti_fraud_rule_code != null" >
+        anti_fraud_rule_code,
+      </if>
+      <if test="anti_fraud_rule_name != null" >
+        anti_fraud_rule_name,
+      </if>
+      <if test="anti_fraud_rule_desc != null" >
+        anti_fraud_rule_desc,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="gather_field_value != null" >
+        gather_field_value,
+      </if>
+      <if test="scoring_field_id != null" >
+        scoring_field_id,
+      </if>
+      <if test="scoring_field_name != null" >
+        scoring_field_name,
+      </if>
+      <if test="scoring_field_name_ch != null" >
+        scoring_field_name_ch,
+      </if>
+      <if test="scoring_field_desc != null" >
+        scoring_field_desc,
+      </if>
+      <if test="is_hit != null" >
+        is_hit,
+      </if>
+      <if test="gather_type_name != null" >
+        gather_type_name,
+      </if>
+      <if test="gather_field_remark != null" >
+        gather_field_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="report_id != null" >
+        #{report_id,jdbcType=INTEGER},
+      </if>
+      <if test="anti_fraud_rule_id != null" >
+        #{anti_fraud_rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="anti_fraud_rule_code != null" >
+        #{anti_fraud_rule_code,jdbcType=VARCHAR},
+      </if>
+      <if test="anti_fraud_rule_name != null" >
+        #{anti_fraud_rule_name,jdbcType=VARCHAR},
+      </if>
+      <if test="anti_fraud_rule_desc != null" >
+        #{anti_fraud_rule_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gather_field_value != null" >
+        #{gather_field_value,jdbcType=VARCHAR},
+      </if>
+      <if test="scoring_field_id != null" >
+        #{scoring_field_id,jdbcType=INTEGER},
+      </if>
+      <if test="scoring_field_name != null" >
+        #{scoring_field_name,jdbcType=VARCHAR},
+      </if>
+      <if test="scoring_field_name_ch != null" >
+        #{scoring_field_name_ch,jdbcType=VARCHAR},
+      </if>
+      <if test="scoring_field_desc != null" >
+        #{scoring_field_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="is_hit != null" >
+        #{is_hit,jdbcType=TINYINT},
+      </if>
+      <if test="gather_type_name != null" >
+        #{gather_type_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gather_field_remark != null" >
+        #{gather_field_remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabAntiFraudReportListExample" resultType="java.lang.Integer" >
+    select count(*) from tab_anti_fraud_report_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_anti_fraud_report_list
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.report_id != null" >
+        report_id = #{record.report_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.anti_fraud_rule_id != null" >
+        anti_fraud_rule_id = #{record.anti_fraud_rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.anti_fraud_rule_code != null" >
+        anti_fraud_rule_code = #{record.anti_fraud_rule_code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.anti_fraud_rule_name != null" >
+        anti_fraud_rule_name = #{record.anti_fraud_rule_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.anti_fraud_rule_desc != null" >
+        anti_fraud_rule_desc = #{record.anti_fraud_rule_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.create_time != null" >
+        create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gather_field_value != null" >
+        gather_field_value = #{record.gather_field_value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoring_field_id != null" >
+        scoring_field_id = #{record.scoring_field_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoring_field_name != null" >
+        scoring_field_name = #{record.scoring_field_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoring_field_name_ch != null" >
+        scoring_field_name_ch = #{record.scoring_field_name_ch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoring_field_desc != null" >
+        scoring_field_desc = #{record.scoring_field_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.is_hit != null" >
+        is_hit = #{record.is_hit,jdbcType=TINYINT},
+      </if>
+      <if test="record.gather_type_name != null" >
+        gather_type_name = #{record.gather_type_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gather_field_remark != null" >
+        gather_field_remark = #{record.gather_field_remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tab_anti_fraud_report_list
+    set id = #{record.id,jdbcType=INTEGER},
+      report_id = #{record.report_id,jdbcType=INTEGER},
+      anti_fraud_rule_id = #{record.anti_fraud_rule_id,jdbcType=INTEGER},
+      anti_fraud_rule_code = #{record.anti_fraud_rule_code,jdbcType=VARCHAR},
+      anti_fraud_rule_name = #{record.anti_fraud_rule_name,jdbcType=VARCHAR},
+      anti_fraud_rule_desc = #{record.anti_fraud_rule_desc,jdbcType=VARCHAR},
+      create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      gather_field_value = #{record.gather_field_value,jdbcType=VARCHAR},
+      scoring_field_id = #{record.scoring_field_id,jdbcType=INTEGER},
+      scoring_field_name = #{record.scoring_field_name,jdbcType=VARCHAR},
+      scoring_field_name_ch = #{record.scoring_field_name_ch,jdbcType=VARCHAR},
+      scoring_field_desc = #{record.scoring_field_desc,jdbcType=VARCHAR},
+      is_hit = #{record.is_hit,jdbcType=TINYINT},
+      gather_type_name = #{record.gather_type_name,jdbcType=VARCHAR},
+      gather_field_remark = #{record.gather_field_remark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_anti_fraud_report_list
+    set id = #{record.id,jdbcType=INTEGER},
+      report_id = #{record.report_id,jdbcType=INTEGER},
+      anti_fraud_rule_id = #{record.anti_fraud_rule_id,jdbcType=INTEGER},
+      anti_fraud_rule_code = #{record.anti_fraud_rule_code,jdbcType=VARCHAR},
+      anti_fraud_rule_name = #{record.anti_fraud_rule_name,jdbcType=VARCHAR},
+      anti_fraud_rule_desc = #{record.anti_fraud_rule_desc,jdbcType=VARCHAR},
+      create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      gather_field_value = #{record.gather_field_value,jdbcType=VARCHAR},
+      scoring_field_id = #{record.scoring_field_id,jdbcType=INTEGER},
+      scoring_field_name = #{record.scoring_field_name,jdbcType=VARCHAR},
+      scoring_field_name_ch = #{record.scoring_field_name_ch,jdbcType=VARCHAR},
+      scoring_field_desc = #{record.scoring_field_desc,jdbcType=VARCHAR},
+      is_hit = #{record.is_hit,jdbcType=TINYINT},
+      gather_type_name = #{record.gather_type_name,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabAntiFraudReportList" >
+    update tab_anti_fraud_report_list
+    <set >
+      <if test="report_id != null" >
+        report_id = #{report_id,jdbcType=INTEGER},
+      </if>
+      <if test="anti_fraud_rule_id != null" >
+        anti_fraud_rule_id = #{anti_fraud_rule_id,jdbcType=INTEGER},
+      </if>
+      <if test="anti_fraud_rule_code != null" >
+        anti_fraud_rule_code = #{anti_fraud_rule_code,jdbcType=VARCHAR},
+      </if>
+      <if test="anti_fraud_rule_name != null" >
+        anti_fraud_rule_name = #{anti_fraud_rule_name,jdbcType=VARCHAR},
+      </if>
+      <if test="anti_fraud_rule_desc != null" >
+        anti_fraud_rule_desc = #{anti_fraud_rule_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gather_field_value != null" >
+        gather_field_value = #{gather_field_value,jdbcType=VARCHAR},
+      </if>
+      <if test="scoring_field_id != null" >
+        scoring_field_id = #{scoring_field_id,jdbcType=INTEGER},
+      </if>
+      <if test="scoring_field_name != null" >
+        scoring_field_name = #{scoring_field_name,jdbcType=VARCHAR},
+      </if>
+      <if test="scoring_field_name_ch != null" >
+        scoring_field_name_ch = #{scoring_field_name_ch,jdbcType=VARCHAR},
+      </if>
+      <if test="scoring_field_desc != null" >
+        scoring_field_desc = #{scoring_field_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="is_hit != null" >
+        is_hit = #{is_hit,jdbcType=TINYINT},
+      </if>
+      <if test="gather_type_name != null" >
+        gather_type_name = #{gather_type_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gather_field_remark != null" >
+        gather_field_remark = #{gather_field_remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yiya.bean.TabAntiFraudReportList" >
+    update tab_anti_fraud_report_list
+    set report_id = #{report_id,jdbcType=INTEGER},
+      anti_fraud_rule_id = #{anti_fraud_rule_id,jdbcType=INTEGER},
+      anti_fraud_rule_code = #{anti_fraud_rule_code,jdbcType=VARCHAR},
+      anti_fraud_rule_name = #{anti_fraud_rule_name,jdbcType=VARCHAR},
+      anti_fraud_rule_desc = #{anti_fraud_rule_desc,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      gather_field_value = #{gather_field_value,jdbcType=VARCHAR},
+      scoring_field_id = #{scoring_field_id,jdbcType=INTEGER},
+      scoring_field_name = #{scoring_field_name,jdbcType=VARCHAR},
+      scoring_field_name_ch = #{scoring_field_name_ch,jdbcType=VARCHAR},
+      scoring_field_desc = #{scoring_field_desc,jdbcType=VARCHAR},
+      is_hit = #{is_hit,jdbcType=TINYINT},
+      gather_type_name = #{gather_type_name,jdbcType=VARCHAR},
+      gather_field_remark = #{gather_field_remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabAntiFraudReportList" >
+    update tab_anti_fraud_report_list
+    set report_id = #{report_id,jdbcType=INTEGER},
+      anti_fraud_rule_id = #{anti_fraud_rule_id,jdbcType=INTEGER},
+      anti_fraud_rule_code = #{anti_fraud_rule_code,jdbcType=VARCHAR},
+      anti_fraud_rule_name = #{anti_fraud_rule_name,jdbcType=VARCHAR},
+      anti_fraud_rule_desc = #{anti_fraud_rule_desc,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      gather_field_value = #{gather_field_value,jdbcType=VARCHAR},
+      scoring_field_id = #{scoring_field_id,jdbcType=INTEGER},
+      scoring_field_name = #{scoring_field_name,jdbcType=VARCHAR},
+      scoring_field_name_ch = #{scoring_field_name_ch,jdbcType=VARCHAR},
+      scoring_field_desc = #{scoring_field_desc,jdbcType=VARCHAR},
+      is_hit = #{is_hit,jdbcType=TINYINT},
+      gather_type_name = #{gather_type_name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

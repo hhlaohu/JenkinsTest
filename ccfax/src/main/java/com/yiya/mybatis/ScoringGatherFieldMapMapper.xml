@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.ScoringGatherFieldMapMapper">
+
+	 <!-- 插入记录 -->
+	<insert id="add" parameterType="com.yiya.bean.ScoringGatherFieldMap">
+	  INSERT INTO 
+	  scoring_gather_field_map
+	  (scoring_field_id,gather_field_id,add_time,add_usr_id)
+	  VALUES
+	  (
+	  #{scoring_field_id},
+	  #{gather_field_id},
+	  now(),
+	  #{add_usr_id})
+	</insert>	
+	
+		<!--删除记录  -->
+	<delete id="delete" parameterType="Object">
+	    delete from scoring_gather_field_map where id = #{id}
+    </delete>
+	
+	<!--根据scoring_field_id-->
+	<select id="selectByScoringFieldId" parameterType="Integer" resultType="com.yiya.bean.ScoringGatherFieldMap">
+	     SELECT * FROM scoring_gather_field_map where scoring_field_id = ${_parameter}
+	</select>
+	
+	
+	<!-- 根据条件查询 -->
+	<select id="queryByCondition" resultType="com.yiya.model.ScoringGatherFieldMapModel"
+		parameterType="Object">
+		SELECT
+		   a.id,
+		   a.scoring_field_id,
+		   a.gather_field_id,
+		   a.add_time,
+		   a.add_usr_id,
+		   b.field_name as scoring_field_name,
+		   b.field_name_ch as scoring_field_name_ch,
+		   b.field_desc as scoring_field_desc,
+		   c.field_name as gather_field_name,
+		   c.field_desc as gather_field_desc,
+		   d.gather_type_name,
+		   d.gather_type_id
+		FROM
+		   scoring_gather_field_map a
+		LEFT JOIN
+		   scoring_model_field b
+		ON
+		   a.scoring_field_id = b.scoring_field_id
+		LEFT JOIN
+		   scoring_gather_field c
+		ON
+		   a.gather_field_id = c.gather_field_id
+		LEFT JOIN
+		   gather_type d
+		ON
+		   c.gather_type_id = d.gather_type_id
+		<where>
+		   <trim suffixOverrides=",">
+		   <if test="id != null">
+			   a.id = #{id}
+			</if>
+			<if test="scoring_field_name != null and  scoring_field_name != ''">
+				and b.field_name  like CONCAT('%', #{scoring_field_name}, '%')
+			</if>
+			<if test="scoring_field_name_ch != null and scoring_field_name_ch != ''">
+				and b.field_name_ch like CONCAT('%', #{scoring_field_name_ch}, '%')
+			</if>
+			<if test="gather_field_name != null and gather_field_name != ''">
+				and c.field_name like CONCAT('%', #{gather_field_name}, '%') 
+			</if>
+			<if test="gather_type_id != null">
+				and d.gather_type_id = #{gather_type_id}
+			</if>
+		</trim>
+		</where>
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+           ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+          ${pager.mysqlQueryCondition}
+        </if>
+	</select>
+	
+	<!-- 根据条件查询总数 -->
+	<select id="queryByCount" resultType="int"
+		parameterType="Object">
+		SELECT
+		   count(*) 
+		FROM
+		   scoring_gather_field_map a
+		LEFT JOIN
+		   scoring_model_field b
+		ON
+		   a.scoring_field_id = b.scoring_field_id
+		LEFT JOIN
+		   scoring_gather_field c
+		ON
+		   a.gather_field_id = c.gather_field_id
+		LEFT JOIN
+		   gather_type d
+		ON
+		   c.gather_type_id = d.gather_type_id
+		<where>
+		   <trim suffixOverrides=",">
+			<if test="scoring_field_name != null and  scoring_field_name != ''">
+				 and b.field_name  like CONCAT('%', #{scoring_field_name}, '%')
+			</if>
+			<if test="scoring_field_name_ch != null and scoring_field_name_ch != ''">
+				and b.field_name_ch like CONCAT('%', #{scoring_field_name_ch}, '%')
+			</if>
+			<if test="gather_field_name != null and gather_field_name != ''">
+				and c.field_name like CONCAT('%', #{gather_field_name}, '%') 
+			</if>
+			<if test="gather_type_id != null">
+				and d.gather_type_id = #{gather_type_id}
+			</if>
+		</trim>
+		</where>
+	</select>
+	
+	<update id="update">
+	   	update scoring_gather_field_map set
+		<trim suffixOverrides=",">
+			<if test="scoring_field_id != null and scoring_field_id != ''">
+				scoring_field_id = #{scoring_field_id},
+			</if>
+			<if test="gather_field_id != null and gather_field_id != ''">
+				gather_field_id = #{gather_field_id},
+			</if>
+		</trim>
+		where id=#{id}
+	
+	</update>
+	
+	
+</mapper>   

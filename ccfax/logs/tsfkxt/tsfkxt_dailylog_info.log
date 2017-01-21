@@ -1,0 +1,233 @@
+2017-01-20 15:11:32,120 ERROR [org.springframework.web.context.ContextLoader] - <Context initialization failed>
+org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [spring/applicationContext-all.xml]; nested exception is java.io.FileNotFoundException: class path resource [spring/applicationContext-all.xml] cannot be opened because it does not exist
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:343)
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:303)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:180)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:216)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:187)
+	at org.springframework.web.context.support.XmlWebApplicationContext.loadBeanDefinitions(XmlWebApplicationContext.java:125)
+	at org.springframework.web.context.support.XmlWebApplicationContext.loadBeanDefinitions(XmlWebApplicationContext.java:94)
+	at org.springframework.context.support.AbstractRefreshableApplicationContext.refreshBeanFactory(AbstractRefreshableApplicationContext.java:129)
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:540)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:454)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:403)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:306)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:106)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1559)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1549)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.FileNotFoundException: class path resource [spring/applicationContext-all.xml] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:158)
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:329)
+	... 21 more
+2017-01-20 15:11:32,134 WARN [org.springframework.web.context.support.XmlWebApplicationContext] - <Exception thrown from ApplicationListener handling ContextClosedEvent>
+java.lang.IllegalStateException: ApplicationEventMulticaster not initialized - call 'refresh' before multicasting events via the context: Root WebApplicationContext: startup date [Fri Jan 20 15:11:32 CST 2017]; root of context hierarchy
+	at org.springframework.context.support.AbstractApplicationContext.getApplicationEventMulticaster(AbstractApplicationContext.java:346)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:333)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:880)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:841)
+	at org.springframework.web.context.ContextLoader.closeWebApplicationContext(ContextLoader.java:579)
+	at org.springframework.web.context.ContextLoaderListener.contextDestroyed(ContextLoaderListener.java:115)
+	at org.apache.catalina.core.StandardContext.listenerStop(StandardContext.java:4980)
+	at org.apache.catalina.core.StandardContext.stopInternal(StandardContext.java:5626)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:232)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:160)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1559)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1549)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+2017-01-20 15:11:32,135 WARN [org.springframework.web.context.support.XmlWebApplicationContext] - <Exception thrown from LifecycleProcessor on context close>
+java.lang.IllegalStateException: LifecycleProcessor not initialized - call 'refresh' before invoking lifecycle methods via the context: Root WebApplicationContext: startup date [Fri Jan 20 15:11:32 CST 2017]; root of context hierarchy
+	at org.springframework.context.support.AbstractApplicationContext.getLifecycleProcessor(AbstractApplicationContext.java:359)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:888)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:841)
+	at org.springframework.web.context.ContextLoader.closeWebApplicationContext(ContextLoader.java:579)
+	at org.springframework.web.context.ContextLoaderListener.contextDestroyed(ContextLoaderListener.java:115)
+	at org.apache.catalina.core.StandardContext.listenerStop(StandardContext.java:4980)
+	at org.apache.catalina.core.StandardContext.stopInternal(StandardContext.java:5626)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:232)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:160)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1559)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1549)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+2017-01-20 15:14:18,716 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 15:20:41,128 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 15:32:56,067 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 16:48:28,090 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 17:18:44,290 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 17:26:07,981 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 17:38:08,261 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 17:40:44,199 INFO [com.yiya.action.app.AppAction] - <getUsrOrderList request param---TabUsrinf2Model [usrinf_id=null, usrid=null, usrname=null, id_card=null, sex=null, age=null, marital=null, mobile_phone=null, diploma=null, register_place=null, local_register_place=null, bank_id=null, income=null, house_type=null, fixed_assets=null, employment=null, com_name=null, industry=null, profession_level=null, cur_hire_duration=null, schooling_system=null, graduate_school=null, repaying_source=null, id_card_front_pic=null, id_card_reverse_pic=null, with_id_card_pic=null, credit_report_pic=null, is_face_id_pass=null, applyfo_flag=null, check_flag=null, is_loan=null, second_check_loan_limit=null, loan_limit=null, loan_used=null, is_firstquery=null, applyfor_limit=null, applyfor_time=null, freeze_remark=null, is_activate=null, limit_validity_time=null, credit_time=null, credit_type=null, first_check_operator=null, second_check_operator=null, check_alive_pic=null, xiaoshi_check_alive_result=null, xiaoshi_id_card_check_result=null, xiao_shi_left_times=null, xiao_shi_invocation_time=null, xiaoshi_id_card_check_msg=null, xiaoshi_id_card_check_score=null, xiaoshi_id_card_check_guid=null, head_portrait_pic=null, bondsmaninf_list=null, tabBondsmaninfList=null, other_pic_list=null, tabUsrOtherPicList=null, usr_order_pic_list=null, tabUsrOrderPicList=null, order_sn=null, order_type=null, first_veriy_auth=false, second_veriy_auth=false, final_veriy_auth=false, credit_info_veriy_auth=false, info_handle_auth=false, scoring_report_auth=false, pic_type_mosaic=false, applyfor_time_start=null, applyfor_time_end=null, if_filter_check_flag_initial=false, is_store=null, borrower_usrname=null, borrower_id_card=null, area_province=null, area_city=null, area_county=null, order_money=null, store_name=null, order_status=null, usr_type=null, store_contract=null, store_tel=null, store_uid=null, store_charge_rate=null, start_time=null, end_time=null, borrower_mobile_phone=null, mobile_imei=null, mobile_idfa=null, ip=null, contract_number=null, order_source=null, borrow_uid=null]>
+2017-01-20 17:41:57,279 WARN [org.springframework.web.servlet.PageNotFound] - <No mapping found for HTTP request with URI [/ccfax/user/login.shtml] in DispatcherServlet with name 'Spring-Servlet'>
+2017-01-20 17:45:45,146 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 17:59:30,846 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 18:02:46,364 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 18:04:56,704 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 18:05:24,984 INFO [com.yiya.action.MainAction] - <getBiddingList接口请求参数为{borrow_status=0}>
+2017-01-20 18:05:24,985 INFO [com.yiya.action.MainAction] - <getBiddingListUrl:http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:05:25,947 INFO [com.yiya.action.MainAction] - <getBiddingList返回结果{"return_param":{"record_total":0,"page_total":0,"bidding_list":[]},"code":0,"msg":""}>
+2017-01-20 18:05:43,722 INFO [com.yiya.action.MainAction] - <getBiddingList接口请求参数为{borrow_status=0}>
+2017-01-20 18:05:43,722 INFO [com.yiya.action.MainAction] - <getBiddingListUrl:http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:05:44,695 INFO [com.yiya.action.MainAction] - <getBiddingList返回结果{"return_param":{"record_total":0,"page_total":0,"bidding_list":[]},"code":0,"msg":""}>
+2017-01-20 18:05:50,301 INFO [com.yiya.action.TabBorrowInfoAction] - <dataList getBiddingList url--http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:05:50,301 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList接口请求参数为{_input_charset=UTF-8, borrow_uid=, bidding_id=, page_number=10, product_type=, page_no=1, borrow_status=3}>
+2017-01-20 18:05:51,257 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList返回结果{"return_param":{"record_total":0,"page_total":0,"bidding_list":[]},"code":0,"msg":""}>
+2017-01-20 18:05:51,498 INFO [com.yiya.action.TabBorrowInfoAction] - <调用链金所标的接口getBiddingList获取借款列表数据成功！借款人borrow_uid=null;标号bidding_id=null>
+2017-01-20 18:05:53,477 INFO [com.yiya.action.TabBorrowInfoAction] - <dataList getBiddingList url--http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:05:53,478 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList接口请求参数为{_input_charset=UTF-8, borrow_uid=, bidding_id=, page_number=10, product_type=, page_no=1, borrow_status=3}>
+2017-01-20 18:05:54,387 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList返回结果{"return_param":{"record_total":0,"page_total":0,"bidding_list":[]},"code":0,"msg":""}>
+2017-01-20 18:05:54,388 INFO [com.yiya.action.TabBorrowInfoAction] - <调用链金所标的接口getBiddingList获取借款列表数据成功！借款人borrow_uid=null;标号bidding_id=null>
+2017-01-20 18:06:00,996 INFO [com.yiya.action.TabBorrowInfoAction] - <getCompany result---{"dataList":[{"uid":15793,"company_name":"深圳市全木行分期系统"},{"uid":15789,"company_name":"深圳市全木行有限公"},{"uid":16027,"company_name":"深圳科技有限公司"}],"code":0,"msg":""}>
+2017-01-20 18:06:03,090 INFO [com.yiya.action.TabBorrowInfoAction] - <getMemberList param--LzhMemberModel [is_vip=null, user_phone=null, user_name=null, real_name=null, user_regtype=null, id_status=null, usrid=null, reg_time=null, reg_time_date=null, company_status=null, member_auth=false]>
+2017-01-20 18:06:03,090 INFO [com.yiya.action.TabBorrowInfoAction] - <getMemberList接口请求参数为{page_number=10, page_no=1}>
+2017-01-20 18:06:04,041 INFO [com.yiya.action.TabBorrowInfoAction] - <getMemberList返回结果{"return_param":{"member_list":[{"user_name":"13580130321","is_vip":1,"company_name":"深圳市全木行分期系统","user_phone":"","user_regtype":2,"id_status":0,"real_name":"深圳市全木行分期系统","reg_time":1468225082,"usrid":15793,"company_status":3},{"user_name":"13421234567","is_vip":0,"company_name":"深圳市全木行有限公","user_phone":"13421234567","user_regtype":2,"id_status":0,"real_name":"深圳市全木行有限公","reg_time":1467877616,"usrid":15789,"company_status":3},{"user_name":"15100000001","is_vip":1,"company_name":"深圳科技有限公司","user_phone":"15100000001","user_regtype":2,"id_status":0,"real_name":"深圳科技有限公司","reg_time":1471426661,"usrid":16027,"company_status":3},{"user_name":"13523456789","is_vip":0,"company_name":"黄花梨123","user_phone":"","user_regtype":2,"id_status":0,"real_name":"黄花梨123","reg_time":1472521240,"usrid":16135,"company_status":1},{"user_name":"18011111111","is_vip":0,"company_name":"测试专用","user_phone":"18011111111","user_regtype":2,"id_status":0,"real_name":"测试专用","reg_time":1484202988,"usrid":16569,"company_status":3},{"user_name":"18022222222","is_vip":0,"company_name":"深圳特速技术测试","user_phone":"18022222222","user_regtype":2,"id_status":0,"real_name":"深圳特速技术测试","reg_time":1484204090,"usrid":16570,"company_status":1},{"user_name":"13311122213","is_vip":0,"company_name":"四防撒旦发射点发","user_phone":"13311122213","user_regtype":2,"id_status":0,"real_name":"四防撒旦发射点发","reg_time":1482998332,"usrid":16547,"company_status":1},{"user_name":"18712222222","is_vip":0,"company_name":"啊啊啊啊啊啊啊啊","user_phone":"18712222222","user_regtype":2,"id_status":0,"real_name":"啊啊啊啊啊啊啊啊","reg_time":1484576326,"usrid":16577,"company_status":1},{"user_name":"13027939857","is_vip":1,"user_phone":"13123456789","user_regtype":1,"id_status":0,"real_name":"%E7%8E%8B%E4%BA%94","reg_time":1468585028,"usrid":15673,"company_status":0},{"user_name":"15885421365","is_vip":1,"user_phone":"15888888888","user_regtype":1,"id_status":0,"real_name":"%E7%94%B3%E6%99%93%E8%93%89","reg_time":1468580472,"usrid":15828,"company_status":0}],"record_total":359,"page_total":36},"code":0,"msg":""}>
+2017-01-20 18:07:59,213 INFO [org.hibernate.validator.internal.util.Version] - <HV000001: Hibernate Validator 5.2.4.Final>
+2017-01-20 18:08:40,463 INFO [com.yiya.action.MainAction] - <getBiddingList接口请求参数为{borrow_status=0}>
+2017-01-20 18:08:40,464 INFO [com.yiya.action.MainAction] - <getBiddingListUrl:http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:08:40,523 INFO [com.yiya.action.MainAction] - <getBiddingList返回结果>
+2017-01-20 18:08:52,251 INFO [com.yiya.action.MainAction] - <getBiddingList接口请求参数为{borrow_status=0}>
+2017-01-20 18:08:52,252 INFO [com.yiya.action.MainAction] - <getBiddingListUrl:http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:08:52,288 INFO [com.yiya.action.MainAction] - <getBiddingList返回结果>
+2017-01-20 18:09:00,403 INFO [com.yiya.action.TabBorrowInfoAction] - <dataList getBiddingList url--http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:09:00,403 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList接口请求参数为{_input_charset=UTF-8, borrow_uid=, bidding_id=, page_number=10, product_type=, page_no=1, borrow_status=3}>
+2017-01-20 18:09:00,428 INFO [com.yiya.action.TabBorrowInfoAction] - <dataList getBiddingList url--http://172.16.20.40:8080/ccfax_background/store/getBiddingList.do>
+2017-01-20 18:09:00,429 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList接口请求参数为{_input_charset=UTF-8, borrow_uid=, bidding_id=, page_number=10, product_type=, page_no=1, borrow_status=3}>
+2017-01-20 18:09:00,440 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList返回结果>
+2017-01-20 18:09:00,464 INFO [com.yiya.action.TabBorrowInfoAction] - <getBiddingList返回结果>
+2017-01-20 18:09:02,163 INFO [com.yiya.action.TabBorrowInfoAction] - <getCompany result--->
+2017-01-20 18:09:02,177 ERROR [com.yiya.interceptor.ExceptionInterceptor] - <[uri＝/tsfkxt/borrowList/startBiddingList.shtml]>
+java.lang.NullPointerException
+	at com.yiya.action.TabBorrowInfoAction.startBiddingList(TabBorrowInfoAction.java:1125)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:215)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:749)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:690)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:83)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:945)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:876)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:961)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:852)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:621)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:837)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+2017-01-20 18:09:05,203 INFO [com.yiya.action.TabBorrowInfoAction] - <dataList getDebtBiddingListUrl url--http://172.16.20.40:8080/ccfax_background/debt/getDebtBiddingList.do>
+2017-01-20 18:09:05,203 INFO [com.yiya.action.TabBorrowInfoAction] - <getDebtBiddingListUrl接口请求参数为{_input_charset=UTF-8, page_number=10, page_no=1, borrow_status=7}>
+2017-01-20 18:09:05,225 INFO [com.yiya.action.TabBorrowInfoAction] - <getDebtBiddingListUrl返回结果>
+2017-01-20 18:09:05,338 INFO [com.yiya.action.TabBorrowInfoAction] - <dataList getDebtBiddingListUrl url--http://172.16.20.40:8080/ccfax_background/debt/getDebtBiddingList.do>
+2017-01-20 18:09:05,339 INFO [com.yiya.action.TabBorrowInfoAction] - <getDebtBiddingListUrl接口请求参数为{_input_charset=UTF-8, page_number=10, page_no=1, borrow_status=7}>
+2017-01-20 18:09:05,358 INFO [com.yiya.action.TabBorrowInfoAction] - <getDebtBiddingListUrl返回结果>
+2017-01-20 18:09:16,922 INFO [com.yiya.action.TabBorrowInfoAction] - <getCompany result--->
+2017-01-20 18:09:16,924 ERROR [com.yiya.interceptor.ExceptionInterceptor] - <[uri＝/tsfkxt/borrowList/startBiddingList.shtml]>
+java.lang.NullPointerException
+	at com.yiya.action.TabBorrowInfoAction.startBiddingList(TabBorrowInfoAction.java:1125)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:215)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:749)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:690)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:83)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:945)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:876)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:961)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:852)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:621)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:837)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+2017-01-20 18:09:27,722 INFO [com.yiya.action.TabBorrowInfoAction] - <getCompany result--->
+2017-01-20 18:09:27,722 ERROR [com.yiya.interceptor.ExceptionInterceptor] - <[uri＝/tsfkxt/borrowList/startBiddingList.shtml]>
+java.lang.NullPointerException
+	at com.yiya.action.TabBorrowInfoAction.startBiddingList(TabBorrowInfoAction.java:1125)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:215)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:749)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:690)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:83)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:945)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:876)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:961)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:852)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:621)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:837)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)

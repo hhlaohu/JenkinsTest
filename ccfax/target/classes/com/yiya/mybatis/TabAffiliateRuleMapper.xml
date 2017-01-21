@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yiya.mapper.TabAffiliateRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.yiya.bean.TabAffiliateRule" >
+    <id column="affiliate_rule_id" property="affiliate_rule_id" jdbcType="BIGINT" />
+    <result column="rule_code" property="rule_code" jdbcType="VARCHAR" />
+    <result column="rule_name" property="rule_name" jdbcType="VARCHAR" />
+    <result column="rule_desc" property="rule_desc" jdbcType="VARCHAR" />
+    <result column="add_time" property="add_time" jdbcType="TIMESTAMP" />
+    <result column="add_usr_id" property="add_usr_id" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    affiliate_rule_id, rule_code, rule_name, rule_desc, add_time, add_usr_id
+  </sql>
+  <select id="selectByExample" resultType="com.yiya.model.TabAffiliateRuleModel" parameterType="com.yiya.bean.TabAffiliateRuleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tab_affiliate_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="start !=0 or limit!=0">  
+      limit #{start},#{limit}  
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_affiliate_rule
+    where affiliate_rule_id = #{affiliate_rule_id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tab_affiliate_rule
+    where affiliate_rule_id = #{affiliate_rule_id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiya.bean.TabAffiliateRuleExample" >
+    delete from tab_affiliate_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yiya.bean.TabAffiliateRule" >
+    insert into tab_affiliate_rule (affiliate_rule_id, rule_code, rule_name, 
+      rule_desc, add_time, add_usr_id
+      )
+    values (#{affiliate_rule_id,jdbcType=BIGINT}, #{rule_code,jdbcType=VARCHAR}, #{rule_name,jdbcType=VARCHAR}, 
+      #{rule_desc,jdbcType=VARCHAR}, #{add_time,jdbcType=TIMESTAMP}, #{add_usr_id,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yiya.bean.TabAffiliateRule" >
+    insert into tab_affiliate_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="affiliate_rule_id != null" >
+        affiliate_rule_id,
+      </if>
+      <if test="rule_code != null" >
+        rule_code,
+      </if>
+      <if test="rule_name != null" >
+        rule_name,
+      </if>
+      <if test="rule_desc != null" >
+        rule_desc,
+      </if>
+      <if test="add_time != null" >
+        add_time,
+      </if>
+      <if test="add_usr_id != null" >
+        add_usr_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="affiliate_rule_id != null" >
+        #{affiliate_rule_id,jdbcType=BIGINT},
+      </if>
+      <if test="rule_code != null" >
+        #{rule_code,jdbcType=VARCHAR},
+      </if>
+      <if test="rule_name != null" >
+        #{rule_name,jdbcType=VARCHAR},
+      </if>
+      <if test="rule_desc != null" >
+        #{rule_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="add_time != null" >
+        #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="add_usr_id != null" >
+        #{add_usr_id,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiya.bean.TabAffiliateRuleExample" resultType="java.lang.Integer" >
+    select count(*) from tab_affiliate_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tab_affiliate_rule
+    <set >
+      <if test="record.affiliate_rule_id != null" >
+        affiliate_rule_id = #{record.affiliate_rule_id,jdbcType=BIGINT},
+      </if>
+      <if test="record.rule_code != null" >
+        rule_code = #{record.rule_code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rule_name != null" >
+        rule_name = #{record.rule_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rule_desc != null" >
+        rule_desc = #{record.rule_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.add_time != null" >
+        add_time = #{record.add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.add_usr_id != null" >
+        add_usr_id = #{record.add_usr_id,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tab_affiliate_rule
+    set affiliate_rule_id = #{record.affiliate_rule_id,jdbcType=BIGINT},
+      rule_code = #{record.rule_code,jdbcType=VARCHAR},
+      rule_name = #{record.rule_name,jdbcType=VARCHAR},
+      rule_desc = #{record.rule_desc,jdbcType=VARCHAR},
+      add_time = #{record.add_time,jdbcType=TIMESTAMP},
+      add_usr_id = #{record.add_usr_id,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiya.bean.TabAffiliateRule" >
+    update tab_affiliate_rule
+    <set >
+      <if test="rule_code != null" >
+        rule_code = #{rule_code,jdbcType=VARCHAR},
+      </if>
+      <if test="rule_name != null" >
+        rule_name = #{rule_name,jdbcType=VARCHAR},
+      </if>
+      <if test="rule_desc != null" >
+        rule_desc = #{rule_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="add_time != null" >
+        add_time = #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="add_usr_id != null" >
+        add_usr_id = #{add_usr_id,jdbcType=BIGINT},
+      </if>
+    </set>
+    where affiliate_rule_id = #{affiliate_rule_id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiya.bean.TabAffiliateRule" >
+    update tab_affiliate_rule
+    set rule_code = #{rule_code,jdbcType=VARCHAR},
+      rule_name = #{rule_name,jdbcType=VARCHAR},
+      rule_desc = #{rule_desc,jdbcType=VARCHAR},
+      add_time = #{add_time,jdbcType=TIMESTAMP},
+      add_usr_id = #{add_usr_id,jdbcType=BIGINT}
+    where affiliate_rule_id = #{affiliate_rule_id,jdbcType=BIGINT}
+  </update>
+</mapper>

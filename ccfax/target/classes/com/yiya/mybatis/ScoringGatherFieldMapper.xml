@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.ScoringGatherFieldMapper">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="com.yiya.bean.ScoringGatherField">
+		<result column="gather_field_id" property="gather_field_id" />
+		<result column="field_name" property="field_name" />
+		<result column="field_desc" property="field_desc" />
+		<result column="gather_type_id" property="gather_type_id" />
+		<result column="add_time" property="add_time" />
+		<result column="add_usr_id" property="add_usr_id" />
+		<result column="is_enable" property="is_enable" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		gather_field_id,field_name,field_desc,gather_type_id,add_time,add_usr_id,is_enable
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="gather_type_id != null">
+				and gather_type_id = #{gather_type_id}
+			</if>
+			<if test="gather_field_id != null">
+				and gather_field_id = #{gather_field_id}
+			</if>
+			<if test="field_name != null and field_name != ''">
+				and field_name = #{field_name}
+			</if>
+			<if test="is_enable != null and is_enable != 9">
+				and is_enable = #{is_enable}
+			</if>
+		</trim>
+	</sql>
+
+     <!-- 插入记录 -->
+	<insert id="add" parameterType="com.yiya.bean.ScoringGatherField" keyProperty="gather_field_id" useGeneratedKeys="true"   >
+	  INSERT INTO 
+	  scoring_gather_field
+	  (field_name,field_desc,gather_type_id,add_time,add_usr_id,is_enable)
+	  VALUES
+	  (
+	  #{field_name},
+	  #{field_desc},
+	  #{gather_type_id},
+	  #{add_time},
+	  #{add_usr_id},
+	  #{is_enable}
+	  )
+	</insert>
+	
+	
+	<!--批量插入记录 -->
+	<insert id="batchInsert">
+	  INSERT INTO
+	    scoring_gather_field
+	    (
+	       field_name,
+	       field_desc,
+	       gather_type_id,
+	       add_time,
+	       add_usr_id,
+	       is_enable
+	      )
+	  VALUES
+	     <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.field_name},#{item.field_desc},#{item.gather_type_id},#{item.add_time},#{item.add_usr_id},0)  
+	    </foreach>  
+	</insert>
+	
+	<!--删除记录  -->
+	<delete id="delete" parameterType="Object">
+	    delete from scoring_gather_field where gather_field_id = #{gather_field_id}
+    </delete>
+	
+	
+	<!-- 根据条件查询 -->
+	<select id="queryByCondition" resultMap="BaseResultMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from scoring_gather_field
+		<include refid="Example_Where_Clause" />
+	</select>
+	
+	<!-- 根据条件 联表gather_type查询 -->
+	<select id="queryJoinScoringTypeTable" parameterType="Object" resultType="com.yiya.model.ScoringGatherFieldModel">
+	  
+	    SELECT
+	      a.gather_field_id,
+	      a.field_name,
+	      a.field_desc,
+	      a.gather_type_id,
+	      a.add_time,
+	      a.add_usr_id,
+	      a.is_enable,
+	      b.gather_type_name
+	    FROM
+	      scoring_gather_field a
+	    LEFT JOIN
+	      gather_type b
+	    ON 
+	      a.gather_type_id = b.gather_type_id
+	   <where>
+	      <if test="gather_type_name != null and gather_type_name != ''">
+	          gather_type_name = #{gather_type_name}   
+	      </if>
+	      <if test="field_name != null and field_name != ''">
+	          and field_name like CONCAT('%', #{field_name}, '%')  
+	      </if>
+	      <if test="gather_field_id != null and gather_field_id != ''">
+	          and  gather_field_id = #{gather_field_id}   
+	      </if>
+	      <if test="is_enable != null and is_enable != 9">
+			  and is_enable = #{is_enable}
+		  </if>
+	   </where>
+	   order by a.add_time desc
+	   <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+           ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+          ${pager.mysqlQueryCondition}
+        </if>
+	</select>
+	
+	<!-- 查询总数-->
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+		SELECT
+		   count(1)  
+		FROM
+	      scoring_gather_field a
+	    LEFT JOIN
+	      gather_type b
+	    ON 
+	      a.gather_type_id = b.gather_type_id
+		<include refid="Example_Where_Clause"/>
+	</select>
+
+	<update id="update" parameterType="com.yiya.bean.ScoringGatherField">
+		update scoring_gather_field set
+		<trim suffixOverrides=",">
+			<if test="field_name != null and field_name != ''">
+				field_name = #{field_name},
+			</if>
+			<if test="field_desc != null and field_desc != ''">
+				field_desc = #{field_desc},
+			</if>
+			<if test="gather_type_id != null">
+				gather_type_id = #{gather_type_id},
+			</if>
+			<if test="is_enable != null">
+			   is_enable = #{is_enable}
+			</if>
+		</trim>
+		where gather_field_id=#{gather_field_id}
+	</update>
+
+
+
+
+
+
+</mapper>   

@@ -1,0 +1,1024 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.ScoringConfigMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.ScoringModelType" >
+	<result column="field_type_id" property="field_type_id"/>
+	<result column="field_type_name" property="field_type_name"/>
+	<result column="field_type_desc" property="field_type_desc"/>
+	<result column="add_time" property="add_time"/>
+	<result column="add_usr_id" property="add_usr_id"/>
+</resultMap>
+       
+<resultMap id="BaseModelFieldtMap" type="com.yiya.bean.ScoringModelField" >
+	<result column="scoring_field_id" property="scoring_field_id"/>
+	<result column="field_name" property="field_name"/>
+	<result column="field_name_ch" property="field_name_ch"/>
+	<result column="field_desc" property="field_desc"/>
+	<result column="field_value_type" property="field_value_type"/>
+	<result column="field_type_id" property="field_type_id"/>
+	<result column="field_value_ini" property="field_value_ini"/>
+	<result column="add_time" property="add_time"/>
+	<result column="add_usr_id" property="add_usr_id"/>
+	<result column="field_type_name" property="field_type_name"/>
+	<result column="dictionary_type_id" property="dictionary_type_id"/>
+</resultMap>
+
+<!-- 列表总数 -->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from scoring_model_field_type 
+    <where>
+		<if test="field_type_name != null and field_type_name !=''">
+			and field_type_name like CONCAT('%', #{field_type_name}, '%')
+		</if>
+	</where>
+</select> 	
+
+<!-- 查询列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+    SELECT field_type_id,field_type_name,field_type_desc,add_time,add_usr_id from scoring_model_field_type t
+	<where>
+		<if test="field_type_name != null and field_type_name !=''">
+			and t.field_type_name like CONCAT('%', #{field_type_name}, '%')
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 	
+
+<select id="listAll" resultMap="BaseResultMap"  parameterType="Object">
+    SELECT field_type_id,field_type_name from scoring_model_field_type t
+</select> 	
+
+
+<!-- 所有字段 -->
+<select id="listAllFields" resultMap="BaseModelFieldtMap"  parameterType="Object">
+   SELECT scoring_field_id,field_name from scoring_model_field t  
+   	<where>
+		<if test="field_value_type != null">
+			and t.field_value_type = #{field_value_type}
+		</if>
+		<if test="is_combined != null">
+			and t.is_combined = #{is_combined}
+		</if>
+	</where> 
+</select> 	
+
+<!-- 浮点型和整形字段 -->
+<select id="listFields" resultMap="BaseModelFieldtMap"  parameterType="Object">
+   SELECT scoring_field_id,field_name,field_name_ch from scoring_model_field t where t.field_value_type = 1 or t.field_value_type = 2
+</select> 	
+
+
+<!-- 添加字段分类 -->
+<insert id="add" parameterType="Object">
+insert into scoring_model_field_type
+(
+	field_type_name,
+	field_type_desc,
+	add_time,
+	add_usr_id
+)	
+values
+(
+	#{field_type_name},
+	#{field_type_desc},
+	now(),
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="field_type_id" >  
+     SELECT @@IDENTITY AS field_type_id 
+</selectKey>  
+</insert>
+
+<!-- 修改字段分类 -->
+<update id="update" parameterType="Object">
+	update scoring_model_field_type 
+ 	 <set>
+		<if test="field_type_name != null and field_type_name !=''">
+			field_type_name = #{field_type_name},
+		</if>
+		<if test="field_type_desc != null">
+			field_type_desc = #{field_type_desc},
+		</if>
+	</set>
+	<where>
+		<if test="field_type_id != null">
+			and field_type_id = #{field_type_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from scoring_model_field_type where field_type_id = #{field_type_id}
+</delete>
+
+
+<!-- 字段列表总数 -->
+<select id="queryModelFieldCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from scoring_model_field t
+    <where>
+		<if test="field_type_id != null">
+			and t.field_type_id = #{field_type_id}
+		</if>
+		<if test="field_name != null and field_name !=''">
+			and t.field_name like CONCAT('%', #{field_name}, '%')
+		</if>
+	</where>
+</select> 	
+
+<!-- 查询字段列表 -->
+<select id="queryModelFieldList" resultMap="BaseModelFieldtMap"  parameterType="Object">
+	SELECT t.field_type_name,f.scoring_field_id,f.field_name,f.field_name_ch,f.field_desc,f.field_value_type,f.dictionary_type_id,f.field_type_id,f.field_value_ini,f.add_time,f.add_usr_id,f.combined_field_id_1,f.combined_field_id_2,f.combined_operate,f.is_combined 
+		from scoring_model_field f
+	LEFT JOIN scoring_model_field_type t ON f.field_type_id = t.field_type_id
+	<where>
+		<if test="field_type_id != null">
+			and f.field_type_id = #{field_type_id}
+		</if>
+		<if test="field_name != null and field_name !=''">
+			and f.field_name like CONCAT('%', #{field_name}, '%')
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<!-- 添加字段 -->
+<insert id="addModelField" parameterType="Object">
+insert into scoring_model_field
+(
+	field_name,
+	field_name_ch,
+	field_desc,
+	field_value_type,
+	dictionary_type_id,
+	field_type_id,
+	field_value_ini,
+	add_time,
+	add_usr_id,
+	combined_field_id_1,
+	combined_field_id_2,
+	combined_operate,
+	is_combined 
+)	
+values
+(
+	#{field_name},
+	#{field_name_ch},
+	#{field_desc},
+	#{field_value_type},
+	#{dictionary_type_id},
+	#{field_type_id},
+	#{field_value_ini},
+	now(),
+	#{add_usr_id},
+	#{combined_field_id_1},
+	#{combined_field_id_2},
+	#{combined_operate},
+	#{is_combined}
+)
+<selectKey resultType="Integer" keyProperty="scoring_field_id" >  
+     SELECT @@IDENTITY AS scoring_field_id 
+</selectKey>  
+</insert>
+
+
+<!-- 修改字段 -->
+<update id="updateModelField" parameterType="Object">
+	update scoring_model_field 
+ 	 <set>
+		<if test="field_name != null and field_name !=''">
+			field_name = #{field_name},
+		</if>
+		<if test="field_name_ch != null and field_name_ch !=''">
+			field_name_ch = #{field_name_ch},
+		</if>
+		<if test="field_type_id != null">
+			field_type_id = #{field_type_id},
+		</if>
+		<if test="field_desc != null">
+			field_desc = #{field_desc},
+		</if>
+		<if test="combined_field_id_1">
+			combined_field_id_1 = #{combined_field_id_1},
+		</if>
+		<if test="combined_field_id_2">
+			combined_field_id_2 = #{combined_field_id_2},
+		</if>
+		<if test="combined_operate != null and combined_operate !=''">
+			combined_operate = #{combined_operate},
+		</if>
+		<if test="is_combined != null">
+			is_combined = #{is_combined},
+		</if>
+		<if test="field_value_type != null">
+			field_value_type = #{field_value_type},
+		</if>
+		<if test="dictionary_type_id != null">
+			dictionary_type_id = #{dictionary_type_id},
+		</if>
+	</set>
+	<where>
+		<if test="scoring_field_id != null">
+			and scoring_field_id = #{scoring_field_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除字段 -->
+<delete id="deleteModelField" parameterType="Object">
+	delete from scoring_model_field where scoring_field_id = #{scoring_field_id}
+</delete>
+
+
+<!-- 根据id查询字段信息 -->
+<select id="queryFieldById" parameterType="Object" resultType="com.yiya.bean.ScoringModelField">
+		SELECT * FROM scoring_model_field where scoring_field_id = #{scoring_field_id}
+</select>
+
+<!-- 删除字段类型对应的字段-->
+<delete id="deleteFieldByType" parameterType="Object">
+	delete from scoring_model_field where field_type_id = #{field_type_id}
+</delete>
+
+
+<!-- 评分规则总数 -->
+<select id="queryModelRuleCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from scoring_model_value_rule t
+    LEFT JOIN scoring_rule_set s on t.rule_set_id = s.rule_set_id
+    <where>
+		<if test="is_active != null">
+			and t.is_active = #{is_active}
+		</if>
+		<if test="rule_name != null and rule_name !=''">
+			and t.rule_name like CONCAT('%', #{rule_name}, '%')
+		</if>
+	</where>
+</select> 	
+
+<select id="queryQuotaCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from tab_rule_set_quota
+    <where>
+		<if test="rule_set_id != null">
+			and rule_set_id = #{rule_set_id}
+		</if>
+	</where>
+</select> 	
+
+<delete id="deleteQuotaValue" parameterType="Integer">
+	delete from tab_rule_set_quota where quota_id=${_parameter}
+</delete>
+
+<insert id="addQuotaValue" parameterType="com.yiya.bean.RuleSetQuotaBean">
+	insert into tab_rule_set_quota(quota_id,rule_set_id,min_score,max_score,min_quota,max_quota,add_time,add_usr_id)
+	value(#{quota_id},#{rule_set_id},#{min_score},#{max_score},#{min_quota},#{max_quota},#{add_time},#{add_usr_id})
+</insert>
+
+<update id="updateQuotaValue" parameterType="com.yiya.bean.RuleSetQuotaBean">
+	update tab_rule_set_quota
+	<set>
+		<if test="min_score != null">
+			min_score=#{min_score},
+		</if>
+		<if test="max_score != null">
+			max_score=#{max_score},
+		</if>
+		<if test="min_quota != null">
+			min_quota=#{min_quota},
+		</if>
+		<if test="max_quota != null">
+			max_quota=#{max_quota},
+		</if>
+	</set>
+	<where>
+		<if test="quota_id != null">
+			and quota_id=${quota_id}
+		</if>
+	</where>
+</update>
+
+<!-- 查询评分规则列表 -->
+<select id="queryModelRuleList" resultType="com.yiya.bean.ScoringModelRule"  parameterType="Object">
+	SELECT t.scoring_rule_id,t.rule_code,t.rule_name,t.score_value,t.rule_desc,t.is_active,t.add_time,t.add_usr_id,t.rule_set_id,t.rule_type_id,s.rule_set_name
+		from scoring_model_value_rule t
+	LEFT JOIN scoring_rule_set s on t.rule_set_id = s.rule_set_id
+	<where>
+		<if test="is_active != null">
+			and t.is_active = #{is_active}
+		</if>
+		<if test="rule_name != null and rule_name !=''">
+			and t.rule_name like CONCAT('%', #{rule_name}, '%')
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<select id="queryQuotaList" resultType="com.yiya.bean.RuleSetQuotaBean"  parameterType="Object">
+	SELECT *
+	FROM tab_rule_set_quota
+	<where>
+		<if test="rule_set_id != null">
+			and rule_set_id = #{rule_set_id}
+		</if>
+	</where>
+	order by quota_id asc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<!-- 添加规则-->
+<insert id="addModelRule" parameterType="Object">
+insert into scoring_model_value_rule
+(
+	rule_code,
+	rule_name,
+	score_value,
+	rule_desc,
+	is_active,
+	add_time,
+	add_usr_id,
+	rule_set_id,
+	rule_type_id
+)	
+values
+(
+	#{rule_code},
+	#{rule_name},
+	#{score_value},
+	#{rule_desc},
+	#{is_active},
+	now(),
+	#{add_usr_id},
+	#{rule_set_id},
+	#{rule_type_id}
+)
+<selectKey resultType="Integer" keyProperty="scoring_rule_id" >  
+     SELECT @@IDENTITY AS scoring_rule_id 
+</selectKey>  
+</insert>
+
+
+<!-- 修改规则 -->
+<update id="updateModelRule" parameterType="Object">
+	update scoring_model_value_rule 
+ 	 <set>
+		<if test="rule_name != null and rule_name !=''">
+			rule_name = #{rule_name},
+		</if>
+		<if test="rule_code != null and rule_code !=''">
+			rule_code = #{rule_code},
+		</if>
+		<if test="rule_desc != null">
+			rule_desc = #{rule_desc},
+		</if>
+		<if test="score_value != null and score_value !=''">
+			score_value = #{score_value},
+		</if>
+		<if test="is_active != null">
+			is_active = #{is_active},
+		</if>
+		<if test="rule_set_id != null">
+			rule_set_id = #{rule_set_id},
+		</if>
+		<if test="rule_type_id != null">
+			rule_type_id = #{rule_type_id},
+		</if>
+	</set>
+	<where>
+		<if test="scoring_rule_id != null">
+			and scoring_rule_id = #{scoring_rule_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除规则 -->
+<delete id="deleteModelRule" parameterType="Object">
+	delete from scoring_model_value_rule where scoring_rule_id = #{scoring_rule_id}
+</delete>
+
+<!-- 所有激活规则 -->
+<select id="listAllRules" resultType="com.yiya.bean.ScoringModelRule"  parameterType="Object">
+	SELECT t.scoring_rule_id,t.rule_code,t.score_value,t.rule_name,t.rule_desc,t.is_active,t.add_time,t.add_usr_id,t.rule_set_id
+	from scoring_model_value_rule t where t.is_active = 1
+</select> 
+
+
+<!-- 规则集总数 -->
+<select id="queryRuleSetCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from scoring_rule_set t
+    <where>
+		<if test="rule_set_name != null and rule_set_name !=''">
+			and t.rule_set_name like CONCAT('%', #{rule_set_name}, '%')
+		</if>
+	</where>
+</select> 	
+
+<!-- 查询评规则集列表 -->
+<select id="queryRuleSetList" resultType="com.yiya.bean.ScoringRuleSet"  parameterType="Object">
+	SELECT t.rule_set_id,t.rule_set_name,t.upper_amount,t.lower_amount,t.add_time,t.add_usr_id,r.rule_set_type_id,r.rule_set_type_name FROM scoring_rule_set t
+ 	LEFT JOIN tab_rule_set_type r ON t.rule_set_type_id = r.rule_set_type_id
+	<where>
+		<if test="rule_set_name != null and rule_set_name !=''">
+			and t.rule_set_name like CONCAT('%', #{rule_set_name}, '%')
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<!-- 添加规则集-->
+<insert id="addRuleSet" parameterType="Object">
+insert into scoring_rule_set
+(
+	rule_set_name,
+	rule_set_type_id,
+	upper_amount,
+	lower_amount,
+	add_time,
+	add_usr_id
+)	
+values
+(
+	#{rule_set_name},
+	#{rule_set_type_id},
+	#{upper_amount},
+	#{lower_amount},
+	now(),
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="rule_set_id" >  
+     SELECT @@IDENTITY AS rule_set_id 
+</selectKey>  
+</insert>
+
+
+<!-- 修改规则集 -->
+<update id="updateRuleSet" parameterType="Object">
+	update scoring_rule_set 
+ 	 <set>
+		<if test="rule_set_name != null and rule_set_name !=''">
+			rule_set_name = #{rule_set_name},
+		</if>
+		<if test="rule_set_type_id != null">
+			rule_set_type_id = #{rule_set_type_id},
+		</if>
+		<if test="upper_amount != null">
+			upper_amount = #{upper_amount},
+		</if>
+		<if test="lower_amount != null">
+			lower_amount = #{lower_amount},
+		</if>
+	</set>
+	<where>
+		<if test="rule_set_id != null">
+			and rule_set_id = #{rule_set_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除规则集 -->
+<delete id="deleteRuleSet" parameterType="Object">
+	delete from scoring_rule_set where rule_set_id = #{rule_set_id}
+</delete>
+<!-- 删除规则集的同时删除其下面的规则 -->
+<delete id="deleteRuleBySet" parameterType="Object">
+	delete from scoring_model_value_rule where rule_set_id = #{rule_set_id}
+</delete>
+<!-- 删除规则集的同时删除其下面的反欺诈规则 -->
+<delete id="deleteFraudRuleBySet" parameterType="Object">
+	delete from anti_fraud_model_value_rule where rule_set_id = #{rule_set_id}
+</delete>
+
+<!-- 所有规则集 -->
+<select id="listAllRuleSet" resultType="com.yiya.bean.ScoringRuleSet"  parameterType="Object">
+	SELECT rule_set_id,rule_set_name,add_time,add_usr_id from scoring_rule_set t
+</select> 
+
+<!-- 所有规则业务分类 -->
+<select id="listAllRuleType" resultType="com.yiya.bean.TabRuleType"  parameterType="Object">
+	SELECT rule_type_id,rule_type_name,add_time,add_usr_id from tab_rule_type t
+</select> 
+
+<!-- 所有业务规则集分类 -->
+<select id="listRuleSetType" resultType="com.yiya.bean.TabRuleSetType"  parameterType="Object">
+	SELECT rule_set_type_id,rule_set_type_name,add_time,add_usr_id from tab_rule_set_type t
+</select> 
+
+<!-- 评分模型value总数 -->
+<select id="queryModelValueCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from scoring_model_value t
+     	LEFT JOIN scoring_model_value_rule r on t.scoring_rule_id = r.scoring_rule_id
+		LEFT JOIN scoring_model_field f on t.scoring_field_id = f.scoring_field_id
+    <where>
+		<if test="scoring_field_id != null">
+			and t.scoring_field_id = #{scoring_field_id}
+		</if>
+		<if test="scoring_rule_id != null">
+			and t.scoring_rule_id = #{scoring_rule_id}
+		</if>
+	</where>
+</select> 	
+
+<!-- 评分模型value列表 -->
+<select id="queryModelValueList" resultType="com.yiya.bean.ScoringModelValue"  parameterType="Object">
+	SELECT t.score_id,t.scoring_rule_id,t.score_value,t.scoring_field_id,t.upper_limit,t.lower_limit,t.unite_value,t.add_time,t.add_usr_id,r.rule_name,f.field_name
+	from scoring_model_value t
+	LEFT JOIN scoring_model_value_rule r on t.scoring_rule_id = r.scoring_rule_id
+	LEFT JOIN scoring_model_field f on t.scoring_field_id = f.scoring_field_id
+	<where>
+		<if test="scoring_field_id != null">
+			and t.scoring_field_id = #{scoring_field_id}
+		</if>
+		<if test="scoring_rule_id != null">
+			and t.scoring_rule_id = #{scoring_rule_id}
+		</if>
+	</where>
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<!-- 添加评分模型value -->
+<insert id="addModelValue" parameterType="Object">
+insert into scoring_model_value
+(
+	scoring_rule_id,
+	scoring_field_id,
+	upper_limit,
+	lower_limit,
+	unite_value,
+	add_time,
+	score_value,
+	add_usr_id
+)	
+values
+(
+	#{scoring_rule_id},
+	#{scoring_field_id},
+	#{upper_limit},
+	#{lower_limit},
+	#{unite_value},
+	now(),
+	#{score_value},
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="score_id" >  
+     SELECT @@IDENTITY AS score_id 
+</selectKey>  
+</insert>
+
+<!-- 修改评分模型value -->
+<update id="updateModelValue" parameterType="Object">
+	update scoring_model_value 
+ 	 <set>
+ 	 	<if test="scoring_rule_id != null">
+			scoring_rule_id = #{scoring_rule_id},
+		</if>
+		<if test="scoring_field_id != null">
+			scoring_field_id = #{scoring_field_id},
+		</if>
+		<if test="upper_limit != null and upper_limit !=''">
+			upper_limit = #{upper_limit},
+		</if>
+		<if test="lower_limit != null and lower_limit !=''">
+			lower_limit = #{lower_limit},
+		</if>
+		<if test="score_value != null">
+			score_value = #{score_value},
+		</if>
+		<if test="unite_value != null">
+			unite_value = #{unite_value},
+		</if>
+	</set>
+	<where>
+		<if test="score_id != null">
+			and score_id = #{score_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除评分模型value -->
+<delete id="deleteModelValue" parameterType="Object">
+	delete from scoring_model_value where score_id = #{score_id}
+</delete>
+<delete id="deleteByModelRule" parameterType="Object">
+	delete from scoring_model_value where scoring_rule_id = #{scoring_rule_id}
+</delete>
+
+<!-- 反欺诈 -->
+<!-- 反欺诈规则总数 -->
+<select id="queryAntiFraudRuleCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from anti_fraud_model_value_rule t
+    <where>
+		<if test="is_active != null">
+			and t.is_active = #{is_active}
+		</if>
+		<if test="rule_name != null and rule_name !=''">
+			and t.rule_name like CONCAT('%', #{rule_name}, '%')
+		</if>
+	</where>
+</select> 	
+
+<!-- 查询反欺诈规则列表 -->
+<select id="queryAntiFraudRuleList" resultType="com.yiya.bean.AntiFraudModelRule"  parameterType="Object">
+	SELECT t.anti_fraud_rule_id,t.rule_code,t.rule_name,t.rule_desc,t.is_active,t.add_time,t.add_usr_id,s.rule_set_name,s.rule_set_id
+		from anti_fraud_model_value_rule t
+	LEFT JOIN scoring_rule_set s on t.rule_set_id = s.rule_set_id
+	<where>
+		<if test="is_active != null">
+			and t.is_active = #{is_active}
+		</if>
+		<if test="rule_name != null and rule_name !=''">
+			and t.rule_name like CONCAT('%', #{rule_name}, '%')
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<!-- 添加反欺诈规则-->
+<insert id="addAntiFraudRule" parameterType="Object">
+insert into anti_fraud_model_value_rule
+(
+	rule_code,
+	rule_name,
+	rule_set_id,
+	rule_desc,
+	is_active,
+	add_time,
+	add_usr_id
+)	
+values
+(
+	#{rule_code},
+	#{rule_name},
+	#{rule_set_id},
+	#{rule_desc},
+	#{is_active},
+	now(),
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="anti_fraud_rule_id" >  
+     SELECT @@IDENTITY AS anti_fraud_rule_id 
+</selectKey>  
+</insert>
+
+
+<!-- 修改反欺诈规则 -->
+<update id="updateAntiFraudRule" parameterType="Object">
+	update anti_fraud_model_value_rule 
+ 	 <set>
+		<if test="rule_name != null and rule_name !=''">
+			rule_name = #{rule_name},
+		</if>
+		<if test="rule_code != null and rule_code !=''">
+			rule_code = #{rule_code},
+		</if>
+		<if test="rule_set_id != null">
+			rule_set_id = #{rule_set_id},
+		</if>
+		<if test="rule_desc != null">
+			rule_desc = #{rule_desc},
+		</if>
+		<if test="is_active != null">
+			is_active = #{is_active},
+		</if>
+	</set>
+	<where>
+		<if test="anti_fraud_rule_id != null">
+			and anti_fraud_rule_id = #{anti_fraud_rule_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除反欺诈规则 -->
+<delete id="deleteAntiFraudRule" parameterType="Object">
+	delete from anti_fraud_model_value_rule where anti_fraud_rule_id = #{anti_fraud_rule_id}
+</delete>
+
+<!-- 查询所有激活的反欺诈规则 -->
+<select id="listAntiFraudRule" resultType="com.yiya.bean.AntiFraudModelRule"  parameterType="Object">
+   SELECT t.anti_fraud_rule_id,t.rule_code,t.rule_name,t.rule_desc,t.is_active,t.add_time,t.add_usr_id
+		from anti_fraud_model_value_rule t where t.is_active = 1
+</select>
+
+
+<!-- 反欺诈模型value -->
+<!-- 反欺诈模型value总数 -->
+<select id="queryAntiFraudValueCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from anti_fraud_model_value t
+     	LEFT JOIN anti_fraud_model_value_rule r on t.anti_fraud_rule_id = r.anti_fraud_rule_id
+		LEFT JOIN scoring_model_field f on t.scoring_field_id = f.scoring_field_id
+    <where>
+		<if test="anti_fraud_rule_id != null">
+			and t.anti_fraud_rule_id = #{anti_fraud_rule_id}
+		</if>
+		<if test="scoring_rule_id != null">
+			and t.scoring_rule_id = #{scoring_rule_id}
+		</if>
+	</where>
+</select> 	
+
+<!-- 评分模型value列表 -->
+<select id="queryAntiFraudValueList" resultType="com.yiya.bean.AntiFraudModelValue"  parameterType="Object">
+SELECT t.anti_fraud_id,t.anti_fraud_rule_id,t.scoring_field_id,t.hit_condition,t.hit_value,t.unite_value,t.add_time,t.add_usr_id,r.rule_name,f.field_name
+	from anti_fraud_model_value t
+     	LEFT JOIN anti_fraud_model_value_rule r on t.anti_fraud_rule_id = r.anti_fraud_rule_id
+		LEFT JOIN scoring_model_field f on t.scoring_field_id = f.scoring_field_id
+	<where>
+		<if test="anti_fraud_rule_id != null">
+			and t.anti_fraud_rule_id = #{anti_fraud_rule_id}
+		</if>
+		<if test="scoring_field_id != null">
+			and t.scoring_field_id = #{scoring_field_id}
+		</if>
+	</where>
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 
+
+<!-- 添加评分模型value -->
+<insert id="addAntiFraudValue" parameterType="Object">
+insert into anti_fraud_model_value
+(
+	anti_fraud_rule_id,
+	scoring_field_id,
+	hit_condition,
+	hit_value,
+	unite_value,
+	add_time,
+	add_usr_id
+)	
+values
+(
+	#{anti_fraud_rule_id},
+	#{scoring_field_id},
+	#{hit_condition},
+	#{hit_value},
+	#{unite_value},
+	now(),
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="anti_fraud_id" >  
+     SELECT @@IDENTITY AS anti_fraud_id 
+</selectKey>  
+</insert>
+
+<!-- 修改评分模型value -->
+<update id="updateAntiFraudValue" parameterType="Object">
+	update anti_fraud_model_value 
+ 	 <set>
+ 	 	<if test="anti_fraud_rule_id != null">
+			anti_fraud_rule_id = #{anti_fraud_rule_id},
+		</if>
+		<if test="scoring_field_id != null">
+			scoring_field_id = #{scoring_field_id},
+		</if>
+		<if test="hit_condition != null">
+			hit_condition = #{hit_condition},
+		</if>
+		<if test="hit_value != null and hit_value !=''">
+			hit_value = #{hit_value},
+		</if>
+		<if test="unite_value != null">
+			unite_value = #{unite_value},
+		</if>
+	</set>
+	<where>
+		<if test="anti_fraud_id != null">
+			and anti_fraud_id = #{anti_fraud_id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除评分模型value -->
+<delete id="deleteAntiFraudValue" parameterType="Object">
+	delete from anti_fraud_model_value where anti_fraud_id = #{anti_fraud_id}
+</delete>
+
+<delete id="deleteByAntiFraudRule" parameterType="Object">
+	delete from anti_fraud_model_value where anti_fraud_rule_id = #{anti_fraud_rule_id}
+</delete>
+
+
+<!-- 黑名单 -->
+<!-- 类型列表总数 -->
+<select id="queryBlackListTypeCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from blacklist_type 
+    <where>
+		<if test="blacklist_type != null and blacklist_type !=''">
+			and blacklist_type like CONCAT('%', #{blacklist_type}, '%')
+		</if>
+	</where>
+</select> 	
+
+<!-- 查询类型列表 -->
+<select id="queryBlackListTypeList" resultType="com.yiya.bean.BlackListBean"  parameterType="Object">
+    SELECT id,blacklist_type,add_time,add_usr_id from blacklist_type t
+	<where>
+		<if test="blacklist_type != null and blacklist_type !=''">
+			and t.blacklist_type like CONCAT('%', #{blacklist_type}, '%')
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 	
+
+<!-- 所有黑名单类型 -->
+<select id="listBlackListType" resultType="com.yiya.bean.BlackListBean"  parameterType="Object">
+    SELECT id,blacklist_type from blacklist_type t
+</select> 	
+
+<!-- 增加黑名单类型 -->
+<insert id="addBlackListType" parameterType="Object">
+insert into blacklist_type
+(
+	blacklist_type,
+	add_time,
+	add_usr_id
+)	
+values
+(
+	#{blacklist_type},
+	now(),
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="id" >  
+     SELECT @@IDENTITY AS id 
+</selectKey>  
+</insert>
+
+<!-- 修改黑名单类型 -->
+<update id="updateBlackListType" parameterType="Object">
+	update blacklist_type 
+ 	 <set>
+		<if test="blacklist_type != null and blacklist_type !=''">
+			blacklist_type = #{blacklist_type},
+		</if>
+	</set>
+	<where>
+		<if test="id != null">
+			and id = #{id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除黑名单类型 -->
+<delete id="deleteBlackListType" parameterType="Object">
+	delete from blacklist_type where id = #{id}
+</delete>
+
+<!-- 删除黑名单类型的同时删除其下面的黑名单 -->
+<delete id="deleteBlackListByType" parameterType="Object">
+	delete from blacklist_value where blacklist_type_id = #{blacklist_type_id}
+</delete>
+
+<!-- 黑名单总数 -->
+<select id="queryBlackListValueCount" resultType="java.lang.Integer"  parameterType="Object">
+    SELECT COUNT(1) from blacklist_value v
+    <where>
+		<if test="blacklist_value != null and blacklist_value !=''">
+			and v.blacklist_value like CONCAT('%', #{blacklist_value}, '%')
+		</if>
+		<if test="is_active != null">
+			and v.is_active = #{is_active}
+		</if>
+	</where>
+</select> 	
+
+<!-- 查询黑名单列表 -->
+<select id="queryBlackListValueList" resultType="com.yiya.bean.BlackListBean"  parameterType="Object">
+    SELECT v.id,v.blacklist_type_id,v.blacklist_value,v.is_active,v.add_time,v.add_usr_id ,t.blacklist_type
+		from blacklist_value v
+	LEFT JOIN blacklist_type t ON v.blacklist_type_id = t.id 
+	<where>
+		<if test="blacklist_value != null and blacklist_value !=''">
+			and v.blacklist_value like CONCAT('%', #{blacklist_value}, '%')
+		</if>
+		<if test="is_active != null">
+			and v.is_active = #{is_active}
+		</if>
+	</where>
+		order by add_time desc
+	<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+   </if>
+</select> 	
+
+
+<!-- 增加黑名单类型 -->
+<insert id="addBlackListValue" parameterType="Object">
+insert into blacklist_value
+(
+	blacklist_type_id,
+	blacklist_value,
+	is_active,
+	add_time,
+	add_usr_id
+)	
+values
+(
+	#{blacklist_type_id},
+	#{blacklist_value},
+	#{is_active},
+	now(),
+	#{add_usr_id}
+)
+<selectKey resultType="Integer" keyProperty="id" >  
+     SELECT @@IDENTITY AS id 
+</selectKey>  
+</insert>
+
+<!-- 修改黑名单值 -->
+<update id="updateBlackListValue" parameterType="Object">
+	update blacklist_value 
+ 	 <set>
+		<if test="blacklist_value != null and blacklist_value !=''">
+			blacklist_value = #{blacklist_value},
+		</if>
+		<if test="blacklist_type_id != null">
+			blacklist_type_id = #{blacklist_type_id},
+		</if>
+		<if test="is_active != null">
+			is_active = #{is_active},
+		</if>		
+	</set>
+	<where>
+		<if test="id != null">
+			and id = #{id}
+		</if>
+	</where>
+</update>
+
+<!-- 删除黑名单类型 -->
+<delete id="deleteBlackListValue" parameterType="Object">
+	delete from blacklist_value where id = #{id}
+</delete>
+
+<!-- 设置scoring_model_value_rule的得分为0 -->
+<update id="updateScoringRule" parameterType="Integer">
+	update scoring_model_value_rule set score_value=0 where scoring_rule_id=${_parameter}
+</update>
+
+<!-- 设置scoring_model_value的得分为0 -->
+<update id="updateScoringValue" parameterType="Integer">
+	update scoring_model_value set score_value=0 where scoring_rule_id=${_parameter}
+</update>
+
+
+<!-- 查询区域列表 -->
+<select id="queryAreaList" resultType="com.yiya.bean.TabAreaBean"  parameterType="map">
+	SELECT area_id,area_name,area_parent_id,area_sort,area_deep,tesu_deleted,tesu_description,tesu_created FROM tab_area  a
+	<where>
+		<if test="area_deep != null">
+			and a.area_deep = #{area_deep}
+		</if>
+		<if test="area_parent_id != null">
+			and a.area_parent_id = #{area_parent_id}
+		</if>
+	</where>
+</select> 	
+
+
+<!-- 规则集管理中，对于金额上限及下限，需限制不交叉 -->
+<!-- 查询左边界范围 -->
+<select id="findLeftCount" resultType="Integer" parameterType="Map">
+	SELECT COUNT(1) from scoring_rule_set where (#{upper_amount} >= `upper_amount` and `lower_amount` > #{upper_amount}) or (`upper_amount` > #{upper_amount}  and #{lower_amount} >= `lower_amount`)
+</select>
+
+<!-- 查询左边界范围 -->
+<select id="findLeftCountByMap" resultType="Integer" parameterType="Map">
+	SELECT COUNT(1) from scoring_rule_set where ((#{upper_amount} >= `upper_amount` and `lower_amount` > #{upper_amount}) or (`upper_amount` > #{upper_amount}  and #{lower_amount} >= `lower_amount`) ) and rule_set_id != #{rule_set_id}
+</select>
+
+<!-- 查询右边界范围 -->
+<select id="findRightCount" resultType="Integer" parameterType="Map">
+	SELECT COUNT(1) from scoring_rule_set where (#{lower_amount} > `upper_amount` and `lower_amount` >= #{lower_amount}) or (`upper_amount` > #{upper_amount}  and #{lower_amount} >= `lower_amount`)
+</select>
+
+<!-- 查询右边界范围 -->
+<select id="findRightCountByMap" resultType="Integer" parameterType="Map">
+	SELECT COUNT(1) from scoring_rule_set where ((#{lower_amount} > `upper_amount` and `lower_amount` >= #{lower_amount}) or (`upper_amount` > #{upper_amount}  and #{lower_amount} >= `lower_amount`)) and rule_set_id != #{rule_set_id}
+</select>
+
+
+</mapper>   

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.OrderMapper">
+	
+	<select id="getOrderDataCnt" parameterType="Object" resultType="Integer">
+		SELECT COUNT(1)
+		FROM tab_usr_order
+		<where>
+			<if test="submit_step != null">
+				and submit_step=#{submit_step}
+			</if>
+			<if test="borrow_uid != null and borrow_uid != ''">
+				and borrow_uid=#{borrow_uid}
+			</if>
+			<if test="order_type != null">
+				and order_type=#{order_type}
+			</if>
+			<if test="check_status != null">
+				and (check_status=3 or check_status=7)
+			</if>
+			<if test="borrower_mobile_phone != null and borrower_mobile_phone != ''">
+				and borrower_mobile_phone=#{borrower_mobile_phone}
+			</if>
+			<if test="borrower_usrname != null and borrower_usrname != ''">
+				and borrower_usrname=#{borrower_usrname}
+			</if>
+			<if test="order_sn != null and order_sn != ''">
+				and order_sn=#{order_sn}
+			</if>
+			<if test="start_time != null">
+				and create_time > #{start_time}
+			</if>
+			<if test="end_time != null">
+				and #{end_time} > create_time
+			</if>
+		</where>
+	</select>
+	
+	<select id="getOrderDataList" parameterType="Object" resultType="com.yiya.bean.BorrowUserOrder">
+		SELECT *
+		FROM tab_usr_order
+		<where>
+			<if test="submit_step != null">
+				and submit_step=#{submit_step}
+			</if>
+			<if test="borrow_uid != null and borrow_uid != ''">
+				and borrow_uid=#{borrow_uid}
+			</if>
+			<if test="order_type != null">
+				and order_type=#{order_type}
+			</if>
+			<if test="check_status != null">
+				and (check_status=3 or check_status=7)
+			</if>
+			<if test="borrower_mobile_phone != null and borrower_mobile_phone != ''">
+				and borrower_mobile_phone=#{borrower_mobile_phone}
+			</if>
+			<if test="borrower_usrname != null and borrower_usrname != ''">
+				and borrower_usrname=#{borrower_usrname}
+			</if>
+			<if test="order_sn != null and order_sn != ''">
+				and order_sn=#{order_sn}
+			</if>
+			<if test="start_time != null">
+				and create_time > #{start_time}
+			</if>
+			<if test="end_time != null">
+				and #{end_time} > create_time
+			</if>
+		</where>
+		order by create_time desc
+		<if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	       ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<select id="findBorrowUserOrderByUsrOrderId" parameterType="Integer" resultType="com.yiya.bean.BorrowUserOrder">
+		SELECT o.*,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_1') AND dictionary_value_key=diploma) 
+		AS diploma_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_3') AND dictionary_value_key=sex) 
+		AS sex_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_2') AND dictionary_value_key=marital) 
+		AS marital_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_6') AND dictionary_value_key=local_register_place) 
+		AS local_register_place_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_10') AND dictionary_value_key=income) 
+		AS income_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_11') AND dictionary_value_key=house_type) 
+		AS house_type_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_12') AND dictionary_value_key=fixed_assets) 
+		AS fixed_assets_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_33') AND dictionary_value_key=employment) 
+		AS employment_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_7') AND dictionary_value_key=industry) 
+		AS industry_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_8') AND dictionary_value_key=profession_level) 
+		AS profession_level_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_9') AND dictionary_value_key=cur_hire_duration) 
+		AS cur_hire_duration_,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_34') AND dictionary_value_key=schooling_system) 
+		AS schooling_system_
+		FROM tab_usr_order o
+		where usr_order_id=#{_parameter}
+	</select>
+	
+	<select id="findTabOrderCheckLogsByUsrOrderId" parameterType="Integer" resultType="com.yiya.bean.TabOrderCheckLog">
+		select * from tab_order_check_log where usr_order_id=#{_parameter}
+	</select>
+	
+	<select id="findTabOrderBondsmaninfsByUsrOrderId" parameterType="Integer" resultType="com.yiya.bean.TabOrderBondsmaninf">
+		select * from tab_order_bondsmaninf where usr_order_id=#{_parameter}
+	</select>
+	
+	<select id="findOrderPicByUsrOrderId" parameterType="Integer" resultType="String">
+		select pic_addr from tab_usr_order_pic where usr_order_id=#{_parameter} 
+	</select>
+	
+	<select id="getPicAdd" parameterType="Integer" resultType="String">
+		select pic_addr from tab_usr_order_pic where usr_order_id = #{_parameter} and pic_type in (0,3,13)
+	</select>
+	
+	<update id="updateCheckStatus" parameterType="Map">
+		update tab_usr_order
+		<set>
+			<if test="check_status != null">
+				check_status=#{check_status},
+			</if>
+			<if test="order_allot != null">
+				order_allot=#{order_allot},
+			</if>
+		</set>
+		where usr_order_id=#{usr_order_id}
+	</update>
+	
+	<insert id="addTabOrderCheckLog" parameterType="com.yiya.bean.TabOrderCheckLog">
+		insert into tab_order_check_log(usr_order_id,deal_user_id,deal_user,check_result,check_remark,deal_time)
+		value(#{usr_order_id},#{deal_user_id},#{deal_user},#{check_result},#{check_remark},#{deal_time})
+	</insert>
+	
+	<update id="updateOrderHaveScoringReport" parameterType="String">
+		update tab_usr_order set have_scoring_report=1 where order_sn=#{_parameter}
+	</update>
+	
+	<update id="updateReportInfo" parameterType="Map">
+		update tab_scoring_report
+		<set>
+			<if test="refund_verdict != null">
+				refund_verdict=#{refund_verdict},
+			</if>
+			<if test="umpire != null">
+				umpire=#{umpire},
+			</if>
+			<if test="first_trial_verdict != null">
+				first_trial_verdict=#{first_trial_verdict},
+			</if>
+			<if test="first_person != null">
+				first_person=#{first_person},
+			</if>
+			<if test="recheck_verdict != null">
+				recheck_verdict=#{recheck_verdict},
+			</if>
+			<if test="recheck_person != null">
+				recheck_person=#{recheck_person},
+			</if>
+			<if test="last_trial_verdict != null">
+				last_trial_verdict=#{last_trial_verdict},
+			</if>
+			<if test="last_person != null">
+				last_person=#{last_person},
+			</if>
+		</set>
+		where report_id=#{report_id}
+	</update>
+</mapper>   

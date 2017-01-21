@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabUsrPremisePermitPicMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.TabUsrPremisePermitPic" >
+	<result column="id" property="id"/>
+	<result column="decoration_order_id" property="decoration_order_id"/>
+	<result column="pic_desc" property="pic_desc"/>
+	<result column="pic_addr" property="pic_addr"/>
+	<result column="order_sn" property="order_sn"/>
+	<result column="pic_type" property="pic_type"/>
+	<result column="sequence" property="sequence"/>
+</resultMap>
+
+
+	<sql id="Base_Column_List">
+	id,decoration_order_id,pic_desc,pic_addr,order_sn,pic_type,sequence
+	</sql>
+
+  
+   <!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+	<trim  suffixOverrides="," >
+		<if test="id != null" >
+		    and id =  #{id}
+		</if>
+		<if test="decoration_order_id != null" >
+		    and decoration_order_id =  #{decoration_order_id}
+		</if>
+		<if test="pic_desc != null and pic_desc != ''" >
+		    and pic_desc like CONCAT('%', #{pic_desc}, '%')
+		</if>
+		<if test="pic_addr != null and pic_addr != ''" >
+		    and pic_addr like CONCAT('%', #{pic_addr}, '%')
+		</if>
+		<if test="order_sn != null and order_sn != ''" >
+		    and order_sn like CONCAT('%', #{order_sn}, '%')
+		</if>
+		<if test="pic_type != null" >
+		    and pic_type =  #{pic_type}
+		</if>
+		</trim>
+	</sql>
+   
+   <!-- 查询装修合同照片信息 -->
+<select id="queryByList"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from tab_usr_premise_permit_pic
+	 <include refid="Example_Where_Clause"/>
+	 ORDER BY IF(ISNULL(sequence),1,0),sequence
+</select>
+
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from tab_usr_premise_permit_pic 
+	<include refid="Example_Where_Clause"/>
+</select>
+   
+   
+	  
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object" >
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			 SELECT LAST_INSERT_ID()
+  	   </selectKey>
+	  insert into tab_usr_premise_permit_pic (decoration_order_id,pic_desc,pic_addr,order_sn,pic_type,sequence)
+	  values(#{decoration_order_id},#{pic_desc},#{pic_addr},#{order_sn},#{pic_type},#{sequence})
+	</insert>
+	
+	 <!-- 根据usrid，修改记录-->  
+	 <update id="update" parameterType="Object" >
+	  update tab_usr_premise_permit_pic set
+	   <trim  suffixOverrides="," >
+		<if test="pic_desc != null and pic_desc != ''" >
+		     pic_desc = #{pic_desc},
+		</if>
+		<if test="pic_addr != null and pic_addr != ''" >
+		     pic_addr = #{pic_addr},
+		</if>
+		<if test="order_sn != null and order_sn != ''" >
+		     order_sn = #{order_sn},
+		</if>
+		<if test="pic_type != null" >
+		     pic_type = #{pic_type}
+		</if>
+		<if test="sequence != null" >
+		     sequence = #{sequence}
+		</if>
+	   </trim> where decoration_order_id=#{decoration_order_id}
+	 </update>
+ 
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete from tab_usr_premise_permit_pic where decoration_order_id=#{decoration_order_id}
+</delete>
+ 
+	<select id="queryTabUsrPremisePermitPic" parameterType="Object" resultType="com.yiya.bean.TabUsrPremisePermitPic">
+	select <include refid="Base_Column_List" /> 
+	 from tab_usr_premise_permit_pic
+	 where 1=1
+	 <trim  suffixOverrides="," >
+			 <if test="decoration_order_id != null" >
+			    and decoration_order_id =  #{decoration_order_id}
+			</if>
+			<if test="order_sn != null and order_sn != ''" >
+			    and order_sn =  #{order_sn}
+			</if>
+			<if test="pic_type != null" >
+			    and pic_type =  #{pic_type}
+			</if>
+	</trim>
+	ORDER BY IF(ISNULL(sequence),1,0),sequence
+	</select>
+
+
+  	
+</mapper>   

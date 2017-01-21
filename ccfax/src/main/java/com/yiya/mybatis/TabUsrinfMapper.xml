@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.TabUsrinfMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.TabUsrinf" >
+	<result column="usrinf_id" property="usrinf_id"/>
+	<result column="usrid" property="usrid"/>
+	<result column="usrname" property="usrname"/>
+	<result column="id_card" property="id_card"/>
+	<result column="sex" property="sex"/>
+	<result column="marital" property="marital"/>
+	<result column="addr_province" property="addr_province"/>
+	<result column="addr_city" property="addr_city"/>
+	<result column="addr_country" property="addr_country"/>
+	<result column="addr_street" property="addr_street"/>
+	<result column="usr_native" property="usr_native"/>
+	<result column="diploma" property="diploma"/>
+	<result column="mobile_phone" property="mobile_phone"/>
+	<result column="home_phone" property="home_phone"/>
+	<result column="profession" property="profession"/>
+	<result column="profession_level" property="profession_level"/>
+	<result column="com_name" property="com_name"/>
+	<result column="com_street" property="com_street"/>
+	<result column="hiredate" property="hiredate"/>
+	<result column="graduate_school" property="graduate_school"/>
+	<result column="graduate_time" property="graduate_time"/>
+	<result column="income" property="income"/>
+	<result column="working_long" property="working_long"/>	
+	<result column="id_card_front_pic" property="id_card_front_pic"/>
+	<result column="id_card_reverse_pic" property="id_card_reverse_pic"/>
+	<result column="is_face_id_pass" property="is_face_id_pass"/>
+	<result column="with_id_card_pic" property="with_id_card_pic"/>
+	<result column="applyfo_flag" property="applyfo_flag"/>
+	<result column="check_flag" property="check_flag"/>
+	<result column="is_loan" property="is_loan"/>
+	<result column="second_check_loan_limit" property="second_check_loan_limit"/>
+	<result column="loan_limit" property="loan_limit"/>
+	<result column="loan_used" property="loan_used"/>
+	<result column="is_firstquery" property="is_firstquery"/>
+	<result column="applyfor_limit" property="applyfor_limit"/>
+	<result column="applyfor_time" property="applyfor_time"/>
+	<result column="freeze_remark" property="freeze_remark"/>
+	<result column="is_activate" property="is_activate"/>
+	<result column="credit_report_pic" property="credit_report_pic"/>
+	<result column="limit_validity_time" property="limit_validity_time"/>
+	<result column="credit_time" property="credit_time"/>
+	<result column="credit_type" property="credit_type"/>
+	<result column="check_alive_pic" property="check_alive_pic"/>
+	<result column="xiaoshi_check_alive_result" property="xiaoshi_check_alive_result"/>
+	<result column="xiaoshi_id_card_check_result" property="xiaoshi_id_card_check_result"/>
+	<result column="xiao_shi_left_times" property="xiao_shi_left_times"/>
+	<result column="xiao_shi_invocation_time" property="xiao_shi_invocation_time"/>
+	<result column="xiaoshi_id_card_check_msg" property="xiaoshi_id_card_check_msg"/>
+	<result column="xiaoshi_id_card_check_score" property="xiaoshi_id_card_check_score"/>
+	<result column="xiaoshi_id_card_check_guid" property="xiaoshi_id_card_check_guid"/>
+</resultMap>
+
+
+	<sql id="Base_Column_List">
+	usrinf_id,usrid,usrname,id_card,sex,marital,addr_province,addr_city,addr_country,addr_street,usr_native,diploma,mobile_phone,home_phone,profession,profession_level,com_name,com_street,income,working_long,hiredate,graduate_school,graduate_time,id_card_front_pic,id_card_reverse_pic,is_face_id_pass,with_id_card_pic,applyfo_flag,check_flag,is_loan,second_check_loan_limit,loan_limit,loan_used,(loan_limit-loan_used) as loan_useble,is_firstquery,applyfor_limit,applyfor_time,freeze_remark,
+	is_activate,credit_report_pic,limit_validity_time,credit_time,credit_type,first_check_operator,second_check_operator,check_alive_pic,xiaoshi_check_alive_result,xiaoshi_id_card_check_result,xiao_shi_left_times,xiao_shi_invocation_time,xiaoshi_id_card_check_msg,xiaoshi_id_card_check_score,xiaoshi_id_card_check_guid
+	</sql>
+
+  
+   <!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+	<trim  suffixOverrides="," >
+		<if test="usrinf_id != null" >
+		    and usrinf_id =  #{usrinf_id}
+		</if>
+		<if test="usrid != null" >
+		    and usrid =  #{usrid}
+		</if>
+		<if test="usrname != null and usrname != ''" >
+		    and usrname like CONCAT('%', #{usrname}, '%')
+		</if>
+		<if test="id_card != null and id_card != ''" >
+		    and id_card like CONCAT('%', #{id_card}, '%')
+		</if>
+		<if test="sex != null" >
+		    and sex =  #{sex}
+		</if>
+		<if test="marital != null" >
+		    and marital =  #{marital}
+		</if>
+		<if test="addr_province != null and addr_province != ''" >
+		    and addr_province like CONCAT('%', #{addr_province}, '%')
+		</if>
+		<if test="addr_city != null and addr_city != ''" >
+		    and addr_city like CONCAT('%', #{addr_city}, '%')
+		</if>
+		<if test="addr_country != null and addr_country != ''" >
+		    and addr_country like CONCAT('%', #{addr_country}, '%')
+		</if>
+		<if test="addr_street != null and addr_street != ''" >
+		    and addr_street like CONCAT('%', #{addr_street}, '%')
+		</if>
+		<if test="usr_native != null and usr_native != ''" >
+		    and usr_native like CONCAT('%', #{usr_native}, '%')
+		</if>
+		<if test="diploma != null" >
+		    and diploma =  #{diploma}
+		</if>
+		<if test="mobile_phone != null and mobile_phone != ''" >
+		    and mobile_phone like CONCAT('%', #{mobile_phone}, '%')
+		</if>
+		<if test="home_phone != null and home_phone != ''" >
+		    and home_phone like CONCAT('%', #{home_phone}, '%')
+		</if>
+		<if test="profession != null and profession != ''" >
+		    and profession like CONCAT('%', #{profession}, '%')
+		</if>
+		<if test="profession_level != null and profession_level != ''" >
+		    and profession_level like CONCAT('%', #{profession_level}, '%')
+		</if>
+		<if test="com_name != null and com_name != ''" >
+		    and com_name like CONCAT('%', #{com_name}, '%')
+		</if>
+		<if test="com_street != null and com_street != ''" >
+		    and com_street like CONCAT('%', #{com_street}, '%')
+		</if>
+		<if test="income != null and income != ''" >
+		    and income like CONCAT('%', #{income}, '%')
+		</if>
+		<if test="working_long != null" >
+		    and working_long =  #{working_long}
+		</if>
+		<if test="hiredate != null" >
+		    and hiredate =  #{hiredate}
+		</if>
+		<if test="graduate_school != null and graduate_school != ''" >
+		     and graduate_school like CONCAT('%', #{graduate_school}, '%')
+		</if>
+		<if test="graduate_time != null" >
+		    and graduate_time =  #{graduate_time}
+		</if>
+		<if test="id_card_front_pic != null and id_card_front_pic != ''" >
+		    and id_card_front_pic like CONCAT('%', #{id_card_front_pic}, '%')
+		</if>
+		<if test="id_card_reverse_pic != null and id_card_reverse_pic != ''" >
+		    and id_card_reverse_pic like CONCAT('%', #{id_card_reverse_pic}, '%')
+		</if>
+		<if test="is_face_id_pass != null" >
+		    and is_face_id_pass =  #{is_face_id_pass}
+		</if>
+		<if test="with_id_card_pic != null and with_id_card_pic != ''" >
+		    and with_id_card_pic like CONCAT('%', #{with_id_card_pic}, '%')
+		</if>
+		<if test="applyfo_flag != null" >
+		    and applyfo_flag =  #{applyfo_flag}
+		</if>
+		<if test="check_flag != null" >
+		    and check_flag =  #{check_flag}
+		</if>
+		<if test="is_loan != null" >
+		    and is_loan =  #{is_loan}
+		</if>
+		<if test="second_check_loan_limit != null" >
+		    and second_check_loan_limit =  #{second_check_loan_limit}
+		</if>
+		<if test="loan_limit != null" >
+		    and loan_limit =  #{loan_limit}
+		</if>
+		<if test="loan_used != null" >
+		    and loan_used =  #{loan_used}
+		</if>
+		<if test="is_firstquery != null" >
+		    and is_firstquery =  #{is_firstquery}
+		</if>
+		<if test="applyfor_limit != null" >
+		    and applyfor_limit =  #{applyfor_limit}
+		</if>
+		<if test="applyfor_time != null" >
+		    and applyfor_time =  #{applyfor_time}
+		</if>
+		<if test="is_activate != null" >
+		    and is_activate =  #{is_activate}
+		</if>
+		<if test="credit_report_pic != null and credit_report_pic != ''" >
+		    and credit_report_pic like CONCAT('%', #{credit_report_pic}, '%')
+		</if>
+		<if test="limit_validity_time != null" >
+		    and limit_validity_time =  #{limit_validity_time}
+		</if>
+		<if test="credit_time != null" >
+		    and credit_time =  #{credit_time}
+		</if>
+		<if test="credit_type != null" >
+		    and credit_type =  #{credit_type}
+		</if>
+		<if test="first_check_operator != null and first_check_operator != ''" >
+		    and first_check_operator =  #{first_check_operator}
+		</if>
+		<if test="second_check_operator != null and second_check_operator != ''" >
+		    and second_check_operator =  #{second_check_operator}
+		</if>
+		</trim>
+	</sql>
+	
+	<!-- 查询用户列表信息-->
+	<select id="queryByList" parameterType="Object" resultType="com.yiya.bean.TabUsrinf">
+		select  <include refid="Base_Column_List" />  
+		 from tab_usrinf <include refid="Example_Where_Clause"/>
+		<if test="applyfor_time_start != null" >
+	  	  and applyfor_time &gt;= #{applyfor_time_start}
+		</if>
+		<if test="applyfor_time_end != null" >
+		    and applyfor_time &lt;= #{applyfor_time_end}
+		</if>
+		<if test="if_filter_check_flag_initial != false" >
+		    and check_flag != 0
+		</if>
+		order by applyfor_time desc
+	   <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+	     ${pager.orderCondition}
+	   </if>
+	   <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	      ${pager.mysqlQueryCondition}
+	   </if>
+	</select>
+	<!-- 列表总数-->
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from tab_usrinf 
+		<include refid="Example_Where_Clause"/>
+		<if test="applyfor_time_start != null" >
+	  	  and applyfor_time &gt;= #{applyfor_time_start}
+		</if>
+		<if test="applyfor_time_end != null" >
+		    and applyfor_time &lt;= #{applyfor_time_end}
+		</if>
+		<if test="if_filter_check_flag_initial != false" >
+		    and check_flag != 0
+		</if>
+	</select>
+   
+    <!-- 根据用户usrid查询用户信息是否存在 -->
+	<select id="isExistTabUsrinf" parameterType="Object" resultType="java.lang.Integer">
+		select count(usrid) from tab_usrinf <include refid="Example_Where_Clause"/>
+	</select>
+	
+	 <!-- 根据用户usrid查询用户信息-->
+	<select id="queryTabUsrinf" parameterType="Object" resultType="com.yiya.bean.TabUsrinf">
+		select  <include refid="Base_Column_List" />  from 
+		tab_usrinf  <include refid="Example_Where_Clause"/>
+	</select>
+	  
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object" >
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="usrinf_id">
+			 SELECT LAST_INSERT_ID()
+  	   </selectKey>
+	  insert into tab_usrinf(usrid,usrname,id_card,sex,marital,addr_province,addr_city,addr_country,addr_street,usr_native,diploma,mobile_phone,home_phone,profession,profession_level,com_name,com_street,income,working_long,hiredate,graduate_school,graduate_time,id_card_front_pic,id_card_reverse_pic,is_face_id_pass,with_id_card_pic,applyfo_flag,check_flag,is_loan,second_check_loan_limit,loan_limit,loan_used,is_firstquery,applyfor_limit,applyfor_time,freeze_remark,is_activate,credit_report_pic,limit_validity_time,credit_time,credit_type)
+	  values(#{usrid},#{usrname},#{id_card},#{sex},#{marital},#{addr_province},#{addr_city},#{addr_country},#{addr_street},#{usr_native},#{diploma},#{mobile_phone},#{home_phone},#{profession},#{profession_level},#{com_name},#{com_street},#{income},#{working_long},#{hiredate},#{graduate_school},#{graduate_time},#{id_card_front_pic},#{id_card_reverse_pic},#{is_face_id_pass},#{with_id_card_pic},#{applyfo_flag},#{check_flag},#{is_loan},#{second_check_loan_limit},#{loan_limit},#{loan_used},#{is_firstquery},#{applyfor_limit},#{applyfor_time},#{freeze_remark},#{is_activate},#{credit_report_pic},#{limit_validity_time},#{credit_time},#{credit_type})
+	</insert>
+	
+	 <!-- 根据usrid，修改记录-->  
+	 <update id="update" parameterType="Object" >
+	  update tab_usrinf set
+	  <trim  suffixOverrides="," >
+		<if test="usrname != null and usrname != ''" >
+		     usrname = #{usrname},
+		</if>
+		<if test="id_card != null and id_card != ''" >
+		     id_card = #{id_card},
+		</if>
+		<if test="sex != null" >
+		     sex =  #{sex},
+		</if>
+		<if test="marital != null" >
+		    marital =  #{marital},
+		</if>
+		<if test="addr_province != null and addr_province != ''" >
+		     addr_province = #{addr_province},
+		</if>
+		<if test="addr_city != null and addr_city != ''" >
+		     addr_city = #{addr_city},
+		</if>
+		<if test="addr_country != null and addr_country != ''" >
+		     addr_country = #{addr_country},
+		</if>
+		<if test="addr_street != null and addr_street != ''" >
+		     addr_street = #{addr_street},
+		</if>
+		<if test="usr_native != null and usr_native != ''" >
+		     usr_native = #{usr_native},
+		</if>
+		<if test="diploma != null" >
+		     diploma =  #{diploma},
+		</if>
+		<if test="mobile_phone != null and mobile_phone != ''" >
+		     mobile_phone = #{mobile_phone},
+		</if>
+		<if test="home_phone != null and home_phone != ''" >
+		     home_phone = #{home_phone},
+		</if>
+		<if test="profession != null and profession != ''" >
+		     profession = #{profession},
+		</if>
+		<if test="profession_level != null and profession_level != ''" >
+		     profession_level = #{profession_level},
+		</if>
+		<if test="com_name != null and com_name != ''" >
+		     com_name = #{com_name},
+		</if>
+		<if test="com_street != null and com_street != ''" >
+		     com_street = #{com_street},
+		</if>
+		<if test="income != null and income != ''" >
+		     income = #{income},
+		</if>
+		<if test="working_long != null" >
+		     working_long =  #{working_long},
+		</if>
+		<if test="hiredate != null" >
+		     hiredate =  #{hiredate},
+		</if>
+		<if test="graduate_school != null" >
+		     graduate_school =  #{graduate_school},
+		</if>
+		<if test="graduate_time != null" >
+		    graduate_time =  #{graduate_time},
+		</if>
+		<if test="id_card_front_pic != null and id_card_front_pic != ''" >
+		   id_card_front_pic = #{id_card_front_pic},
+		</if>
+		<if test="id_card_reverse_pic != null and id_card_reverse_pic != ''" >
+		     id_card_reverse_pic = #{id_card_reverse_pic},
+		</if>
+		<if test="is_face_id_pass != null" >
+		     is_face_id_pass =  #{is_face_id_pass},
+		</if>
+		<if test="with_id_card_pic != null and with_id_card_pic != ''" >
+		     with_id_card_pic =  #{with_id_card_pic},
+		</if>
+		<if test="applyfo_flag != null" >
+		   applyfo_flag =  #{applyfo_flag},
+		</if>
+		<if test="check_flag != null" >
+		    check_flag =  #{check_flag},
+		</if>
+		<if test="is_loan != null" >
+		    is_loan =  #{is_loan},
+		</if>
+		<if test="second_check_loan_limit != null" >
+		    second_check_loan_limit =  #{second_check_loan_limit},
+		</if>
+		<if test="loan_limit != null" >
+		    loan_limit =  #{loan_limit},
+		</if>
+		<if test="loan_used != null" >
+		   loan_used =  #{loan_used},
+		</if>
+		<if test="is_firstquery != null" >
+		    is_firstquery =  #{is_firstquery},
+		</if>
+		<if test="applyfor_limit != null" >
+		    applyfor_limit =  #{applyfor_limit},
+		</if>
+		<if test="applyfor_time != null" >
+		    applyfor_time =  #{applyfor_time},
+		</if>
+		<if test="freeze_remark != null and freeze_remark != ''" >
+		     freeze_remark =  #{freeze_remark},
+		</if>
+		<if test="is_activate != null" >
+		    is_activate =  #{is_activate},
+		</if>
+		<if test="credit_report_pic != null and credit_report_pic != ''" >
+		     credit_report_pic =  #{credit_report_pic},
+		</if>
+		<if test="limit_validity_time != null" >
+		    limit_validity_time =  #{limit_validity_time},
+		</if>
+		<if test="credit_time != null" >
+		    credit_time =  #{credit_time},
+		</if>
+		<if test="credit_type != null" >
+		    credit_type =  #{credit_type},
+		</if>
+		<if test="first_check_operator != null and first_check_operator != ''" >
+		    first_check_operator =  #{first_check_operator},
+		</if>
+		<if test="check_alive_pic != null and check_alive_pic != ''" >
+		    check_alive_pic =  #{check_alive_pic},
+		</if>
+		<if test="xiaoshi_check_alive_result != null" >
+		    xiaoshi_check_alive_result =  #{xiaoshi_check_alive_result},
+		</if>
+		<if test="xiaoshi_id_card_check_result != null and xiaoshi_id_card_check_result != ''" >
+		    xiaoshi_id_card_check_result =  #{xiaoshi_id_card_check_result},
+		</if>
+		<if test="xiao_shi_left_times != null" >
+		    xiao_shi_left_times =  #{xiao_shi_left_times},
+		</if>
+		<if test="xiao_shi_invocation_time != null" >
+		    xiao_shi_invocation_time =  #{xiao_shi_invocation_time},
+		</if>
+		<if test="xiaoshi_id_card_check_msg != null and xiaoshi_id_card_check_msg != ''" >
+		    xiaoshi_id_card_check_msg =  #{xiaoshi_id_card_check_msg},
+		</if>
+		<if test="xiaoshi_id_card_check_score != null and xiaoshi_id_card_check_score != ''" >
+		    xiaoshi_id_card_check_score =  #{xiaoshi_id_card_check_score},
+		</if>
+		<if test="xiaoshi_id_card_check_guid != null and xiaoshi_id_card_check_guid != ''" >
+		    xiaoshi_id_card_check_guid =  #{xiaoshi_id_card_check_guid}
+		</if>
+	   </trim> where usrid=#{usrid}
+	 </update>
+ 	
+ 	 <update id="updateLimitStatus" parameterType="Object" >
+	  update tab_usrinf set
+	  <trim  suffixOverrides="," >
+		  <if test="is_loan != null" >
+		    is_loan =  #{is_loan},
+		  </if>
+		  <if test="freeze_remark != null and freeze_remark != ''" >
+			     freeze_remark =  #{freeze_remark}
+		  </if>
+      </trim> where usrinf_id=#{usrinf_id}
+  	 </update>
+  	 
+  	 <!-- 根据主键usrinf_id，修改记录-->  
+	 <update id="updateBySelective" parameterType="Object" >
+	  update tab_usrinf set
+	  <trim  suffixOverrides="," >
+		<if test="usrname != null and usrname != ''" >
+		     usrname = #{usrname},
+		</if>
+		<if test="id_card != null and id_card != ''" >
+		     id_card = #{id_card},
+		</if>
+		<if test="sex != null" >
+		     sex =  #{sex},
+		</if>
+		<if test="marital != null" >
+		    marital =  #{marital},
+		</if>
+		<if test="addr_province != null and addr_province != ''" >
+		     addr_province = #{addr_province},
+		</if>
+		<if test="addr_city != null and addr_city != ''" >
+		     addr_city = #{addr_city},
+		</if>
+		<if test="addr_country != null and addr_country != ''" >
+		     addr_country = #{addr_country},
+		</if>
+		<if test="addr_street != null and addr_street != ''" >
+		     addr_street = #{addr_street},
+		</if>
+		<if test="usr_native != null and usr_native != ''" >
+		     usr_native = #{usr_native},
+		</if>
+		<if test="diploma != null" >
+		     diploma =  #{diploma},
+		</if>
+		<if test="mobile_phone != null and mobile_phone != ''" >
+		     mobile_phone = #{mobile_phone},
+		</if>
+		<if test="home_phone != null and home_phone != ''" >
+		     home_phone = #{home_phone},
+		</if>
+		<if test="profession != null and profession != ''" >
+		     profession = #{profession},
+		</if>
+		<if test="profession_level != null and profession_level != ''" >
+		     profession_level = #{profession_level},
+		</if>
+		<if test="com_name != null and com_name != ''" >
+		     com_name = #{com_name},
+		</if>
+		<if test="com_street != null and com_street != ''" >
+		     com_street = #{com_street},
+		</if>
+		<if test="income != null and income != ''" >
+		     income = #{income},
+		</if>
+		<if test="working_long != null" >
+		     working_long =  #{working_long},
+		</if>
+		<if test="hiredate != null" >
+		     hiredate =  #{hiredate},
+		</if>
+		<if test="graduate_school != null" >
+		     graduate_school =  #{graduate_school},
+		</if>
+		<if test="graduate_time != null" >
+		    graduate_time =  #{graduate_time},
+		</if>
+		<if test="id_card_front_pic != null and id_card_front_pic != ''" >
+		   id_card_front_pic = #{id_card_front_pic},
+		</if>
+		<if test="id_card_reverse_pic != null and id_card_reverse_pic != ''" >
+		     id_card_reverse_pic = #{id_card_reverse_pic},
+		</if>
+		<if test="is_face_id_pass != null" >
+		     is_face_id_pass =  #{is_face_id_pass},
+		</if>
+		<if test="with_id_card_pic != null and with_id_card_pic != ''" >
+		     with_id_card_pic =  #{with_id_card_pic},
+		</if>
+		<if test="applyfo_flag != null" >
+		   applyfo_flag =  #{applyfo_flag},
+		</if>
+		<if test="check_flag != null" >
+		    check_flag =  #{check_flag},
+		</if>
+		<if test="is_loan != null" >
+		    is_loan =  #{is_loan},
+		</if>
+		<if test="second_check_loan_limit != null" >
+		    second_check_loan_limit =  #{second_check_loan_limit},
+		</if>
+		<if test="loan_limit != null" >
+		    loan_limit =  #{loan_limit},
+		</if>
+		<if test="loan_used != null" >
+		   loan_used =  #{loan_used},
+		</if>
+		<if test="is_firstquery != null" >
+		    is_firstquery =  #{is_firstquery},
+		</if>
+		<if test="applyfor_limit != null" >
+		    applyfor_limit =  #{applyfor_limit},
+		</if>
+		<if test="applyfor_time != null" >
+		    applyfor_time =  #{applyfor_time},
+		</if>
+		<if test="freeze_remark != null and freeze_remark != ''" >
+		     freeze_remark =  #{freeze_remark},
+		</if>
+		<if test="is_activate != null" >
+		    is_activate =  #{is_activate},
+		</if>
+		<if test="credit_report_pic != null and credit_report_pic != ''" >
+		     credit_report_pic =  #{credit_report_pic},
+		</if>
+		<if test="limit_validity_time != null" >
+		    limit_validity_time =  #{limit_validity_time},
+		</if>
+		<if test="credit_time != null" >
+		    credit_time =  #{credit_time},
+		</if>
+		<if test="credit_type != null" >
+		    credit_type =  #{credit_type},
+		</if>
+		<if test="first_check_operator != null and first_check_operator != ''" >
+		    first_check_operator =  #{first_check_operator},
+		</if>
+		<if test="second_check_operator != null and second_check_operator !=''" >
+		    second_check_operator =  #{second_check_operator},
+		</if>
+		<if test="check_alive_pic != null and check_alive_pic != ''" >
+		    check_alive_pic =  #{check_alive_pic},
+		</if>
+		<if test="xiaoshi_check_alive_result != null" >
+		    xiaoshi_check_alive_result =  #{xiaoshi_check_alive_result},
+		</if>
+		<if test="xiaoshi_id_card_check_result != null and xiaoshi_id_card_check_result != ''" >
+		    xiaoshi_id_card_check_result =  #{xiaoshi_id_card_check_result},
+		</if>
+		<if test="xiao_shi_left_times != null" >
+		    xiao_shi_left_times =  #{xiao_shi_left_times},
+		</if>
+		<if test="xiao_shi_invocation_time != null" >
+		    xiao_shi_invocation_time =  #{xiao_shi_invocation_time},
+		</if>
+		<if test="xiaoshi_id_card_check_msg != null and xiaoshi_id_card_check_msg != ''" >
+		    xiaoshi_id_card_check_msg =  #{xiaoshi_id_card_check_msg},
+		</if>
+		<if test="xiaoshi_id_card_check_score != null and xiaoshi_id_card_check_score != ''" >
+		    xiaoshi_id_card_check_score =  #{xiaoshi_id_card_check_score},
+		</if>
+		<if test="xiaoshi_id_card_check_guid != null and xiaoshi_id_card_check_guid != ''" >
+		    xiaoshi_id_card_check_guid =  #{xiaoshi_id_card_check_guid}
+		</if>
+	   </trim> where usrinf_id=#{usrinf_id}
+	 </update>
+	 
+	 
+	 <!-- 查询用户列表信息-->
+	<select id="queryById" parameterType="Object" resultType="com.yiya.bean.TabUsrinf">
+		select  <include refid="Base_Column_List" />  
+		 from tab_usrinf 
+		 where usrinf_id=#{usrinf_id}
+	</select>
+	 
+	<select id="queryAllUsrinf" parameterType="Object" resultType="com.yiya.bean.TabUsrinf">
+		select  <include refid="Base_Column_List" />  
+		 from tab_usrinf 
+	</select>
+	
+	<!-- 根据条件查询用户授信信息列表,提供给php-->
+	<select id="queryCreditStatusList" parameterType="Object" resultType="com.yiya.model.TabUsrinfModel">
+		SELECT
+		   <include refid="Base_Column_List" />
+		FROM
+		   tab_usrinf 
+		   
+	   <trim  suffixOverrides="," >	   
+			<where>
+			    1=1
+			    <if test="mobile_phone != null and mobile_phone != ''" >
+			       and mobile_phone like CONCAT('%', #{mobile_phone}, '%')
+			    </if>
+			    <if test="is_activate != null" >
+			       and is_activate =  #{is_activate}
+			    </if>
+			    <if test="is_loan != null" >
+			       and is_loan =  #{is_loan}
+			    </if>
+				<if test="list != null" >
+		           and check_flag in
+		            <foreach collection="list" item="flag" index="index"
+		                  open="(" close=")" separator=",">
+		                     #{flag}
+		                 </foreach>
+				</if>
+				<if test="applyfor_time_start != null">
+				    and applyfor_time <![CDATA[ >]]> #{applyfor_time_start}
+				</if>
+				<if test="applyfor_time_end != null">
+				    and applyfor_time <![CDATA[ <]]> #{applyfor_time_end}
+				
+				</if>
+			</where>
+	   </trim>
+	   order by applyfor_time desc
+	   limit #{page_no},#{page_number}
+	</select>
+	
+	
+	<!-- 根据条件查询用户授信信息列表总数,提供给php-->
+	<select id="queryCreditStatusListCount" parameterType="Object" resultType="int">
+		SELECT
+		   count(*)
+		FROM
+		   tab_usrinf 
+	   <trim  suffixOverrides="," >	   
+			<where>
+			    1=1
+			    <if test="mobile_phone != null and mobile_phone != ''" >
+			       and mobile_phone =  #{mobile_phone}
+			    </if>
+			    <if test="is_activate != null" >
+			       and is_activate =  #{is_activate}
+			    </if>
+			    <if test="is_loan != null" >
+			       and is_loan =  #{is_loan}
+			    </if>
+				<if test="list != null" >
+		           and check_flag in
+		            <foreach collection="list" item="flag" index="index"
+		                  open="(" close=")" separator=",">
+		                     #{flag}
+		                 </foreach>
+				</if>
+				<if test="applyfor_time_start != null">
+				    and applyfor_time <![CDATA[ >]]> #{applyfor_time_start}
+				
+				</if>
+				<if test="applyfor_time_end != null">
+				    and applyfor_time <![CDATA[ <]]> #{applyfor_time_end}
+				
+				</if>
+			</where>
+	   </trim>
+	</select>
+	 
+
+</mapper>   

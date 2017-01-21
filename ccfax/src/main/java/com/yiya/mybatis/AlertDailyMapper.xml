@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.AlertDailyMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.AlertDaily" >
+	<result column="alert_id" property="alert_id"/>
+	<result column="alert_time" property="alert_time"/>
+	<result column="alert_content" property="alert_content"/>
+	<result column="deal_status" property="deal_status"/>
+	<result column="deal_with" property="deal_with"/>
+	<result column="deal_time" property="deal_time"/>	
+</resultMap>
+       
+       
+<sql id="Base_Column_List" >
+	alert_id,alert_time,alert_content,deal_status,deal_with,deal_time
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="alert_id != null" >
+	    and alert_id =  #{alert_id}
+	</if>
+	<if test="alert_time != null" >
+	    and alert_time =#{alert_time}
+	</if>
+	<if test="alert_content != null and alert_content != ''" >
+	    and alert_content like CONCAT('%', #{alert_content}, '%')
+	</if>
+	<if test="deal_status != null" >
+	    and deal_status =  #{deal_status}
+	</if>
+	<if test="deal_with != null and deal_with != ''" >
+	    and deal_with like CONCAT('%', #{deal_with}, '%')
+	</if>
+	<if test="deal_time != null" >
+	    and deal_time =  #{deal_time}
+	</if>
+</trim>
+</sql>
+
+
+
+<sql id="limitSql">
+	LIMIT #{startRow},#{rows}
+</sql>
+
+<!-- 查询预警信息总条数 -->
+<select id="queryCountAll"  resultType="java.lang.Integer"  parameterType="hashmap">
+	select count(1) from alert_daily 
+	<include refid="Example_Where_Clause"/>
+	<if test="alert_time_start != null" >
+	    and alert_time &gt;= #{alert_time_start}
+	</if>
+	<if test="alert_time_end != null" >
+	    and alert_time &lt;= #{alert_time_end}
+	</if>
+</select>
+
+<!-- 查询预警信息列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from alert_daily 
+	<include refid="Example_Where_Clause"/>
+	<if test="alert_time_start != null" >
+	    and alert_time &gt;= #{alert_time_start}
+	</if>
+	<if test="alert_time_end != null" >
+	    and alert_time &lt;= #{alert_time_end}
+	</if>
+	order by alert_id desc
+	<include refid="limitSql"/>
+	
+</select>
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into alert_daily(alert_time,alert_content,deal_status,deal_with,deal_time)
+ values(#{alert_time},#{alert_content},#{deal_status},#{deal_with},#{deal_time})
+</insert>
+
+ <update id="updateAlertDaily" parameterType="com.yiya.bean.AlertDaily" >
+  update alert_daily set deal_status=#{deal_status},deal_time=now() where alert_id=#{alert_id}
+ </update>
+ 
+</mapper>   

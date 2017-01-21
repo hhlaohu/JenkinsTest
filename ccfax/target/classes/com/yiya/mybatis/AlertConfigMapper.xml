@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.AlertConfigMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yiya.bean.AlertConfig" >
+	<result column="id" property="id"/>
+	<result column="alert_condition" property="alert_condition"/>
+	<result column="msg_status" property="msg_status"/>
+	<result column="msg_with" property="msg_with"/>
+	<result column="notice_type" property="notice_type"/>
+	<result column="msg_content" property="msg_content"/>	
+	<result column="wcmr_tel" property="wcmr_tel"/>
+</resultMap>
+       
+       
+<sql id="Base_Column_List" >
+	id,alert_condition,msg_status,msg_with,notice_type,msg_content,wcmr_tel
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null" >
+	    and id =  #{id}
+	</if>
+	<if test="alert_condition != null and alert_condition != ''" >
+	    and alert_condition =#{alert_condition}
+	</if>
+	<if test="msg_status != null" >
+	    and msg_status =  #{msg_status}
+	</if>
+	<if test="msg_with != null and msg_with != ''" >
+	    and msg_with like CONCAT('%', #{msg_with}, '%')
+	</if>
+	<if test="notice_type != null" >
+	    and notice_type =  #{notice_type}
+	</if>
+	<if test="msg_content != null and msg_content != ''" >
+	    and msg_content like CONCAT('%', #{msg_content}, '%')
+	</if>
+</trim>
+</sql>
+
+<!-- 查询预警配置信息总条数 -->
+<select id="queryCountAll"  resultType="java.lang.Integer"   parameterType="hashmap">
+	select count(1) from alert_config 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+<!-- 查询预警配置信息列表 -->
+<select id="queryByAll" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from alert_config 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+ <update id="updateAlertConfig" parameterType="Object" >
+  update alert_config set msg_status=#{msg_status},msg_content=#{msg_content},wcmr_tel=#{wcmr_tel} where id=#{id}
+ </update>
+ 
+ 
+
+</mapper>   

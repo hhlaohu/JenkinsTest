@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiya.mapper.ScoreMapper">
+	
+	<select id="findBlacklistValue" parameterType="Map" resultType="Map">
+		SELECT bv.*, bt.blacklist_type
+		FROM blacklist_value bv
+		LEFT JOIN blacklist_type bt ON bv.blacklist_type_id=bt.id
+		<where>
+			<if test="is_active != null">
+				and is_active=#{is_active}
+			</if>
+			<if test="mobile_phone != null">
+				and blacklist_value=#{mobile_phone}
+			</if>
+			<if test="id_no != null">
+				and blacklist_value=#{id_no}
+			</if>
+			<if test="bank_no != null">
+				and blacklist_value=#{bank_no}
+			</if>
+			<if test="real_name != null">
+				and blacklist_value=#{real_name}
+			</if>
+			<if test="usrid != null">
+				and blacklist_value=#{real_name}
+			</if>
+			<if test="mobile_idfa != null or mobile_imei != null">
+				and (blacklist_value=#{mobile_idfa} or blacklist_value=#{mobile_imei})
+			</if>
+		</where>
+	</select>
+	
+	<select id="getAntiFraudRuleList" resultType="Map">
+		select * from anti_fraud_model_value_rule where is_active=1  and rule_set_id = #{_parameter}
+	</select>
+	
+	<select id="getAntiFraudRuleListByRuleSetId" resultType="Map" parameterType="Integer">
+		select * from anti_fraud_model_value_rule where is_active=1 and rule_set_id = #{rule_set_id}
+	</select>
+	
+	<select id="getAntiFraudValueList" parameterType="Integer" resultType="Map">
+		select af.*,sm.field_value_type,sm.field_name as scoring_field_name,sm.field_name_ch as scoring_field_name_ch,sm.field_desc as scoring_field_desc
+		from anti_fraud_model_value af 
+		LEFT JOIN scoring_model_field sm ON af.scoring_field_id=sm.scoring_field_id
+		where af.anti_fraud_rule_id=${_parameter}
+		order by af.anti_fraud_id asc
+	</select>
+	
+	<select id="getAntiValueList" parameterType="Integer" resultType="Map">
+	    SELECT * FROM anti_fraud_model_value WHERE anti_fraud_rule_id=#{_parameter}
+	</select>
+	
+	<select id="findScoringGatherFieldMap" parameterType="Integer" resultType="Map">
+		select * from scoring_gather_field_map 
+		where scoring_field_id=${_parameter}
+		limit 0,1
+	</select>
+	
+	<select id="findGatherValue" parameterType="Map" resultType="Map">
+		select gv.*,gt.gather_type_name from gather_value gv
+		left join gather_type gt on gt.gather_type_id=gv.gather_type_id
+		<where>
+			<if test="gather_type_id != null">
+				and gather_type_id=#{gather_type_id}
+			</if>
+			<if test="gather_field_id != null">
+				and gather_field_id=#{gather_field_id}
+			</if>
+			<if test="usrid != null">
+				and usrid=#{usrid}
+			</if>
+		</where>
+		limit 0,1
+	</select>
+	
+	<select id="findAllRules" parameterType="String" resultType="Map">
+		SELECT r.* 
+		FROM scoring_model_value_rule r 
+		WHERE r.rule_set_id=${_parameter}
+		AND r.is_active=1
+	</select>
+	
+	<select id="findAllRuleValues" parameterType="Integer" resultType="Map">
+		SELECT smv.*,smf.field_value_type,smf.field_name,smf.field_name_ch,smf.field_desc,
+		smf.is_combined,smf.combined_field_id_1,smf.combined_field_id_2,smf.combined_operate
+		FROM scoring_model_value smv
+		LEFT JOIN scoring_model_field smf ON smf.scoring_field_id=smv.scoring_field_id
+		WHERE smv.scoring_rule_id=${_parameter}
+	</select>
+	
+	<select id="getgatherFieldValue" parameterType="Map" resultType="String">
+		select gv.gather_field_value
+		from gather_value gv
+		where gather_field_id IN(
+			select scoring_gather_field_map.gather_field_id from scoring_gather_field_map 
+			where scoring_gather_field_map.scoring_field_id=${scoring_field_id})
+		and usrid=${usrid}
+		limit 0,1
+	</select>
+	
+	<select id="findCombinedFieldValueMap" parameterType="Integer" resultType="Map">
+		SELECT * FROM scoring_model_field WHERE scoring_field_id=${_parameter}
+	</select>
+	
+	<select id="findQuota" parameterType="Map" resultType="Map">
+		select * from tab_rule_set_quota
+		where #{sum_score} >= min_score 
+		and max_score > #{sum_score}
+		and rule_set_id = #{rule_set_id}
+		order by quota_id asc
+		limit 0,1
+	</select>
+	
+	<select id="findScoreQuotaMap" parameterType="Float" resultType="Map">
+		select min_quota,max_quota 
+		from tab_rule_set_quota 
+		where max_score > #{_parameter} and #{_parameter} >= min_score 
+		limit 0,1
+	</select>
+	
+	<insert id="addScoreReport" parameterType="com.yiya.bean.ScoreReport" useGeneratedKeys="true" keyProperty="report_id">
+		insert into tab_scoring_report(usrid,sum_score,create_time,add_usr_id,scoring_quota,sex, age, 
+		marital, mobile_phone, diploma, register_place, local_register_place, bank_id, 
+		income, house_type, fixed_assets, employment, com_name, industry, profession_level, 
+		cur_hire_duration, schooling_system, graduate_school, repaying_source,order_sn,store_type_name,usr_order_id,  
+		borrower_usrname,borrower_id_card,borrower_mobile_phone,mobile_imei,mobile_idfa,ip)
+		value(#{usrid},#{sum_score},#{create_time},#{add_usr_id},#{scoring_quota},#{sex_},#{age}
+		,#{marital_},#{mobile_phone},#{diploma_},#{register_place_},#{local_register_place_},#{bank_id}
+		,#{income_},#{house_type_},#{fixed_assets_},#{employment_},#{com_name},#{industry_},#{profession_level_}
+		,#{cur_hire_duration_},#{schooling_system_},#{graduate_school},#{repaying_source},#{order_sn},#{store_type_name},#{usr_order_id}
+		,#{borrower_usrname},#{borrower_id_card},#{borrower_mobile_phone},#{mobile_imei},#{mobile_idfa},#{ip})
+	</insert>
+	
+	<insert id="addScoreReportList" parameterType="com.yiya.bean.ScoreReportList">
+		insert into tab_scoring_report_list(report_id,rule_set_id,rule_set_name,scoring_rule_id,scoring_rule_code,
+		scoring_rule_name,scoring_rule_desc,scoring_field_id,scoring_field_name,rule_type_id,
+		scoring_field_name_ch,scoring_field_desc,create_time,score,gather_field_value,gather_field_remark)
+		value(#{report_id},#{rule_set_id},#{rule_set_name},#{scoring_rule_id},#{scoring_rule_code},
+		#{scoring_rule_name},#{scoring_rule_desc},#{scoring_field_id},#{scoring_field_name},#{rule_type_id},
+		#{scoring_field_name_ch},#{scoring_field_desc},#{create_time},#{score},#{gather_field_value},#{gather_field_remark})
+	</insert>
+	
+	<select id="findRuleSetName" parameterType="Integer" resultType="String">
+		select rule_set_name from scoring_rule_set where rule_set_id=${_parameter}
+	</select>
+	
+	<select id="findUserInfo" parameterType="Integer" resultType="Map">
+		SELECT usrid,mobile_imei,mobile_idfa,usrname,id_card,mobile_phone,bank_id FROM tab_usrinf_2 WHERE usrid=${_parameter}
+	</select>
+	
+	<insert id="addBlacklistReportList" parameterType="com.yiya.bean.BlacklistReportList">
+		insert into tab_blacklist_report_list(report_id,blacklist_type,blacklist_value,is_hit) 
+		value(#{report_id},#{blacklist_type},#{blacklist_value},#{is_hit})
+	</insert>
+	
+	<insert id="addAntiFraudReportList" parameterType="com.yiya.bean.AntiFraudReportList">
+		insert into tab_anti_fraud_report_list(report_id,anti_fraud_rule_id,anti_fraud_rule_code,
+		anti_fraud_rule_name,anti_fraud_rule_desc,scoring_field_id,scoring_field_name,is_hit,gather_type_name,
+		scoring_field_name_ch,scoring_field_desc,create_time,gather_field_value,gather_field_remark) 
+		value(#{report_id},#{anti_fraud_rule_id},#{anti_fraud_rule_code},
+		#{anti_fraud_rule_name},#{anti_fraud_rule_desc},#{scoring_field_id},#{scoring_field_name},#{is_hit},#{gather_type_name},
+		#{scoring_field_name_ch},#{scoring_field_desc},#{create_time},#{gather_field_value},#{gather_field_remark})
+	</insert>
+	
+	<select id="findUserScore" parameterType="Integer" resultType="com.yiya.bean.ScoreReport">
+		SELECT 
+			(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_3') AND dictionary_value_key=sex) AS sex_
+	    ,age
+	    ,(SELECT usrinf_id from tab_usrinf_2 where borrow_uid=tab_usrinf_2.usrid) as usrinf_id
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_2') AND dictionary_value_key=marital) AS marital_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_1') AND dictionary_value_key=diploma) AS diploma_
+	    ,mobile_phone
+	    ,register_place
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_6') AND dictionary_value_key=local_register_place) AS local_register_place_
+	    ,bank_id
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_10') AND dictionary_value_key=income) AS income_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_11') AND dictionary_value_key=house_type) AS house_type_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_12') AND dictionary_value_key=fixed_assets) AS fixed_assets_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_33') AND dictionary_value_key=employment) AS employment_
+	    ,com_name
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_7') AND dictionary_value_key=industry) AS industry_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_8') AND dictionary_value_key=profession_level) AS profession_level_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_9') AND dictionary_value_key=cur_hire_duration) AS cur_hire_duration_
+	    ,(SELECT dictionary_value_name FROM data_dictionary_value 
+			WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+			WHERE dictionary_type_code='tszd_34') AND dictionary_value_key=schooling_system) AS schooling_system_
+	    ,graduate_school
+	    ,repaying_source
+		  ,borrower_usrname
+	    ,borrower_id_card
+	    ,borrower_mobile_phone
+	    ,mobile_imei
+	    ,mobile_idfa
+	    ,ip 
+		FROM tab_usr_order
+		WHERE usr_order_id=#{_parameter}
+	</select>
+	
+	<select id="findTabAreaBeanByAreaId" parameterType="Integer" resultType="com.yiya.bean.TabAreaBean">
+		select * from tab_area where area_id=#{_parameter}
+	</select>
+	
+	<select id="findScoreReportByReportId" parameterType="Integer" resultType="com.yiya.bean.ScoreReport">
+		select * from tab_scoring_report where report_id=#{_parameter}
+	</select>
+	
+	<select id="findScoreReportByUsrOrderId" parameterType="Integer" resultType="com.yiya.bean.ScoreReport">
+		select * from tab_scoring_report where usr_order_id=#{_parameter}
+	</select>
+	
+	<select id="findBondsmaninfList" parameterType="Integer" resultType="com.yiya.bean.Bondsmaninf">
+		SELECT rel_usrname,
+		(SELECT dictionary_value_name FROM data_dictionary_value 
+					WHERE dictionary_type_id=(SELECT dictionary_type_id FROM data_dictionary_type 
+					WHERE dictionary_type_code='tszd_35') AND dictionary_value_key=relation) as relation_,
+		rel_mobile_phone
+		FROM tab_order_bondsmaninf 
+		WHERE usr_order_id=#{_parameter}
+	</select>
+	
+	<select id="findAffiliateRuleByReportId" parameterType="Integer" resultType="com.yiya.bean.AffiliateRule">
+		SELECT rule_code,rule_desc,rule_name,remark 
+		FROM tab_affiliate_rule
+		LEFT JOIN tab_affiliate_rule_report_list ON tab_affiliate_rule.affiliate_rule_id=tab_affiliate_rule_report_list.affiliate_rule_id
+		WHERE report_id=#{_parameter}
+	</select>
+	
+	<select id="findScoringReportBondsmaninfByReportId" parameterType="Integer" resultType="com.yiya.bean.ScoringReportBondsmaninf">
+		SELECT *
+		FROM tab_scoring_report_bondsmaninf
+		WHERE report_id=#{_parameter}
+	</select>
+	
+	<select id="findBlacklistReportListByReportId" parameterType="Integer" resultType="com.yiya.bean.BlacklistReportList">
+		SELECT *
+		FROM tab_blacklist_report_list
+		WHERE report_id=#{_parameter}
+	</select>
+	
+	<select id="findAntiFraudReportListByReportId" parameterType="Integer" resultType="com.yiya.bean.AntiFraudReportList">
+		SELECT *
+		FROM tab_anti_fraud_report_list
+		WHERE report_id=#{_parameter}
+	</select>
+	
+	<select id="findScoreReportListByReportId" parameterType="Integer" resultType="com.yiya.bean.ScoreReportList">
+		SELECT *
+		FROM tab_scoring_report_list
+		WHERE report_id=#{_parameter}
+	</select>
+	
+	<select id="findScoreReportListByRuleTypeId" parameterType="Integer" resultType="com.yiya.bean.ScoreReportList">
+		SELECT *
+		FROM tab_scoring_report_list
+		WHERE rule_type_id=#{_parameter}
+	</select>
+	
+	<insert id="addScoringReportBondsmaninf" parameterType="com.yiya.bean.ScoringReportBondsmaninf">
+		insert into tab_scoring_report_bondsmaninf(report_id,rel_usrname,relation,rel_mobile_phone)
+		value(#{report_id},#{rel_usrname},#{relation},#{rel_mobile_phone})
+	</insert>
+	
+	<!--根据规则集分类ID和金额查找对应的规则集-->
+	<select id="getRuleSetIdByTypeIdAndAmount" parameterType="java.util.Map"  resultType="Integer">
+	    SELECT 
+	        rule_set_id
+	    FROM
+	        scoring_rule_set
+	    WHERE
+	        rule_set_type_id = #{rule_set_type_id}
+	    AND
+	        lower_amount <![CDATA[> ]]> #{amount}
+	    AND
+	        upper_amount <![CDATA[<= ]]> #{amount}  
+	</select>
+	
+</mapper>   
