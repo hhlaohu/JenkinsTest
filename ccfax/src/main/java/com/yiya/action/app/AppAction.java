@@ -47,6 +47,7 @@ import com.yiya.bean.JsonResponse2;
 import com.yiya.bean.OrderBean;
 import com.yiya.bean.SysUser;
 import com.yiya.bean.TabApplyLog;
+import com.yiya.bean.TabBondsmaninf;
 import com.yiya.bean.TabBorrowInfo;
 import com.yiya.bean.TabCheckLog;
 import com.yiya.bean.TabOrderBondsmaninf;
@@ -115,22 +116,22 @@ public class AppAction extends BaseAction {
 	private TabUsrDecorationOrderService<TabUsrDecorationOrder> tabUsrDecorationOrderService;
 
 	@Autowired
-	private TabBondsmaninfService tabBondsmaninfService;
+	private TabBondsmaninfService<TabBondsmaninf> tabBondsmaninfService;
 
 	@Autowired
 	private TabUsrOtherPicService<TabUsrOtherPic> tabUsrOtherPicService;
 
 	@Autowired
-	private TabUsrPremisePermitPicService tabUsrPremisePermitPicService;
+	private TabUsrPremisePermitPicService<TabUsrPremisePermitPic> tabUsrPremisePermitPicService;
 
 	@Autowired
-	private TabUsrDecorationContractPicService tabUsrDecorationContractPicService;
+	private TabUsrDecorationContractPicService<TabUsrDecorationContractPic> tabUsrDecorationContractPicService;
 
 	@Autowired
-	private TabApplyLogService tabApplyLogService;
+	private TabApplyLogService<TabApplyLog> tabApplyLogService;
 
 	@Autowired
-	private TabUsrComplementPicService tabUsrComplementPicService;
+	private TabUsrComplementPicService<TabUsrComplementPic> tabUsrComplementPicService;
 
 	@Autowired
 	private XiaoShiConfigService xiaoShiConfigService;
@@ -139,7 +140,7 @@ public class AppAction extends BaseAction {
 	private SysUserService sysUserService;
 
 	@Autowired
-	private TabCheckLogService tabCheckLogService;
+	private TabCheckLogService<TabCheckLog> tabCheckLogService;
 
 	@Autowired
 	private SendMessage sendMessage;
@@ -1218,8 +1219,31 @@ public class AppAction extends BaseAction {
 				log.info("获取店铺类型信息失败");
 			}
 			CopyProperties.copyPropertysWithoutNull(tabUsrOrder, model);
+			//定时器提醒
+			 final Long orderid = tabUsrOrder.getUsr_order_id();
 			// 持久化订单
 			tabUsrOrderService.insertSelective(tabUsrOrder);
+			 //21小时后如果订单还在提交中，则提醒客户尽快提交
+			ScheduledExecutorServiceTask.scheduledThreadPool.schedule(new Runnable() {
+				public void run() {
+				   TabUsrOrder tempOrder = tabUsrOrderService.queryByUsrOrderId(orderid);
+				   if(WebServiceConstant.ORDER_STATUS_INFO_SUBMIT.equals(tempOrder.getOrder_status())){
+					   sendMessage.sendGroupSmsToClient(afterThreeHoursToCustomer, tempOrder.getBorrower_mobile_phone(),
+							   WebServiceConstant.SHORT_MESSAGE_CHANEL_5);
+				   }
+				}
+			}, 21*60*60, TimeUnit.SECONDS);
+			 //24小时后如果订单还是在提交中，则置订单状态为无效
+			 ScheduledExecutorServiceTask.scheduledThreadPool.schedule(new Runnable() {
+					public void run() {
+					   TabUsrOrder tempOrder = tabUsrOrderService.queryByUsrOrderId(orderid);
+					   if(WebServiceConstant.ORDER_STATUS_INFO_SUBMIT.equals(tempOrder.getOrder_status())){
+						   tempOrder.setOrder_status(WebServiceConstant.ORDER_STATUS_NOT_VALID);
+						   tabUsrOrderService.updateByPrimaryKeySelective(tempOrder);
+					   }
+					   
+					}
+				}, 24*60*60, TimeUnit.SECONDS);
 			return JsonResponse2.success().put("usr_order_id", tabUsrOrder.getUsr_order_id());
 		} else if (WebServiceConstant.SUBMIT_STEP_ID_CARD.equals(model.getSubmit_step())) {
 			// 参数校验

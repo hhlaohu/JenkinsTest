@@ -138,16 +138,24 @@ td, th {
 </div>
 <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
 <script>
+var is_submit = false;
 function submitForm(){
+	if(is_submit){
+		alert('正在处理中');
+	}
+	
+    is_submit = true;
 	$.ajax({  
 	    type: "POST",  
 	    url:"updateOrderAllot.do",  
 	    data:$('#orderForm').serialize(),// 序列化表单值  
 	    async: false,  
 	    error: function(request) {  
+	    	is_submit = false;
 	        alert('Connection error');
 	    },  
 	    success: function(data) { 
+	    	is_submit = false;
 	     	var json = eval('(' + data + ')');
 	        if(json.code == 0){
 	        	location.href='orderList.shtml';

@@ -44,7 +44,7 @@ public class PzGoodAction extends BaseAction{
 	private  PzGoodService<PzGood> pzGoodService; 
 	
 	@Autowired(required=false)
-	private  SpecConfigService specConfigService; 
+	private  SpecConfigService<SpecConfig> specConfigService; 
 	
 	private PzGood pzGood = new PzGood();
 	

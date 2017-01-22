@@ -19,12 +19,12 @@ import com.yiya.model.DbjeModel;
 
 
 @Service("tabUsrPremisePermitPicService")
-public class TabUsrPremisePermitPicService extends BaseService<TabUsrPremisePermitPic> {
+public class TabUsrPremisePermitPicService<T> extends BaseService<T> {
 	private final static Logger log= Logger.getLogger(TabUsrPremisePermitPicService.class);
 	@Autowired
-    private TabUsrPremisePermitPicMapper mapper;
+    private TabUsrPremisePermitPicMapper<T> mapper;
 
-	public TabUsrPremisePermitPicMapper getMapper() {
+	public TabUsrPremisePermitPicMapper<T> getMapper() {
 		return mapper;
 	}
  

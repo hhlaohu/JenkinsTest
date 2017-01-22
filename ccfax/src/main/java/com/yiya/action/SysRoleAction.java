@@ -38,7 +38,7 @@ public class SysRoleAction extends BaseAction{
 	
 	// Servrice start
 	@Autowired(required=false) 
-	private SysMenuService sysMenuService; 
+	private SysMenuService<SysMenu> sysMenuService; 
 	@Autowired(required=false) 
 	private SysRoleRelService<SysRoleRel> sysRoleRelService;
 	/**

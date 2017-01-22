@@ -10,7 +10,7 @@ import com.yiya.bean.SpecConfig;
 import com.yiya.bean.TabUsrinf;
 
 
-public interface SpecConfigMapper extends BaseMapper<SpecConfig> {
+public interface SpecConfigMapper<T> extends BaseMapper<T> {
 	
 	public void update(SpecConfig sc);
 	
@@ -18,7 +18,7 @@ public interface SpecConfigMapper extends BaseMapper<SpecConfig> {
 	
 	public void delete(SpecConfig sc);
 	
-	public List<SpecConfig> querySpecConfigList();
+	public List<T> querySpecConfigList();
 	
 	public SpecConfig querySpecConfigReject(Integer spec_id);
 	

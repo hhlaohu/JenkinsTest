@@ -14,7 +14,7 @@ import com.yiya.bean.TabUsrOtherPic;
 import com.yiya.bean.TabUsrPremisePermitPic;
 import com.yiya.bean.TabUsrinf;
 
-public interface TabUsrDecorationContractPicMapper extends BaseMapper<TabUsrDecorationContractPic> {
+public interface TabUsrDecorationContractPicMapper<T> extends BaseMapper<T> {
 	
 	public void update(TabUsrDecorationContractPic tudcp);
 	

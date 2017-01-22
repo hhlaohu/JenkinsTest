@@ -10,13 +10,13 @@ import com.yiya.mapper.TabCheckLogMapper;
 
 
 @Service("tabCheckLogService")
-public class TabCheckLogService extends BaseService<TabCheckLog> {
+public class TabCheckLogService<T> extends BaseService<T> {
 	
 	
 	@Autowired
-    private TabCheckLogMapper mapper;
+    private TabCheckLogMapper<T> mapper;
 
-	public TabCheckLogMapper getMapper() {
+	public TabCheckLogMapper<T> getMapper() {
 		return mapper;
 	}
  

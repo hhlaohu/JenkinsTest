@@ -11,12 +11,12 @@ import com.yiya.mapper.TabUsrDecorationContractPicMapper;
 
 
 @Service("tabUsrDecorationContractPicService")
-public class TabUsrDecorationContractPicService extends BaseService<TabUsrDecorationContractPic> {
+public class TabUsrDecorationContractPicService<T> extends BaseService<T> {
 	private final static Logger log= Logger.getLogger(TabUsrDecorationContractPicService.class);
 	@Autowired
-    private TabUsrDecorationContractPicMapper mapper;
+    private TabUsrDecorationContractPicMapper<T> mapper;
 
-	public TabUsrDecorationContractPicMapper getMapper() {
+	public TabUsrDecorationContractPicMapper<T> getMapper() {
 		return mapper;
 	}
  

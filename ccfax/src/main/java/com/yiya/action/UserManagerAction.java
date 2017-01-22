@@ -82,16 +82,16 @@ public class UserManagerAction extends BaseAction {
 	private final static Logger log = Logger.getLogger(UserManagerAction.class);
 	
 	@Autowired(required = false)
-	private TabUsrComplementPicService tabUsrComplementPicService;
+	private TabUsrComplementPicService<TabUsrComplementPic> tabUsrComplementPicService;
 
 	@Autowired(required = false)
-	private TabChangeLogService tabChangeLogService;
+	private TabChangeLogService<TabChangeLog> tabChangeLogService;
 	
 	@Autowired(required=false)
 	private  TabUsrOtherPicService<TabUsrOtherPic> tabUsrOtherPicService; 
 	
 	@Autowired(required=false)
-	private  TabBondsmaninfService tabBondsmaninfService; 
+	private  TabBondsmaninfService<TabBondsmaninf> tabBondsmaninfService; 
 	
 	@Autowired
 	private TabUsrOrderService tabUsrOrderService;

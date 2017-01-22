@@ -8,16 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yiya.bean.SpecConfig;
+import com.yiya.bean.TabBondsmaninf;
+import com.yiya.bean.TabUsrOtherPic;
+import com.yiya.bean.TabUsrinf;
 import com.yiya.mapper.SpecConfigMapper;
+import com.yiya.mapper.TabBondsmaninfMapper;
+import com.yiya.mapper.TabUsrOtherPicMapper;
+import com.yiya.mapper.TabUsrinfMapper;
+import com.yiya.model.DbjeModel;
 
 
 @Service("specConfigService")
-public class SpecConfigService extends BaseService<SpecConfig> {
+public class SpecConfigService<T> extends BaseService<T> {
 	private final static Logger log= Logger.getLogger(SpecConfigService.class);
 	@Autowired
-    private SpecConfigMapper mapper;
+    private SpecConfigMapper<T> mapper;
 
-	public SpecConfigMapper getMapper() {
+	public SpecConfigMapper<T> getMapper() {
 		return mapper;
 	}
  
@@ -33,7 +40,7 @@ public class SpecConfigService extends BaseService<SpecConfig> {
 		mapper.delete(sc);
 	}
 	
-	public List<SpecConfig> querySpecConfigList(){
+	public List<T> querySpecConfigList(){
 		return mapper.querySpecConfigList();
 	}
 	

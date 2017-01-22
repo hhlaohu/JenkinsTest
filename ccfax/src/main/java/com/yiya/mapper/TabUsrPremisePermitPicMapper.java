@@ -13,7 +13,7 @@ import com.yiya.bean.TabUsrOtherPic;
 import com.yiya.bean.TabUsrPremisePermitPic;
 import com.yiya.bean.TabUsrinf;
 
-public interface TabUsrPremisePermitPicMapper extends BaseMapper<TabUsrPremisePermitPic> {
+public interface TabUsrPremisePermitPicMapper<T> extends BaseMapper<T> {
 	
 	public void update(TabUsrPremisePermitPic tuppp);
 	

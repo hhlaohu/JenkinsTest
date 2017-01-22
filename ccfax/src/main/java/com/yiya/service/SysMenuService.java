@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ import com.yiya.model.SysMenuModel;
  * <b>版权所有：<b>版权所有(C) 2011，WWW.VOWO.COM<br>
  */
 @Service("sysMenuService")
-public class SysMenuService extends BaseService<SysMenu> {
+public class SysMenuService<T> extends BaseService<T> {
 	private final static Logger log= Logger.getLogger(SysMenuService.class);
 
 
@@ -36,7 +35,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	private SysMenuBtnService<SysMenuBtn> sysMenuBtnService;
 	
 	@Autowired
-    private SysMenuMapper<SysMenu> mapper;
+    private SysMenuMapper<T> mapper;
 	
 	/**
 	 * 保存菜单btn
@@ -66,7 +65,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	
 
 	public void add(SysMenu menu) throws Exception {
-		super.add((SysMenu)menu);
+		super.add((T)menu);
 		saveBtns(menu.getId(),menu.getBtns());
 	}
 
@@ -74,7 +73,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 
 
 	public void update(SysMenu menu) throws Exception {
-		super.update((SysMenu)menu);
+		super.update((T)menu);
 		saveBtns(menu.getId(),menu.getBtns());
 	}
 
@@ -85,7 +84,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	 * 查询所有系统菜单列表
 	 * @return
 	 */
-	public List<SysMenu> queryByAll(){
+	public List<T> queryByAll(){
 		return mapper.queryByAll();
 	}
 	
@@ -93,7 +92,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	 * 获取顶级菜单
 	 * @return
 	 */
-	public List<SysMenu> getRootMenu(Integer menuId){
+	public List<T> getRootMenu(Integer menuId){
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("menuId", menuId);
 		return mapper.getRootMenu(map);
@@ -103,7 +102,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	 * 获取子菜单
 	 * @return
 	 */
-	public List<SysMenu> getChildMenu(){
+	public List<T> getChildMenu(){
 		return mapper.getChildMenu();
 	}
 	
@@ -112,7 +111,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	 * @param roleId
 	 * @return
 	 */
-	public List<SysMenu> getRootMenuByUser(Integer userId){
+	public List<T> getRootMenuByUser(Integer userId){
 		return getMapper().getRootMenuByUser(userId);
 	}
 	
@@ -122,7 +121,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	 * @param roleId
 	 * @return
 	 */
-	public List<SysMenu> getChildMenuByUser(Integer userId){
+	public List<T> getChildMenuByUser(Integer userId){
 		return getMapper().getChildMenuByUser(userId);
 	}
 	
@@ -132,7 +131,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 	 * @param roleId
 	 * @return
 	 */
-	public List<SysMenu> getMenuByRoleId(Integer roleId){
+	public List<T> getMenuByRoleId(Integer roleId){
 		return getMapper().getMenuByRoleId(roleId);
 	}
 	
@@ -170,7 +169,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 		return getMapper().queryParentNameList(sm);
 	}
 	
-	public SysMenuMapper<SysMenu> getMapper() {
+	public SysMenuMapper<T> getMapper() {
 		return mapper;
 	}
 

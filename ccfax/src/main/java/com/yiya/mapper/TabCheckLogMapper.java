@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.yiya.bean.TabCheckLog;
 
-public interface TabCheckLogMapper extends BaseMapper<TabCheckLog> {
+public interface TabCheckLogMapper<T> extends BaseMapper<T> {
 	
 	public void update(TabCheckLog tu);
 	

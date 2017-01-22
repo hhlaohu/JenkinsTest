@@ -34,7 +34,7 @@ public class SysMenuAction extends BaseAction{
 	
 	// Servrice start
 	@Autowired(required=false) //自动注入，不需要生成set方法了，required=false表示没有实现类，也不会报错。
-	private SysMenuService sysMenuService; 
+	private SysMenuService<SysMenu> sysMenuService; 
 	
 	@Autowired
 	private SysMenuBtnService<SysMenuBtn> sysMenuBtnService;

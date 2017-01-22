@@ -10,7 +10,7 @@ import com.yiya.bean.TabUsrComplementPic;
 import com.yiya.bean.TabUsrOtherPic;
 
 
-public interface TabUsrComplementPicMapper extends BaseMapper<TabUsrComplementPic> {
+public interface TabUsrComplementPicMapper<T> extends BaseMapper<T> {
 	
 	public void update(TabUsrComplementPic tucp);
 	

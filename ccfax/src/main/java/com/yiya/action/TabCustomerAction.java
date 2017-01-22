@@ -102,7 +102,7 @@ public class TabCustomerAction extends BaseAction implements InitializingBean {
 	private PzGoodService<PzGood> pzGoodService;
 
 	@Autowired(required = false)
-	private SpecConfigService specConfigService;
+	private SpecConfigService<SpecConfig> specConfigService;
 
 	@Value("${updateStockSwitch}")
 	private boolean updateStockSwitch;

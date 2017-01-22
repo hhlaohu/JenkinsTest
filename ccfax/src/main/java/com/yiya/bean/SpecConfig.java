@@ -2,6 +2,7 @@ package com.yiya.bean;
 
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Id;
 
 /** 规格配置信息表**/

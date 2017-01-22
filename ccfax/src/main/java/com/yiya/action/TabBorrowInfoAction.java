@@ -84,13 +84,13 @@ public class TabBorrowInfoAction extends BaseAction {
 	private SysUserService sysUserService;
 	
 	@Autowired
-	private TabUsrPremisePermitPicService tabUsrPremisePermitPicService;
+	private TabUsrPremisePermitPicService<TabUsrPremisePermitPic> tabUsrPremisePermitPicService;
 	
 	@Autowired
-	private TabUsrDecorationContractPicService tabUsrDecorationContractPicService;
+	private TabUsrDecorationContractPicService<TabUsrDecorationContractPic> tabUsrDecorationContractPicService;
 	
 	@Autowired
-	private TabUsrComplementPicService tabUsrComplementPicService;
+	private TabUsrComplementPicService<TabUsrComplementPic> tabUsrComplementPicService;
 	
 	@Autowired
 	private TabUsrDecorationOrderService<TabUsrDecorationOrder> tabUsrDecorationOrderService;

@@ -33,6 +33,7 @@ import com.yiya.bean.TabCheckLog;
 import com.yiya.bean.TabUsrComplementPic;
 import com.yiya.bean.TabUsrDecorationContractPic;
 import com.yiya.bean.TabUsrDecorationOrder;
+import com.yiya.bean.TabUsrOtherPic;
 import com.yiya.bean.TabUsrPremisePermitPic;
 import com.yiya.bean.TabUsrinf;
 import com.yiya.bean.TabUsrinf2;
@@ -40,7 +41,9 @@ import com.yiya.constant.WebServiceConstant;
 import com.yiya.model.TabApplyLogModel;
 import com.yiya.model.TabBondsmaninfModel;
 import com.yiya.model.TabCheckLogModel;
+import com.yiya.model.TabUsrComplementPicModel;
 import com.yiya.model.TabUsrDecorationOrderModel;
+import com.yiya.model.TabUsrOtherPicModel;
 import com.yiya.model.TabUsrinf2Model;
 import com.yiya.service.SendMessage;
 import com.yiya.service.SysRoleRelService;
@@ -52,6 +55,7 @@ import com.yiya.service.TabCheckLogService;
 import com.yiya.service.TabUsrComplementPicService;
 import com.yiya.service.TabUsrDecorationContractPicService;
 import com.yiya.service.TabUsrDecorationOrderService;
+import com.yiya.service.TabUsrOtherPicService;
 import com.yiya.service.TabUsrPremisePermitPicService;
 import com.yiya.service.TabUsrinf2Service;
 import com.yiya.utils.HtmlUtil;
@@ -68,21 +72,21 @@ public class CreditCheckAction extends BaseAction {
 	@Autowired(required = false)
 	private TabUsrinf2Service tabUsrinf2Service;
 	@Autowired(required = false)
-	private TabApplyLogService tabApplyLogService;
+	private TabApplyLogService<TabApplyLog> tabApplyLogService;
 	@Autowired(required = false)
-	private TabCheckLogService tabCheckLogService;
+	private TabCheckLogService<TabCheckLog> tabCheckLogService;
 	@Autowired(required = false)
-	private TabUsrComplementPicService tabUsrComplementPicService;
+	private TabUsrComplementPicService<TabUsrComplementPic> tabUsrComplementPicService;
 	@Autowired(required = false)
-	private TabBondsmaninfService tabBondsmaninfService;
+	private TabBondsmaninfService<TabBondsmaninf> tabBondsmaninfService;
 	@Autowired(required = false)
 	private SysRoleRelService<SysRoleRel> sysRoleRelService;
 	@Autowired(required = false)
-	private TabChangeLogService tabChangeLogService;
+	private TabChangeLogService<TabChangeLog> tabChangeLogService;
 	@Autowired(required = false)
-	private TabUsrDecorationContractPicService tabUsrDecorationContractPicService;
+	private TabUsrDecorationContractPicService<TabUsrDecorationContractPic> tabUsrDecorationContractPicService;
 	@Autowired(required = false)
-	private TabUsrPremisePermitPicService tabUsrPremisePermitPicService;
+	private TabUsrPremisePermitPicService<TabUsrPremisePermitPic> tabUsrPremisePermitPicService;
 	@Autowired
 	private TabUsrDecorationOrderService<TabUsrDecorationOrder> tabUsrDecorationOrderService;
 	@Autowired

@@ -59,7 +59,7 @@ public class MainAction extends BaseAction implements InitializingBean {
 
 	// Servrice start
 	@Autowired(required = false)
-	private SysMenuService sysMenuService;
+	private SysMenuService<SysMenu> sysMenuService;
 
 	@Autowired(required = false)
 	private SysUserService sysUserService;

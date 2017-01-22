@@ -10,12 +10,12 @@ import com.yiya.model.TabApplyLogModel;
 
 
 @Service("tabApplyLogService")
-public class TabApplyLogService extends BaseService<TabApplyLog> {
+public class TabApplyLogService<T> extends BaseService<T> {
 	private final static Logger log= Logger.getLogger(TabApplyLogService.class);
 	@Autowired
-    private TabApplyLogMapper mapper;
+    private TabApplyLogMapper<T> mapper;
 
-	public TabApplyLogMapper getMapper() {
+	public TabApplyLogMapper<T> getMapper() {
 		return mapper;
 	}
  

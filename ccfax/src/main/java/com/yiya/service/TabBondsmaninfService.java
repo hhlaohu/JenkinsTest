@@ -2,6 +2,7 @@ package com.yiya.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,12 @@ import com.yiya.mapper.TabBondsmaninfMapper;
 
 
 @Service("tabBondsmaninfService")
-public class TabBondsmaninfService extends BaseService<TabBondsmaninf> {
+public class TabBondsmaninfService<T> extends BaseService<T> {
 
 	@Autowired
-    private TabBondsmaninfMapper mapper;
+    private TabBondsmaninfMapper<T> mapper;
 
-	public TabBondsmaninfMapper getMapper() {
+	public TabBondsmaninfMapper<T> getMapper() {
 		return mapper;
 	}
  

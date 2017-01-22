@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class URLUtils {
 	
-	private static ResourceBundle res = ResourceBundle.getBundle("urls_local");
+	private static ResourceBundle res = ResourceBundle.getBundle("urls_test");
 	private static 	Map<String,String> urlsMap = null;
 	
 	/**
